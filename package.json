@@ -1,0 +1,24 @@
+{
+  "name": "please",
+  "version": "0.1.0",
+  "description": "A simple programming language built on top of JavaScript",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github:ull-esit-pl-2021/please-Daniel-del-Castillo"
+  },
+  "keywords": [
+    "PL",
+    "ULL",
+    "Programming language"
+  ],
+  "author": "Daniel del Castillo de la Rosa <alu0101225548@ull.edu.es> (https://github.com/Daniel-del-Castillo)",
+  "license": "Unlicense",
+  "devDependencies": {
+    "eslint": "^7.23.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
