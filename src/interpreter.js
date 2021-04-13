@@ -8,7 +8,7 @@
 /**
  * An object with the different base functions of the language
  */
-const predefinedFunctions = {};
+const keywords = {};
 
 /**
  * The if function
@@ -20,7 +20,7 @@ const predefinedFunctions = {};
  * @return {*} What the if evaluates to
  * @private
  */
-predefinedFunctions.if = (args, scope) => {
+keywords.if = (args, scope) => {
   if (args.length > 3 || args.length < 2) {
     throw new SyntaxError('Wrong number of args to if');
   }
@@ -34,14 +34,14 @@ predefinedFunctions.if = (args, scope) => {
 };
 
 /**
- * The while function
+ * The while keyword
  * @param {Array} args An array with the arguments. It must have length 2.
  *     The first argument is a condition and the body of the while
  * @param {Object} scope The scope for executing the while
  * @return {boolean} A while loop always evaluates to false
  * @private
  */
-predefinedFunctions.while = (args, scope) => {
+keywords.while = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Wrong number of args to while');
   }
@@ -52,13 +52,13 @@ predefinedFunctions.while = (args, scope) => {
 };
 
 /**
- * The run function. Runs the code passed as arguments
+ * The run keyword. Runs the code passed as arguments
  * @param {Array} args A list of expressions to run
  * @param {Object} scope The scope
  * @return {*} The return value of the last executed expression
  * @private
  */
-predefinedFunctions.run = (args, scope) => {
+keywords.run = (args, scope) => {
   let value = false;
   args.forEach((arg) => {
     value = evaluate(arg, scope);
@@ -67,15 +67,20 @@ predefinedFunctions.run = (args, scope) => {
 };
 
 /**
- * The let function. Allows to create a binding and add it to the scope
+ * The let keyword. Allows to create a binding and add it to the scope
  * @param {Array} args The args should be a variable name and a value
  * @param {Object} scope The scope
  * @return {*} The value of the binding
  * @private
  */
-predefinedFunctions.let = (args, scope) => {
-  if (args.length !== 2 || args[0].type !== 'word') {
-    throw new SyntaxError('Incorrect use of let');
+keywords.let = (args, scope) => {
+  if (args.length !== 2) {
+    throw new SyntaxError('let needs two arguments');
+  }
+  if (args[0].type !== 'word') {
+    throw new SyntaxError(
+        'The first argument to let must be a valid variable name',
+    );
   }
   const value = evaluate(args[1], scope);
   scope[args[0].name] = value;
@@ -83,14 +88,14 @@ predefinedFunctions.let = (args, scope) => {
 };
 
 /**
- * The fn function. Allows to create another function
+ * The fn keyword. Allows to create another function
  * @param {Array} args The args should be a list of args and then the
  *     function body
  * @param {Object} scope The scope
  * @return {function} The created function
  * @private
  */
-predefinedFunctions.fn = (args, scope) => {
+keywords.fn = (args, scope) => {
   if (!args.length) {
     throw new SyntaxError('Functions need a body');
   }
@@ -115,26 +120,58 @@ predefinedFunctions.fn = (args, scope) => {
 };
 
 /**
+ * The assign keyword. Allows to assign a different value to a variable
+ * @param {Array} args The args should be the name of a variable and a
+ *     expression that evaluates to a new value
+ * @param {Object} scope The scope
+ * @return {function} The value of the new variable
+ * @private
+ */
+keywords.assign = (args, scope) => {
+  if (args.length !== 2) {
+    throw new SyntaxError('Assigns need two arguments');
+  }
+  if (args[0].type !== 'word') {
+    throw new SyntaxError(
+        'The first argument to assign must be a variable name',
+    );
+  }
+  const varName = args[0].name;
+  const value = evaluate(args[1], scope);
+  const hasProperty = Object.prototype.hasOwnProperty;
+  while (scope != null) {
+    if (hasProperty.call(scope, varName)) {
+      scope[varName] = value;
+      return value;
+    }
+    scope = Object.getPrototypeOf(scope);
+  }
+  throw new ReferenceError(
+      `Tried to assign to a non existent variable: ${varName}`,
+  );
+};
+
+/**
  * A function that evaluates an expression
- * @param {Object} expr The expression as a JSON AST
+ * @param {Object} tree The expression as a JSON AST
  * @param {Object} scope The scope
  * @return {*} The value of the evaluated expression
  * @private
  */
-const evaluate = (expr, scope) => {
-  if (expr.type === 'value') {
-    return expr.value;
-  } else if (expr.type === 'word') {
-    if (expr.name in scope) {
-      return scope[expr.name];
+const evaluate = (tree, scope) => {
+  if (tree.type === 'value') {
+    return tree.value;
+  } else if (tree.type === 'word') {
+    if (tree.name in scope) {
+      return scope[tree.name];
     } else {
-      throw new ReferenceError(`Undefined binding: ${expr.name}`);
+      throw new ReferenceError(`Undefined binding: ${tree.name}`);
     }
-  } else if (expr.type === 'call') {
-    const {operator, args} = expr;
+  } else if (tree.type === 'call') {
+    const {operator, args} = tree;
     if (operator.type === 'word' &&
-        operator.name in predefinedFunctions) {
-      return predefinedFunctions[operator.name](expr.args, scope);
+        operator.name in keywords) {
+      return keywords[operator.name](tree.args, scope);
     } else {
       const op = evaluate(operator, scope);
       if (typeof op === 'function') {
@@ -158,7 +195,7 @@ const createTopScope = () => {
   ['+', '-', '*', '/', '==', '<', '>'].forEach((op) => {
     topScope[op] = Function('a, b', `return a ${op} b;`);
   });
-  topScope.print = (value) => {
+  topScope.println = (value) => {
     console.log(value);
     return value;
   };
