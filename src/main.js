@@ -7,15 +7,35 @@
 
 'use strict';
 
-const interpret = require('./interpreter.js');
-const parse = require('./compiler.js');
+const {
+  interpret,
+  interpretFromFile,
+  run,
+  runFromFile,
+  createTopScope,
+  keywords,
+  evaluate,
+} = require('./lib/interpreter.js');
 
-/**
- * Parses and executes a program
- * @param {string} program The string with the whole program
- */
-const run = (program) => {
-  interpret(parse(program));
+const {
+  parse,
+  parseCall,
+  parseExpression,
+  parseFromFile,
+  compile,
+} = require('./lib/compiler.js');
+
+module.exports = {
+  interpret,
+  interpretFromFile,
+  run,
+  runFromFile,
+  createTopScope,
+  keywords,
+  evaluate,
+  parse,
+  parseCall,
+  parseExpression,
+  parseFromFile,
+  compile,
 };
-
-module.exports = {run, interpret, parse};

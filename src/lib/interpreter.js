@@ -1,14 +1,20 @@
 // @ts-check
 /**
- * @description The file with the code to compile the Please lang
+ * @description The file with the code to interpret the Please lang
  * @author Daniel del Castillo de la Rosa <alu0101225548@ull.edu.es>
  * @since 8/04/2021
+ * @module
  */
+
+'use strict';
+
+const fs = require('fs');
+const {parse} = require('./compiler.js');
 
 /**
  * An object with the different base functions of the language
  */
-const keywords = {};
+const keywords = Object.create(null);
 
 /**
  * The if function
@@ -189,10 +195,10 @@ const evaluate = (tree, scope) => {
  * @private
  */
 const createTopScope = () => {
-  const topScope = {};
+  const topScope = Object.create(null);
   topScope.true = true;
   topScope.false = false;
-  ['+', '-', '*', '/', '==', '<', '>'].forEach((op) => {
+  ['+', '-', '*', '/', '==', '<', '>', '&&', '||'].forEach((op) => {
     topScope[op] = Function('a, b', `return a ${op} b;`);
   });
   topScope.println = (value) => {
@@ -204,11 +210,56 @@ const createTopScope = () => {
 
 /**
  * A function that interprets a Please JSON AST
- * @param {Object} program The program to interpret
+ * @param {Object} program The AST of the program to interpret
  * @return {*} The return value of the program
  */
 const interpret = (program) => {
   return evaluate(program, createTopScope());
 };
 
-module.exports = interpret;
+/**
+ * A function that interprets a compiled Please file
+ * @param {string} fileName The name of the file
+ * @return {*} The return value of the program
+ */
+const interpretFromFile = (fileName) => {
+  try {
+    const source = fs.readFileSync(fileName, 'utf8');
+    return evaluate(JSON.parse(source), createTopScope());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+/**
+ * Parses and executes a Please program
+ * @param {Object} program The Please program to run
+ * @return {*} The return value of the program
+ */
+const run = (program) => {
+  return interpret(parse(program));
+};
+
+/**
+ * A function that interprets a Please file
+ * @param {string} fileName The name of the file
+ * @return {*} The return value of the program
+ */
+const runFromFile = (fileName) => {
+  try {
+    const source = fs.readFileSync(fileName, 'utf8');
+    return evaluate(parse(source), createTopScope());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  interpret,
+  interpretFromFile,
+  run,
+  runFromFile,
+  createTopScope,
+  keywords,
+  evaluate,
+};
