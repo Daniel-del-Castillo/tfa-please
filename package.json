@@ -4,10 +4,10 @@
   "description": "A simple programming language built on top of JavaScript",
   "main": "src/main.js",
   "bin": {
-    "please": "bin/please.js",
-    "please-run": "bin/run.js",
-    "please-compile": "bin/compile.js",
-    "please-interpret": "bin/interpret.js"
+    "please": "src/bin/please.js",
+    "please-run": "src/bin/run.js",
+    "please-compile": "src/bin/compile.js",
+    "please-interpret": "src/bin/interpret.js"
   },
   "scripts": {
     "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
