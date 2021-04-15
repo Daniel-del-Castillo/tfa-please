@@ -22,9 +22,15 @@ describe('Compiler', () => {
     runTest('fixing-scope');
   });
 
-  it('unexpected token', () => {
-    should.Throw(() => {
-      parseFromFile('test/pls/unexpected-token.pls');
+  it('unexpected token in call', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/unexpected-token-call.pls');
+    }, SyntaxError);
+  });
+
+  it('unexpected token in expr', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/unexpected-token-expr.pls');
     }, SyntaxError);
   });
 });
