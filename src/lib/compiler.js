@@ -21,7 +21,7 @@ class Lexer {
    */
   constructor(source) {
     /** @const {string} @private */
-    this.source_= source;
+    this.source_= source.replace(/\r/g, '');
     /** @property {Object} @private */
     this.cachedToken_ = undefined;
     /** @const {number} @private */

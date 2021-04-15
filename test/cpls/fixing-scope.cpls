@@ -73,7 +73,7 @@
               "operator": {
                 "type": "WORD",
                 "name": "assign",
-                "offset": 54,
+                "offset": 53,
                 "line": 4,
                 "column": 9
               },
@@ -81,14 +81,14 @@
                 {
                   "type": "WORD",
                   "name": "x",
-                  "offset": 61,
+                  "offset": 60,
                   "line": 4,
                   "column": 16
                 },
                 {
                   "type": "WORD",
                   "name": "val",
-                  "offset": 64,
+                  "offset": 63,
                   "line": 4,
                   "column": 19
                 }
@@ -103,7 +103,7 @@
       "operator": {
         "type": "WORD",
         "name": "assignx",
-        "offset": 81,
+        "offset": 80,
         "line": 6,
         "column": 5
       },
@@ -111,7 +111,7 @@
         {
           "type": "VALUE",
           "value": 50,
-          "offset": 89,
+          "offset": 88,
           "line": 6,
           "column": 13
         }
@@ -120,7 +120,7 @@
     {
       "type": "WORD",
       "name": "x",
-      "offset": 98,
+      "offset": 97,
       "line": 7,
       "column": 5
     }
