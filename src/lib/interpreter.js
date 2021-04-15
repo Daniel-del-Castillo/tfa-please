@@ -140,7 +140,7 @@ keywords.fn = (args, scope) => {
  */
 keywords.assign = (args, scope) => {
   if (args.length !== 2) {
-    throw new SyntaxError('Assigns need two arguments');
+    throw new SyntaxError('Assign needs two arguments');
   }
   if (args[0].type !== 'WORD') {
     throw new SyntaxError(

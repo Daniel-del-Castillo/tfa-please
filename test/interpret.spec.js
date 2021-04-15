@@ -53,4 +53,15 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'assign-first-arg.cpls');
     }, /The first argument to assign/);
   });
+
+  it('Assign needs two arguments', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'assign-two-args.cpls');
+    }, /Assign needs two arg/);
+  });
+  it('Functions won\'t accept a different number of args', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'fn-wrong-arg-numbers.cpls');
+    }, /Wrong number of arg/);
+  });
 });
