@@ -51,4 +51,10 @@ describe('Compiler', () => {
       parseFromFile('test/pls/expected,or).pls');
     }, /Expected ',' or '\)'/);
   });
+
+  it('Unexpected text after program', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/unexpected-text.pls');
+    }, /Unexpected text/);
+  });
 });
