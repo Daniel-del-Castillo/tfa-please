@@ -1,0 +1,12 @@
+{
+    "source": {
+        "include": [
+            "src/lib/compiler.js",
+            "src/lib/interpreter.js",
+            "README.md"
+        ]
+    },
+    "opts": {
+        "template": "node_modules/tui-jsdoc-template"
+    }
+}

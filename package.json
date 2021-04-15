@@ -10,7 +10,8 @@
     "please-interpret": "bin/interpret.js"
   },
   "scripts": {
-    "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan"
+    "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
+    "doc": "jsdoc -d docs -c jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,9 @@
     "chai": "^4.3.4",
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.14.0",
-    "mocha": "^8.3.2"
+    "jsdoc": "^3.6.6",
+    "mocha": "^8.3.2",
+    "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
     "commander": "^7.2.0"

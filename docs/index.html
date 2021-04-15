@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home | Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-jsdoc.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/tui-doc.css">
+
+    
+</head>
+<body>
+<nav class="lnb" id="lnb">
+    <div class="logo" style="">
+        
+            <img src="img/toast-ui.png" width="100%" height="100%">
+        
+    </div>
+    <div class="title">
+        <h1><a href="index.html" class="link">Home</a></h1>
+        
+    </div>
+    <div class="search-container" id="search-container">
+        <input type="text" placeholder="Search">
+        <ul></ul>
+    </div>
+    
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-PleaseLangCompiler.html">PleaseLangCompiler</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~compile">compile</a></li><li><a href="module-PleaseLangCompiler.html#~parse">parse</a></li><li><a href="module-PleaseLangCompiler.html#~parseCall">parseCall</a></li><li><a href="module-PleaseLangCompiler.html#~parseExpression">parseExpression</a></li><li><a href="module-PleaseLangCompiler.html#~parseFromFile">parseFromFile</a></li></ul></div></li><li><a href="module-PleaseLangInterpreter.html">PleaseLangInterpreter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangInterpreter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~keywords">keywords</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~createTopScope">createTopScope</a></li><li><a href="module-PleaseLangInterpreter.html#~evaluate">evaluate</a></li><li><a href="module-PleaseLangInterpreter.html#~interpret">interpret</a></li><li><a href="module-PleaseLangInterpreter.html#~interpretFromFile">interpretFromFile</a></li><li><a href="module-PleaseLangInterpreter.html#~run">run</a></li><li><a href="module-PleaseLangInterpreter.html#~runFromFile">runFromFile</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-PleaseLangCompiler-Lexer.html">Lexer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler~Lexer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#consumeToken">consumeToken</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#isEmpty">isEmpty</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#nextToken">nextToken</a></li></ul></div></li></ul></div>
+</nav>
+<div id="resizer"></div>
+
+<div class="main" id="main">
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section>
+        <article class="readme"><p><a href="https://github.com/ULL-ESIT-PL-2021/please-Daniel-del-Castillo/actions/workflows/test.yaml"><img src="https://github.com/ULL-ESIT-PL-2021/please-Daniel-del-Castillo/actions/workflows/test.yaml/badge.svg?branch=main" alt="Test"></a></p>
+<h1>Please Lang</h1>
+<h2>Made by Daniel del Castillo de la Rosa</h2>
+<p>This respository contains a language called Please. This language has been designed to run on top of JavaScript, mimicking the <a href="https://eloquentjavascript.net/12_language.html">Egg language</a>.</p>
+<h2>Installation</h2>
+<p>You can install the language like this:</p>
+<pre class="prettyprint source lang-sh"><code>npm i -g @ull-esit-pl-2021/please-Daniel-del-Castillo
+</code></pre>
+<p>You can also install locally.</p>
+<h2>Use</h2>
+<h3>From the CLI</h3>
+<p>There is a main executable <code>please</code> that acts as compiler and interpreter. Please is an interpreted language, but it can be sort of compiled to a JSON AST. Below the help the please executable help:</p>
+<pre class="prettyprint source lang-sh"><code>Usage: please [options] [command]
+
+A simple programming language built on top of JavaScript
+
+Options:
+  -V, --version           output the version number
+  -h, --help              display help for command
+
+Commands:
+  run &lt;fileName>          Run a Please lang file
+  compile|c &lt;origin>      compile a Please lang file
+  interpret|i &lt;fileName>  interpret a compiled Please lang file
+  help [command]          display help for command
+</code></pre>
+<p>The subcommands can also be used as executables and are also exported.</p>
+<h3>From code</h3>
+<p>The module exports the following functions:</p>
+<pre class="prettyprint source lang-js"><code>module.exports = {
+  interpret,
+  interpretFromFile,
+  run,
+  runFromFile,
+  createTopScope,
+  keywords,
+  evaluate,
+  parse,
+  parseCall,
+  parseExpression,
+  parseFromFile,
+  compile,
+};
+</code></pre>
+<p>You can check what each of them do in the documentation.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<footer>
+    <img class="logo" src="img/toast-ui.png" style="">
+    <div class="footer-text">NHN Entertainment. Frontend Development Lab</div>
+</footer>
+<script>prettyPrint();</script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/tui-doc.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+    <script>
+        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var selectedApi = document.getElementById(id); // do not use jquery selector
+        var $selectedApi = $(selectedApi);
+
+        $selectedApi.removeClass('hidden');
+        $selectedApi.parent().find('.glyphicon').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        showLnbApi();
+    </script>
+
+</body>
+</html>
