@@ -21,46 +21,49 @@ describe('Compiler', () => {
   it('Fixing scope', () => {
     runTest('fixing-scope');
   });
+});
 
+describe('Compiler errors', () => {
+  const basePath = 'test/pls/errors/';
   it('Unexpected token in call', () => {
     should.throw(() => {
-      parseFromFile('test/pls/unexpected-token-call.pls');
+      parseFromFile(basePath + 'unexpected-token-call.pls');
     }, /Unexpected token/);
   });
 
   it('Unexpected token in expr', () => {
     should.throw(() => {
-      parseFromFile('test/pls/unexpected-token-expr.pls');
+      parseFromFile(basePath + 'unexpected-token-expr.pls');
     }, /Unexpected token/);
   });
 
   it('Unexpected EOF', () => {
     should.throw(() => {
-      parseFromFile('test/pls/unexpected-eof.pls');
+      parseFromFile(basePath + 'unexpected-eof.pls');
     }, /EOF/);
   });
 
   it('Invalid token', () => {
     should.throw(() => {
-      parseFromFile('test/pls/invalid-token.pls');
+      parseFromFile(basePath + 'invalid-token.pls');
     }, /Invalid token/);
   });
 
   it('Expected , or )', () => {
     should.throw(() => {
-      parseFromFile('test/pls/expected,or).pls');
+      parseFromFile(basePath + 'expected,or).pls');
     }, /Expected ',' or '\)'/);
   });
 
   it('Unexpected comma after program', () => {
     should.throw(() => {
-      parseFromFile('test/pls/comma-after-end.pls');
+      parseFromFile(basePath + 'comma-after-end.pls');
     }, /Unexpected comma/);
   });
 
   it('Unmatched parenthesis', () => {
     should.throw(() => {
-      parseFromFile('test/pls/unmatched-parenthesis.pls');
+      parseFromFile(basePath + 'unmatched-parenthesis.pls');
     }, /Unmatched parenthesis/);
   });
 });
