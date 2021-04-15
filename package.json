@@ -22,6 +22,10 @@
     "ULL",
     "Programming language"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "author": "Daniel del Castillo de la Rosa <alu0101225548@ull.edu.es> (https://github.com/Daniel-del-Castillo)",
   "license": "Unlicense",
   "devDependencies": {
