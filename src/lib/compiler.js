@@ -242,6 +242,9 @@ const parseCall = (ast, lexer) => {
 const parse = (program) => {
   const lexer = new Lexer(program);
   const ast = parseExpression(lexer);
+  if (!lexer.isEmpty()) {
+    throw new SyntaxError('Unexpected text after program');
+  }
   return ast;
 };
 
