@@ -46,3 +46,5 @@ module.exports = {
 };
 ```
 You can check what each of them do in the documentation.
+## Documentation
+The code is extensively documented. The generated documentation can be consulted [here](https://ull-esit-pl-2021.github.io/please-Daniel-del-Castillo/)
