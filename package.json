@@ -10,7 +10,7 @@
     "please-interpret": "bin/interpret.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "c8 mocha --reporter nyan"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,12 @@
   "author": "Daniel del Castillo de la Rosa <alu0101225548@ull.edu.es> (https://github.com/Daniel-del-Castillo)",
   "license": "Unlicense",
   "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "c8": "^7.7.1",
+    "chai": "^4.3.4",
     "eslint": "^7.23.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^8.3.2"
   },
   "dependencies": {
     "commander": "^7.2.0"
