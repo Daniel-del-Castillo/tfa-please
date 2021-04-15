@@ -77,4 +77,16 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'fn-needs-body.cpls');
     }, /Functions need a body/);
   });
+
+  it('The first argument to let must be a valid variable name', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'first-let-arg.cpls');
+    }, /The first argument to let/);
+  });
+
+  it('let needs two arguments', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'let-two-args.cpls');
+    }, /let needs two arguments/);
+  });
 });
