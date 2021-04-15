@@ -12,14 +12,22 @@ const {parseFromFile} = require('../src/main.js');
 const fs = require('fs');
 
 describe('Compiler', () => {
-  const runTest = (testName) => {
+  const runTest = (testName, expectedExtraPath = '') => {
     const expected = JSON.parse(
-        fs.readFileSync('test/cpls/' + testName + '.cpls', {encoding: 'utf8'}));
+        fs.readFileSync(
+            'test/cpls/' + expectedExtraPath + testName +
+            '.cpls', {encoding: 'utf8'},
+        ),
+    );
     parseFromFile('test/pls/' + testName + '.pls').should.eql(expected);
   };
 
   it('Fixing scope', () => {
     runTest('fixing-scope');
+  });
+
+  it('println', () => {
+    runTest('println', 'errors/');
   });
 });
 

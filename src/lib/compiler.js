@@ -37,7 +37,7 @@ class Lexer {
     /** @const {RegExp} @private */
     this.REGEXP_ = new RegExp(
         [
-          /(?<STRING>(["'])(?:[^\1\\]|\\.)*?\1)/,
+          /(?<STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
           /(?<WORD>[^\s(),"'\\]+)/,
           /(?<COMMA>,)/,
@@ -118,7 +118,7 @@ class Lexer {
       }
     } else if (type === 'COMMA' && this.parenthesis_count_ === 0) {
       throw new SyntaxError(
-          `Unexpected comman after end of program ` +
+          `Unexpected comma after end of program ` +
           `at line ${this.line_} and column ${this.column_}`,
       );
     }
