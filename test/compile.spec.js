@@ -29,6 +29,18 @@ describe('Compiler', () => {
   it('while', () => {
     runTest('while');
   });
+
+  it('if', () => {
+    runTest('if');
+  });
+
+  it('if else', () => {
+    runTest('if-else');
+  });
+
+  it('false if', () => {
+    runTest('false-if');
+  });
 });
 
 describe('Compiler errors', () => {

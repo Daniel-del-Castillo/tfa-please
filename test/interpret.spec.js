@@ -23,6 +23,18 @@ describe('Interpreter', () => {
   it('while', () => {
     interpretFromFile(basePath + 'while.cpls').should.eql(false);
   });
+
+  it('if', () => {
+    interpretFromFile(basePath + 'if.cpls').should.eql(5);
+  });
+
+  it('if else', () => {
+    interpretFromFile(basePath + 'if-else.cpls').should.eql(10);
+  });
+
+  it('false if', () => {
+    interpretFromFile(basePath + 'false-if.cpls').should.eql(false);
+  });
 });
 
 describe('Interpreter errors', () => {
@@ -94,9 +106,15 @@ describe('Interpreter errors', () => {
     }, /let needs two arguments/);
   });
 
-  it('Wrong number of args', () => {
+  it('Wrong number of args for while', () => {
     should.throw(() => {
       interpretFromFile(basePath + 'while-args-number.cpls');
+    }, /Wrong number of arg/);
+  });
+
+  it('Wrong number of args for if', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'if-args-number.cpls');
     }, /Wrong number of arg/);
   });
 });
