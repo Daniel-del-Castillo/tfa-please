@@ -10,7 +10,7 @@
     "please-interpret": "bin/interpret.js"
   },
   "scripts": {
-    "test": "c8 mocha --reporter nyan"
+    "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan"
   },
   "repository": {
     "type": "git",
