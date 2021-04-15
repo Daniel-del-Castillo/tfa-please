@@ -9,11 +9,11 @@
 'use strict';
 
 const {program} = require('commander');
-const {name, version, description} = require('../../package.json');
+const {version, description} = require('../../package.json');
 
 program
     .version(version)
-    .name(name)
+    .name('please')
     .description(description)
     .command(
         'run <fileName>',

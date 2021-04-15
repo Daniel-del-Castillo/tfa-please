@@ -1,5 +1,5 @@
 {
-  "name": "please",
+  "name": "@ull-esit-pl-2021/please",
   "version": "0.1.0",
   "description": "A simple programming language built on top of JavaScript",
   "main": "src/main.js",
