@@ -23,9 +23,16 @@ describe('Interpreter', () => {
 
 describe('Interpreter errors', () => {
   const basePath = 'test/cpls/errors/';
+
   it('Tried to assign to non existent variable', () => {
     should.throw(() => {
       interpretFromFile(basePath + 'assign-non-existent-var.cpls');
     }, /Tried to assign/);
+  });
+
+  it('Tried to call non function', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'call-non-function.cpls');
+    }, /Calling a non-function/);
   });
 });

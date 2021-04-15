@@ -70,4 +70,10 @@ describe('Compiler errors', () => {
       parseFromFile(basePath + 'unmatched-parenthesis.pls');
     }, /Unmatched parenthesis/);
   });
+
+  it('Unexpected text', () => {
+    should.throw(() => {
+      parseFromFile(basePath + 'unexpected-text.pls');
+    }, /Unexpected text/);
+  });
 });
