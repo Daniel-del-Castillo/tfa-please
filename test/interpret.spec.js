@@ -35,4 +35,10 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'call-non-function.cpls');
     }, /Calling a non-function/);
   });
+
+  it('Undefined binding', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'undefined-binding.cpls');
+    }, /Undefined binding/);
+  });
 });
