@@ -47,4 +47,10 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'assign-non-existent.cpls');
     }, /Tried to assign to a non existent var/);
   });
+
+  it('First argument to assign must be a variable name', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'assign-first-arg.cpls');
+    }, /The first argument to assign/);
+  });
 });

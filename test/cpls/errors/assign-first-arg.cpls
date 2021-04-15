@@ -1,0 +1,26 @@
+{
+  "type": "CALL",
+  "operator": {
+    "type": "WORD",
+    "name": "assign",
+    "offset": 0,
+    "line": 1,
+    "column": 1
+  },
+  "args": [
+    {
+      "type": "VALUE",
+      "value": 1,
+      "offset": 7,
+      "line": 1,
+      "column": 8
+    },
+    {
+      "type": "VALUE",
+      "value": 2,
+      "offset": 10,
+      "line": 1,
+      "column": 10
+    }
+  ]
+}
