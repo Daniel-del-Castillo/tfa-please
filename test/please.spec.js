@@ -8,10 +8,22 @@
 'use strict';
 
 require('chai').should();
-const {runFromFile} = require('../src/main.js');
+const {runFromFile, compile} = require('../src/main.js');
+const fs = require('fs');
 
 describe('Miscellanous', () => {
   it('Run from file', () => {
     runFromFile('test/pls/fixing-scope.pls').should.eql(50);
+  });
+  it('Compile', () => {
+    compile('test/pls/fixing-scope.pls');
+    const actual = JSON.parse(
+        fs.readFileSync('test/pls/fixing-scope.cpls', {encoding: 'utf8'}),
+    );
+    const expected = JSON.parse(
+        fs.readFileSync('test/cpls/fixing-scope.cpls', {encoding: 'utf8'}),
+    );
+    fs.unlinkSync('test/pls/fixing-scope.cpls');
+    actual.should.eql(expected);
   });
 });
