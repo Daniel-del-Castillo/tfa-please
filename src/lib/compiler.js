@@ -141,8 +141,8 @@ class Lexer {
    */
   updateAfterMatch_(token) {
     const lineStart = this.source_.lastIndexOf('\n', this.offset_);
-    this.column_ = this.offset_ - (lineStart >= 0 ? lineStart : 0) + 1;
     this.offset_ += token.length;
+    this.column_ = this.offset_ - lineStart;
     this.line_ += token.split(/\n/).length - 1;
   }
 
@@ -151,6 +151,7 @@ class Lexer {
    * @return {boolean} Whether is it empty or not
    */
   isEmpty() {
+    this.skipSpace_();
     return this.source_.length === this.offset_;
   }
 

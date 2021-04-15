@@ -15,7 +15,7 @@
         "name": "let",
         "offset": 9,
         "line": 2,
-        "column": 1
+        "column": 5
       },
       "args": [
         {
@@ -23,7 +23,7 @@
           "name": "x",
           "offset": 13,
           "line": 2,
-          "column": 10
+          "column": 9
         },
         {
           "type": "VALUE",
@@ -41,7 +41,7 @@
         "name": "let",
         "offset": 24,
         "line": 3,
-        "column": 1
+        "column": 5
       },
       "args": [
         {
@@ -49,7 +49,7 @@
           "name": "assignx",
           "offset": 28,
           "line": 3,
-          "column": 10
+          "column": 9
         },
         {
           "type": "CALL",
@@ -66,7 +66,7 @@
               "name": "val",
               "offset": 40,
               "line": 3,
-              "column": 22
+              "column": 21
             },
             {
               "type": "CALL",
@@ -75,7 +75,7 @@
                 "name": "assign",
                 "offset": 54,
                 "line": 4,
-                "column": 26
+                "column": 9
               },
               "args": [
                 {
@@ -83,7 +83,7 @@
                   "name": "x",
                   "offset": 61,
                   "line": 4,
-                  "column": 17
+                  "column": 16
                 },
                 {
                   "type": "WORD",
@@ -105,7 +105,7 @@
         "name": "assignx",
         "offset": 81,
         "line": 6,
-        "column": 1
+        "column": 5
       },
       "args": [
         {
@@ -113,7 +113,7 @@
           "value": 50,
           "offset": 89,
           "line": 6,
-          "column": 14
+          "column": 13
         }
       ]
     },
@@ -122,7 +122,7 @@
       "name": "x",
       "offset": 98,
       "line": 7,
-      "column": 1
+      "column": 5
     }
   ]
 }
