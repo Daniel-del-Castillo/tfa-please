@@ -41,4 +41,10 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'undefined-binding.cpls');
     }, /Undefined binding/);
   });
+
+  it('Assign to non existent var', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'assign-non-existent.cpls');
+    }, /Tried to assign to a non existent var/);
+  });
 });
