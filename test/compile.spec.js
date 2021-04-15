@@ -18,19 +18,25 @@ describe('Compiler', () => {
     parseFromFile('test/pls/' + testName + '.pls').should.eql(expected);
   };
 
-  it('fixing scope', () => {
+  it('Fixing scope', () => {
     runTest('fixing-scope');
   });
 
-  it('unexpected token in call', () => {
+  it('Unexpected token in call', () => {
     should.throw(() => {
       parseFromFile('test/pls/unexpected-token-call.pls');
-    }, SyntaxError);
+    }, /token/);
   });
 
-  it('unexpected token in expr', () => {
+  it('Unexpected token in expr', () => {
     should.throw(() => {
       parseFromFile('test/pls/unexpected-token-expr.pls');
-    }, SyntaxError);
+    }, /token/);
+  });
+
+  it('Unexpected EOF', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/unexpected-eof.pls');
+    }, /EOF/);
   });
 });

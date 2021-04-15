@@ -56,13 +56,11 @@ class Lexer {
       return this.cachedToken_;
     }
     this.skipSpace_();
+    if (this.isEmpty()) {
+      throw new SyntaxError('Unexpected EOF');
+    }
     const match = this.REGEXP_.exec(this.source_);
     const result = {};
-    if (this.source_.length === 0) {
-      throw new SyntaxError(
-          `Unexpected EOF at line ${this.line_} and column ${this.column_}`,
-      );
-    }
     if (match == null) {
       throw new SyntaxError(
           `Invalid token: ` +

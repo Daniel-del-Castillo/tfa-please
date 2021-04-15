@@ -11,7 +11,7 @@ require('chai').should();
 const {interpretFromFile} = require('../src/main.js');
 
 describe('Interpreter', () => {
-  it('fixing scope', () => {
+  it('Fixing scope', () => {
     interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
   });
 });

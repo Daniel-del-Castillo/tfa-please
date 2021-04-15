@@ -11,7 +11,7 @@ require('chai').should();
 const {runFromFile} = require('../src/main.js');
 
 describe('Miscellanous', () => {
-  it('run from file', () => {
+  it('Run from file', () => {
     runFromFile('test/pls/fixing-scope.pls').should.eql(50);
   });
 });
