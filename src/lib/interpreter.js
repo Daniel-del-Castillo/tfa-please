@@ -51,7 +51,7 @@ keywords.if = (args, scope) => {
  */
 keywords.while = (args, scope) => {
   if (args.length !== 2) {
-    throw new SyntaxError('Wrong number of args to while');
+    throw new SyntaxError('Wrong number of arguments to while');
   }
   while (evaluate(args[0], scope) !== false) {
     evaluate(args[1], scope);
@@ -204,7 +204,7 @@ const createTopScope = () => {
   const topScope = Object.create(null);
   topScope.true = true;
   topScope.false = false;
-  ['+', '-', '*', '/', '==', '<', '>', '&&', '||'].forEach((op) => {
+  ['+', '-', '*', '/', '==', '!=', '<', '>', '&&', '||'].forEach((op) => {
     topScope[op] = Function('a, b', `return a ${op} b;`);
   });
   topScope.println = (value) => {

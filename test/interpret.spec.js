@@ -19,6 +19,10 @@ describe('Interpreter', () => {
   it('println', () => {
     interpretFromFile(basePath + 'println.cpls').should.eql('Hello world');
   });
+
+  it('while', () => {
+    interpretFromFile(basePath + 'while.cpls').should.eql(false);
+  });
 });
 
 describe('Interpreter errors', () => {
@@ -88,5 +92,11 @@ describe('Interpreter errors', () => {
     should.throw(() => {
       interpretFromFile(basePath + 'let-two-args.cpls');
     }, /let needs two arguments/);
+  });
+
+  it('Wrong number of args', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'while-args-number.cpls');
+    }, /Wrong number of arg/);
   });
 });

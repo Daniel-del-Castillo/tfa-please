@@ -25,6 +25,10 @@ describe('Compiler', () => {
   it('println', () => {
     runTest('println');
   });
+
+  it('while', () => {
+    runTest('while');
+  });
 });
 
 describe('Compiler errors', () => {
