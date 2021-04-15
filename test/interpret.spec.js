@@ -71,4 +71,10 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'parameter-names.cpls');
     }, /Parameter names/);
   });
+
+  it('Functions need bodies', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'fn-needs-body.cpls');
+    }, /Functions need a body/);
+  });
 });
