@@ -59,9 +59,16 @@ describe('Interpreter errors', () => {
       interpretFromFile(basePath + 'assign-two-args.cpls');
     }, /Assign needs two arg/);
   });
+
   it('Functions won\'t accept a different number of args', () => {
     should.throw(() => {
       interpretFromFile(basePath + 'fn-wrong-arg-numbers.cpls');
     }, /Wrong number of arg/);
+  });
+
+  it('Parameter names must be words', () => {
+    should.throw(() => {
+      interpretFromFile(basePath + 'parameter-names.cpls');
+    }, /Parameter names/);
   });
 });
