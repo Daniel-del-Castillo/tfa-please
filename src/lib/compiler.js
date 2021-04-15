@@ -49,6 +49,7 @@ class Lexer {
   /**
    * A method that returns the next token of the source
    * @return {object} The next token
+ * @throws Will throw if there are invalid tokens
    */
   nextToken() {
     if (this.cachedToken_ != undefined) {
@@ -130,6 +131,7 @@ class Lexer {
  * @param {Lexer} lexer An instance of the Lexer class initialized with
  *     the source of the program
  * @return {Object} The JSON AST of the expression
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 const parseExpression = (lexer) => {
@@ -153,6 +155,7 @@ const parseExpression = (lexer) => {
  * @param {Object} ast The already parsed previous part of the program
  * @param {Lexer} lexer An instance of the Lexer class properly initialized
  * @return {Object} The JSON AST of the call
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 const parseCall = (ast, lexer) => {
@@ -194,6 +197,7 @@ const parseCall = (ast, lexer) => {
  * A function that parses a Please program
  * @param {string} program The string with the unparsed program
  * @return {Object} The AST of the program
+ * @throws Will throw if there are errors in the program
  */
 const parse = (program) => {
   const lexer = new Lexer(program);
@@ -208,32 +212,28 @@ const parse = (program) => {
  * A function that reads a file and parses its contents
  * @param {string} fileName The name of the file
  * @return {Object} The JSON AST of the program
+ * @throws Will throw if there are errors in the program or if the file
+ *     can't be opened
  */
 const parseFromFile = (fileName) => {
-  try {
-    const source = fs.readFileSync(fileName, 'utf8');
-    return parse(source);
-  } catch (err) {
-    console.log('There was an error: ' + err.message);
-  }
+  const source = fs.readFileSync(fileName, 'utf8');
+  return parse(source);
 };
 
 /**
  * A function that compiles a Please file
  * @param {string} origin The name of the origin file
  * @param {string} destination The name of the destination file
+ * @throws Will throw if there are errors in the program or if the files
+ *     can't be opened
  */
 const compile = (origin, destination = undefined) => {
-  try {
-    const source = fs.readFileSync(origin, 'utf8');
-    if (destination == undefined) {
-      destination = origin.match(/^[^\.]*/)[0] + '.cpls';
-    }
-    const ast = JSON.stringify(parse(source), null, 2);
-    fs.writeFileSync(destination, ast);
-  } catch (err) {
-    console.log('There was an error: ' + err.message);
+  const source = fs.readFileSync(origin, 'utf8');
+  if (destination == undefined) {
+    destination = origin.match(/^[^\.]*/)[0] + '.cpls';
   }
+  const ast = JSON.stringify(parse(source), null, 2);
+  fs.writeFileSync(destination, ast);
 };
 
 module.exports = {parse, parseCall, parseExpression, parseFromFile, compile};

@@ -24,6 +24,7 @@ const keywords = Object.create(null);
  *     is the action to perform if the condition evaluates to false
  * @param {Object} scope The scope for executing the if
  * @return {*} What the if evaluates to
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 keywords.if = (args, scope) => {
@@ -45,6 +46,7 @@ keywords.if = (args, scope) => {
  *     The first argument is a condition and the body of the while
  * @param {Object} scope The scope for executing the while
  * @return {boolean} A while loop always evaluates to false
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 keywords.while = (args, scope) => {
@@ -77,6 +79,7 @@ keywords.run = (args, scope) => {
  * @param {Array} args The args should be a variable name and a value
  * @param {Object} scope The scope
  * @return {*} The value of the binding
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 keywords.let = (args, scope) => {
@@ -99,6 +102,7 @@ keywords.let = (args, scope) => {
  *     function body
  * @param {Object} scope The scope
  * @return {function} The created function
+ * @throws Will throw if there are syntactical errors
  * @private
  */
 keywords.fn = (args, scope) => {
@@ -131,6 +135,7 @@ keywords.fn = (args, scope) => {
  *     expression that evaluates to a new value
  * @param {Object} scope The scope
  * @return {function} The value of the new variable
+ * @throws Will throw if there are syntactical or semantical errors
  * @private
  */
 keywords.assign = (args, scope) => {
@@ -162,6 +167,7 @@ keywords.assign = (args, scope) => {
  * @param {Object} tree The expression as a JSON AST
  * @param {Object} scope The scope
  * @return {*} The value of the evaluated expression
+ * @throws Will throw if there are semantical errors
  * @private
  */
 const evaluate = (tree, scope) => {
@@ -212,6 +218,7 @@ const createTopScope = () => {
  * A function that interprets a Please JSON AST
  * @param {Object} program The AST of the program to interpret
  * @return {*} The return value of the program
+ * @throws Will throw if there are syntactical errors
  */
 const interpret = (program) => {
   return evaluate(program, createTopScope());
@@ -221,20 +228,19 @@ const interpret = (program) => {
  * A function that interprets a compiled Please file
  * @param {string} fileName The name of the file
  * @return {*} The return value of the program
+ * @throws Will throw if it isn't possible to read the file or if there
+ *     are syntactical errors
  */
 const interpretFromFile = (fileName) => {
-  try {
-    const source = fs.readFileSync(fileName, 'utf8');
-    return evaluate(JSON.parse(source), createTopScope());
-  } catch (err) {
-    console.log('There was an error: ' + err.message);
-  }
+  const source = fs.readFileSync(fileName, 'utf8');
+  return evaluate(JSON.parse(source), createTopScope());
 };
 
 /**
  * Parses and executes a Please program
  * @param {Object} program The Please program to run
  * @return {*} The return value of the program
+ * @throws Will throw if there are errors in the program
  */
 const run = (program) => {
   return interpret(parse(program));
@@ -244,14 +250,12 @@ const run = (program) => {
  * A function that interprets a Please file
  * @param {string} fileName The name of the file
  * @return {*} The return value of the program
+ * @throws Will throw if it isn't possible to read the file or if there
+ *     are errors in the program
  */
 const runFromFile = (fileName) => {
-  try {
-    const source = fs.readFileSync(fileName, 'utf8');
-    return evaluate(parse(source), createTopScope());
-  } catch (err) {
-    console.log('There was an error: ' + err.message);
-  }
+  const source = fs.readFileSync(fileName, 'utf8');
+  return evaluate(parse(source), createTopScope());
 };
 
 module.exports = {

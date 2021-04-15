@@ -27,7 +27,11 @@ program
         },
     )
     .action((origin, options) => {
-      compile(origin, options.out);
+      try {
+        compile(origin, options.out);
+      } catch (err) {
+        console.log('There was an error: ' + err.message);
+      }
     });
 
 program.parse(process.argv);

@@ -20,7 +20,11 @@ program
         {fileName: 'The path of the file to execute'},
     )
     .action((fileName) => {
-      runFromFile(fileName);
+      try {
+        runFromFile(fileName);
+      } catch (err) {
+        console.log('There was an error: ' + err.message);
+      }
     });
 
 program.parse(process.argv);

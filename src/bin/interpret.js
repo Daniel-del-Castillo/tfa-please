@@ -20,7 +20,11 @@ program
         {fileName: 'The path of the file to interpret'},
     )
     .action((fileName) => {
-      interpretFromFile(fileName);
+      try {
+        interpretFromFile(fileName);
+      } catch (err) {
+        console.log('There was an error: ' + err.message);
+      }
     });
 
 program.parse(process.argv);
