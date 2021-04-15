@@ -45,4 +45,10 @@ describe('Compiler', () => {
       parseFromFile('test/pls/invalid-token.pls');
     }, /Invalid token/);
   });
+
+  it('Expected , or )', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/expected,or).pls');
+    }, /Expected ',' or '\)'/);
+  });
 });
