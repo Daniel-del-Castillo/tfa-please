@@ -83,7 +83,7 @@ keywords.let = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('let needs two arguments');
   }
-  if (args[0].type !== 'word') {
+  if (args[0].type !== 'WORD') {
     throw new SyntaxError(
         'The first argument to let must be a valid variable name',
     );
@@ -107,7 +107,7 @@ keywords.fn = (args, scope) => {
   }
   const body = args[args.length - 1];
   const params = args.slice(0, args.length - 1).map((expr) => {
-    if (expr.type !== 'word') {
+    if (expr.type !== 'WORD') {
       throw new SyntaxError('Parameter names must be words');
     }
     return expr.name;
@@ -137,7 +137,7 @@ keywords.assign = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Assigns need two arguments');
   }
-  if (args[0].type !== 'word') {
+  if (args[0].type !== 'WORD') {
     throw new SyntaxError(
         'The first argument to assign must be a variable name',
     );
@@ -167,15 +167,15 @@ keywords.assign = (args, scope) => {
 const evaluate = (tree, scope) => {
   if (tree.type === 'value') {
     return tree.value;
-  } else if (tree.type === 'word') {
+  } else if (tree.type === 'WORD') {
     if (tree.name in scope) {
       return scope[tree.name];
     } else {
       throw new ReferenceError(`Undefined binding: ${tree.name}`);
     }
-  } else if (tree.type === 'call') {
+  } else if (tree.type === 'CALL') {
     const {operator, args} = tree;
-    if (operator.type === 'word' &&
+    if (operator.type === 'WORD' &&
         operator.name in keywords) {
       return keywords[operator.name](tree.args, scope);
     } else {

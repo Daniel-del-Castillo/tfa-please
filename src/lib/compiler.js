@@ -22,6 +22,8 @@ class Lexer {
   constructor(source) {
     /** @const {string} @private */
     this.source_= source;
+    /** @property {Object} @private */
+    this.cachedToken_ = undefined;
     /** @const {number} @private */
     this.line_ = 1;
     /** @const {number} @private */
@@ -29,19 +31,19 @@ class Lexer {
     /** @const {number} @private */
     this.offset_ = 0;
     /** @const {RegExp} @private */
-    this.WHITE_ = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
+    this.WHITE_ = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/,
     /** @const {RegExp} @private */
-    this.STRING_ = /^(["'])(?:[^\1\\]|\\.)*?\1/;
-    /** @const {RegExp} @private */
-    this.NUMBER_ = /^[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?/;
-    /** @const {RegExp} @private */
-    this.WORD_ = /^[^\s(),"'\\]+/;
-    /** @const {RegExp} @private */
-    this.COMMA_ = /^,/;
-    /** @const {RegExp} @private */
-    this.LEFT_PARENTHESIS_ = /^\(/;
-    /** @const {RegExp} @private */
-    this.RIGHT_PARENTHESIS_ = /^\)/;
+    this.REGEXP_ = new RegExp(
+        [
+          /(?<STRING>(["'])(?:[^\1\\]|\\.)*?\1)/,
+          /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
+          /(?<WORD>[^\s(),"'\\]+)/,
+          /(?<COMMA>,)/,
+          /(?<LEFT_PARENTHESIS>\()/,
+          /(?<RIGHT_PARENTHESIS>\))/,
+        ].map((regexp) => regexp.source).join('|'),
+        'y',
+    );
   }
 
   /**
@@ -49,54 +51,58 @@ class Lexer {
    * @return {object} The next token
    */
   nextToken() {
+    if (this.cachedToken_ != undefined) {
+      return this.cachedToken_;
+    }
     this.skipSpace_();
-    let match;
+    const match = this.REGEXP_.exec(this.source_);
     const result = {};
     if (this.source_.length === 0) {
       throw new SyntaxError(
           `Unexpected EOF at line ${this.line_} and column ${this.column_}`,
       );
     }
-    if ((match = this.STRING_.exec(this.source_)) ||
-        (match = this.NUMBER_.exec(this.source_))) {
-      result.type = 'value';
-      result.value = match[0];
-    } else if (match = this.WORD_.exec(this.source_)) {
-      result.type = 'word';
-      result.name = match[0];
-    } else if (match = this.COMMA_.exec(this.source_)) {
-      result.type = 'comma';
-      result.value = match[0];
-    } else if (match = this.LEFT_PARENTHESIS_.exec(this.source_)) {
-      result.type = 'left_parenthesis';
-      result.value = match[0];
-    } else if (match = this.RIGHT_PARENTHESIS_.exec(this.source_)) {
-      result.type = 'right_parenthesis';
-      result.value = match[0];
-    } else {
+    if (match == null) {
       throw new SyntaxError(
-          `Invalid token: ${/..*?\b/.exec(this.source_)[0]} at line` +
-          ` ${this.line_} and column ${this.column_}`,
+          `Invalid token: ` +
+          `${/..*?\b/.exec(this.source_.slice(this.REGEXP_.lastIndex))[0]} ` +
+          `at line ${this.line_} and column ${this.column_}`,
       );
+    }
+    result.type = Object.keys(match.groups)
+        .find((type) => match.groups[type] !== undefined);
+    if (result.type === 'WORD') {
+      result.name = match.groups[result.type];
+    } else if (result.type === 'NUMBER') {
+      result.value = Number(match.groups[result.type]);
+    } else {
+      result.value = match.groups[result.type];
     }
     result.offset = this.offset_;
     result.line = this.line_;
     result.column = this.column_;
-    this.updateAfterMatch_(match);
+    this.updateAfterMatch_(match.groups[result.type]);
+    this.cachedToken_ = result;
     return result;
   }
 
   /**
+   * A method that consomes the next token so a new one is available
+   */
+  consumeToken() {
+    this.cachedToken_ = undefined;
+  }
+
+  /**
    * A function to update the lexer after consuming a token
-   * @param {Object} match The match found
+   * @param {string} token The token found
    * @private
    */
-  updateAfterMatch_(match) {
+  updateAfterMatch_(token) {
     const lineStart = this.source_.lastIndexOf('\n', this.offset_);
     this.column_ = this.offset_ - (lineStart >= 0 ? lineStart : 0) + 1;
-    this.offset_ += match[0].length;
-    this.line_ += match[0].split(/\n/).length - 1;
-    this.source_ = this.source_.slice(match[0].length);
+    this.offset_ += token.length;
+    this.line_ += token.split(/\n/).length - 1;
   }
 
   /**
@@ -104,7 +110,7 @@ class Lexer {
    * @return {boolean} Whether is it empty or not
    */
   isEmpty() {
-    return this.source_.length === 0;
+    return this.source_.length === this.offset_;
   }
 
   /**
@@ -112,8 +118,9 @@ class Lexer {
    * @private
    */
   skipSpace_() {
-    const match = this.WHITE_.exec(this.source_);
-    this.updateAfterMatch_(match);
+    const match = this.WHITE_.exec(this.source_.slice(this.offset_));
+    this.REGEXP_.lastIndex += match[0].length;
+    this.updateAfterMatch_(match[0]);
   };
 }
 
@@ -127,11 +134,11 @@ class Lexer {
  */
 const parseExpression = (lexer) => {
   const token = lexer.nextToken();
-  console.log(token.type);
-  if (token.type === 'word') {
+  lexer.consumeToken();
+  if (token.type === 'WORD') {
     return parseCall(token, lexer);
   }
-  if (token.type === 'string' || token.type === 'number') {
+  if (token.type === 'STRING' || token.type === 'NUMBER') {
     return token;
   }
   throw new SyntaxError(
@@ -152,26 +159,33 @@ const parseCall = (ast, lexer) => {
     return ast;
   }
   let token = lexer.nextToken();
-  if (token.type === 'right_parenthesis' || token.type === 'comma') {
+  if (token.type === 'RIGHT_PARENTHESIS' || token.type === 'COMMA') {
     return ast;
   }
-  if (token.type !== 'left_parenthesis') {
+  if (token.type !== 'LEFT_PARENTHESIS') {
     throw new SyntaxError(
         `Unexpected token: ${token.value} at line` +
         ` ${token.line} and column ${token.column}, expected '('`,
     );
   }
-  ast = {type: 'call', operator: ast, args: []};
+  lexer.consumeToken();
+  ast = {type: 'CALL', operator: ast, args: []};
   token = lexer.nextToken();
-  while (token.type !== 'right_parenthesis') {
+  while (token.type !== 'RIGHT_PARENTHESIS') {
     const arg = parseExpression(lexer);
-    ast.args.push(arg.expr);
+    ast.args.push(arg);
     token = lexer.nextToken();
-    if (token.type !== 'comma' && token.type !== 'right_parenthesis') {
-      throw new SyntaxError('Expected \',\' or \')\'');
+    if (token.type === 'COMMA') {
+      lexer.consumeToken();
+      token = lexer.nextToken();
+    } else if (token.type !== 'RIGHT_PARENTHESIS') {
+      throw new SyntaxError(
+          `Expected ',' or ')' at line ${token.line} ` +
+          `and column ${token.column}`,
+      );
     }
   }
-
+  lexer.consumeToken();
   return parseCall(ast, lexer);
 };
 
@@ -208,7 +222,7 @@ const parseFromFile = (fileName) => {
  * @param {string} origin The name of the origin file
  * @param {string} destination The name of the destination file
  */
-const compile = (origin, destination) => {
+const compile = (origin, destination = undefined) => {
   try {
     const source = fs.readFileSync(origin, 'utf8');
     if (destination == undefined) {
