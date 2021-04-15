@@ -30,6 +30,8 @@ class Lexer {
     this.column_ = 1;
     /** @const {number} @private */
     this.offset_ = 0;
+    /** @const {number} @private */
+    this.parenthesis_count_ = 0;
     /** @const {RegExp} @private */
     this.WHITE_ = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/,
     /** @const {RegExp} @private */
@@ -60,7 +62,6 @@ class Lexer {
       throw new SyntaxError('Unexpected EOF');
     }
     let match = this.REGEXP_.exec(this.source_);
-    const result = {};
     if (match == null) {
       match = /..*?\b|.*$/.exec(this.source_.slice(this.REGEXP_.lastIndex));
       throw new SyntaxError(
@@ -68,6 +69,24 @@ class Lexer {
           `at line ${this.line_} and column ${this.column_}`,
       );
     }
+    const result = this.constructResult_(match);
+    this.checkValidToken_(result.type);
+    result.offset = this.offset_;
+    result.line = this.line_;
+    result.column = this.column_;
+    this.updateAfterMatch_(match.groups[result.type]);
+    this.cachedToken_ = result;
+    return result;
+  }
+
+  /**
+   * A helper function that construct the result from the match
+   * @param {Object} match The string that matched with the RegExp
+   * @return {Object} The constructed result
+   * @private
+   */
+  constructResult_(match) {
+    const result = {};
     result.type = Object.keys(match.groups)
         .find((type) => match.groups[type] !== undefined);
     if (result.type === 'WORD') {
@@ -77,12 +96,32 @@ class Lexer {
     } else {
       result.value = match.groups[result.type];
     }
-    result.offset = this.offset_;
-    result.line = this.line_;
-    result.column = this.column_;
-    this.updateAfterMatch_(match.groups[result.type]);
-    this.cachedToken_ = result;
     return result;
+  }
+
+  /**
+   * A function that check that the token is a valid one
+   *    In particular it allows to avoid ')' and ',' after
+   *    the end of the program
+   * @param {string} type The type of the token
+   */
+  checkValidToken_(type) {
+    if (type === 'LEFT_PARENTHESIS') {
+      this.parenthesis_count_++;
+    } else if (type === 'RIGHT_PARENTHESIS') {
+      this.parenthesis_count_--;
+      if (this.parenthesis_count_ < 0) {
+        throw new SyntaxError(
+            `Unmatched parenthesis ` +
+            `at line ${this.line_} and column ${this.column_}`,
+        );
+      }
+    } else if (type === 'COMMA' && this.parenthesis_count_ === 0) {
+      throw new SyntaxError(
+          `Unexpected comman after end of program ` +
+          `at line ${this.line_} and column ${this.column_}`,
+      );
+    }
   }
 
   /**
@@ -200,9 +239,6 @@ const parseCall = (ast, lexer) => {
 const parse = (program) => {
   const lexer = new Lexer(program);
   const ast = parseExpression(lexer);
-  if (!lexer.isEmpty()) {
-    throw new SyntaxError('Unexpected text after program');
-  }
   return ast;
 };
 

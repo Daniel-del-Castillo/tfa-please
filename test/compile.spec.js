@@ -52,9 +52,15 @@ describe('Compiler', () => {
     }, /Expected ',' or '\)'/);
   });
 
-  it('Unexpected text after program', () => {
+  it('Unexpected comma after program', () => {
     should.throw(() => {
-      parseFromFile('test/pls/unexpected-text.pls');
-    }, /Unexpected text/);
+      parseFromFile('test/pls/comma-after-end.pls');
+    }, /Unexpected comma/);
+  });
+
+  it('Unmatched parenthesis', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/unmatched-parenthesis.pls');
+    }, /Unmatched parenthesis/);
   });
 });
