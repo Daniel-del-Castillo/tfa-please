@@ -233,7 +233,7 @@ const interpret = (program) => {
  */
 const interpretFromFile = (fileName) => {
   const source = fs.readFileSync(fileName, 'utf8');
-  return evaluate(JSON.parse(source), createTopScope());
+  return interpret(JSON.parse(source));
 };
 
 /**
@@ -255,7 +255,7 @@ const run = (program) => {
  */
 const runFromFile = (fileName) => {
   const source = fs.readFileSync(fileName, 'utf8');
-  return evaluate(parse(source), createTopScope());
+  return run(source);
 };
 
 module.exports = {

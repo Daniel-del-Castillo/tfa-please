@@ -7,7 +7,7 @@
 
 'use strict';
 
-require('chai').should();
+const should = require('chai').should();
 const {parseFromFile} = require('../src/main.js');
 const fs = require('fs');
 
@@ -20,5 +20,11 @@ describe('Compiler', () => {
 
   it('fixing scope', () => {
     runTest('fixing-scope');
+  });
+
+  it('unexpected token', () => {
+    should.Throw(() => {
+      parseFromFile('test/pls/unexpected-token.pls');
+    }, SyntaxError);
   });
 });
