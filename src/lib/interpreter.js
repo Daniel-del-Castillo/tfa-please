@@ -113,12 +113,12 @@ keywords.fn = (args, scope) => {
     return expr.name;
   });
 
-  return function(...args) {
+  return (...args) => {
     if (args.length !== params.length) {
       throw new TypeError('Wrong number of arguments');
     }
     const localScope = Object.create(scope);
-    for (let i = 0; i < arguments.length; i++) {
+    for (let i = 0; i < args.length; i++) {
       localScope[params[i]] = args[i];
     }
     return evaluate(body, localScope);
@@ -165,7 +165,7 @@ keywords.assign = (args, scope) => {
  * @private
  */
 const evaluate = (tree, scope) => {
-  if (tree.type === 'value') {
+  if (tree.type === 'VALUE') {
     return tree.value;
   } else if (tree.type === 'WORD') {
     if (tree.name in scope) {
@@ -227,7 +227,7 @@ const interpretFromFile = (fileName) => {
     const source = fs.readFileSync(fileName, 'utf8');
     return evaluate(JSON.parse(source), createTopScope());
   } catch (err) {
-    console.log(err);
+    console.log('There was an error: ' + err.message);
   }
 };
 
@@ -250,7 +250,7 @@ const runFromFile = (fileName) => {
     const source = fs.readFileSync(fileName, 'utf8');
     return evaluate(parse(source), createTopScope());
   } catch (err) {
-    console.log(err);
+    console.log('There was an error: ' + err.message);
   }
 };
 

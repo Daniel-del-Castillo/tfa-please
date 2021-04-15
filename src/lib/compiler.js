@@ -139,6 +139,7 @@ const parseExpression = (lexer) => {
     return parseCall(token, lexer);
   }
   if (token.type === 'STRING' || token.type === 'NUMBER') {
+    token.type = 'VALUE';
     return token;
   }
   throw new SyntaxError(
@@ -213,7 +214,7 @@ const parseFromFile = (fileName) => {
     const source = fs.readFileSync(fileName, 'utf8');
     return parse(source);
   } catch (err) {
-    console.log(err);
+    console.log('There was an error: ' + err.message);
   }
 };
 
@@ -231,7 +232,7 @@ const compile = (origin, destination = undefined) => {
     const ast = JSON.stringify(parse(source), null, 2);
     fs.writeFileSync(destination, ast);
   } catch (err) {
-    console.log(err);
+    console.log('There was an error: ' + err.message);
   }
 };
 
