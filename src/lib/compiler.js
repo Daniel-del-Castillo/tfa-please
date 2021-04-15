@@ -59,12 +59,12 @@ class Lexer {
     if (this.isEmpty()) {
       throw new SyntaxError('Unexpected EOF');
     }
-    const match = this.REGEXP_.exec(this.source_);
+    let match = this.REGEXP_.exec(this.source_);
     const result = {};
     if (match == null) {
+      match = /..*?\b|.*$/.exec(this.source_.slice(this.REGEXP_.lastIndex));
       throw new SyntaxError(
-          `Invalid token: ` +
-          `${/..*?\b/.exec(this.source_.slice(this.REGEXP_.lastIndex))[0]} ` +
+          `Invalid token: ${match[0]} ` +
           `at line ${this.line_} and column ${this.column_}`,
       );
     }

@@ -25,18 +25,24 @@ describe('Compiler', () => {
   it('Unexpected token in call', () => {
     should.throw(() => {
       parseFromFile('test/pls/unexpected-token-call.pls');
-    }, /token/);
+    }, /Unexpected token/);
   });
 
   it('Unexpected token in expr', () => {
     should.throw(() => {
       parseFromFile('test/pls/unexpected-token-expr.pls');
-    }, /token/);
+    }, /Unexpected token/);
   });
 
   it('Unexpected EOF', () => {
     should.throw(() => {
       parseFromFile('test/pls/unexpected-eof.pls');
     }, /EOF/);
+  });
+
+  it('Invalid token', () => {
+    should.throw(() => {
+      parseFromFile('test/pls/invalid-token.pls');
+    }, /Invalid token/);
   });
 });
