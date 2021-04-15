@@ -11,8 +11,13 @@ const should = require('chai').should();
 const {interpretFromFile} = require('../src/main.js');
 
 describe('Interpreter', () => {
+  const basePath = 'test/cpls/';
   it('Fixing scope', () => {
-    interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
+    interpretFromFile(basePath + 'fixing-scope.cpls').should.eql(50);
+  });
+
+  it('println', () => {
+    interpretFromFile(basePath + 'println.cpls').should.eql('Hello world');
   });
 });
 

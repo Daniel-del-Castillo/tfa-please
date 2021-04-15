@@ -93,6 +93,9 @@ class Lexer {
       result.name = match.groups[result.type];
     } else if (result.type === 'NUMBER') {
       result.value = Number(match.groups[result.type]);
+    } else if (result.type === 'STRING') {
+      const string = match.groups[result.type];
+      result.value = string.slice(1, string.length - 1);
     } else {
       result.value = match.groups[result.type];
     }

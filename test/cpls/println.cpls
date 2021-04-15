@@ -10,7 +10,7 @@
   "args": [
     {
       "type": "VALUE",
-      "value": "\"hello world\"",
+      "value": "Hello world",
       "offset": 8,
       "line": 1,
       "column": 9

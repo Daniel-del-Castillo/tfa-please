@@ -12,13 +12,9 @@ const {parseFromFile} = require('../src/main.js');
 const fs = require('fs');
 
 describe('Compiler', () => {
-  const runTest = (testName, expectedExtraPath = '') => {
+  const runTest = (testName) => {
     const expected = JSON.parse(
-        fs.readFileSync(
-            'test/cpls/' + expectedExtraPath + testName +
-            '.cpls', {encoding: 'utf8'},
-        ),
-    );
+        fs.readFileSync('test/cpls/' + testName + '.cpls', {encoding: 'utf8'}));
     parseFromFile('test/pls/' + testName + '.pls').should.eql(expected);
   };
 
@@ -27,7 +23,7 @@ describe('Compiler', () => {
   });
 
   it('println', () => {
-    runTest('println', 'errors/');
+    runTest('println');
   });
 });
 
