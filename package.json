@@ -7,7 +7,8 @@
     "please": "src/bin/please.js",
     "please-run": "src/bin/run.js",
     "please-compile": "src/bin/compile.js",
-    "please-interpret": "src/bin/interpret.js"
+    "please-interpret": "src/bin/interpret.js",
+    "please-repl": "src/bin/repl.js"
   },
   "scripts": {
     "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
@@ -39,6 +40,7 @@
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "commander": "^7.2.0"
   }
 }

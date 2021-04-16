@@ -16,10 +16,15 @@ program
     .name('please')
     .description(description)
     .command(
+        'repl',
+        'Run the Please lang repl',
+        {executableFile: 'repl.js', isDefault: true},
+    )
+    .command(
         'run <fileName>',
         'Run a Please lang file',
-        {executableFile: 'run.js', isDefault: true},
-    )
+        {executableFile: 'run.js'},
+    ).alias('r')
     .command(
         'compile <origin>',
         'compile a Please lang file',
