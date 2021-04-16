@@ -21,7 +21,8 @@ Options:
   -h, --help              display help for command
 
 Commands:
-  run <fileName>          Run a Please lang file
+  repl                    Run the Please lang repl
+  run|r <fileName>        Run a Please lang file
   compile|c <origin>      compile a Please lang file
   interpret|i <fileName>  interpret a compiled Please lang file
   help [command]          display help for command
