@@ -75,10 +75,11 @@ rl.on('line', (line) => {
 rl.on('close', topScope.exit);
 
 rl.on('SIGINT', () => {
+  console.log('\nExpression discarded'.red);
   program = '';
   stack = 0;
+  rl.clearLine(process.stdout);
   rl.setPrompt((PROMPT).green);
-  console.log('\nExpression discarded'.red);
   rl.prompt();
 });
 
