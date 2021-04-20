@@ -45,15 +45,9 @@ class Lexer {
     */
     this.offset_ = 0;
     /**
-     * @const {number}
-     * @private
-    */
-    this.parenthesis_count_ = 0;
-    /**
      * @const {RegExp}
-     * @private
     */
-    this.WHITE_ = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
+    this.WHITE = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
     /**
      * @const {RegExp}
      * @private
@@ -73,16 +67,13 @@ class Lexer {
 
   /**
    * A method that returns the next token of the source
-   * @return {Object} The next token
    * @throws Will throw if there are invalid tokens
    */
-  nextToken() {
-    if (this.cachedToken_ != undefined) {
-      return this.cachedToken_;
-    }
+  advanceToken() {
     this.skipSpace_();
     if (this.isEmpty()) {
-      throw new SyntaxError('Unexpected EOF');
+      this.cachedToken_ = {type: 'EOF', line: this.line_, column: this.column_};
+      return;
     }
     let match = this.REGEXP_.exec(this.source_);
     if (match == null) {
@@ -92,14 +83,11 @@ class Lexer {
           `at line ${this.line_} and column ${this.column_}`,
       );
     }
-    const result = this.constructResult_(match);
-    this.checkValidToken_(result.type);
-    result.offset = this.offset_;
-    result.line = this.line_;
-    result.column = this.column_;
-    this.updateAfterMatch_(match.groups[result.type]);
-    this.cachedToken_ = result;
-    return result;
+    this.cachedToken_ = this.constructResult_(match);
+    this.cachedToken_.offset = this.offset_;
+    this.cachedToken_.line = this.line_;
+    this.cachedToken_.column = this.column_;
+    this.updateAfterMatch_(match.groups[this.cachedToken_.type]);
   }
 
   /**
@@ -126,36 +114,11 @@ class Lexer {
   }
 
   /**
-   * A function that check that the token is a valid one
-   *    In particular it allows to avoid ')' and ',' after
-   *    the end of the program
-   * @param {string} type The type of the token
-   * @private
+   * A method that returns the actual token
+   * @return {Object} The actual token
    */
-  checkValidToken_(type) {
-    if (type === 'LEFT_PARENTHESIS') {
-      this.parenthesis_count_++;
-    } else if (type === 'RIGHT_PARENTHESIS') {
-      this.parenthesis_count_--;
-      if (this.parenthesis_count_ < 0) {
-        throw new SyntaxError(
-            `Unmatched parenthesis ` +
-            `at line ${this.line_} and column ${this.column_}`,
-        );
-      }
-    } else if (type === 'COMMA' && this.parenthesis_count_ === 0) {
-      throw new SyntaxError(
-          `Unexpected comma after end of program ` +
-          `at line ${this.line_} and column ${this.column_}`,
-      );
-    }
-  }
-
-  /**
-   * A method that consomes the next token so a new one is available
-   */
-  consumeToken() {
-    this.cachedToken_ = undefined;
+  getLookAhead() {
+    return this.cachedToken_;
   }
 
   /**
@@ -184,7 +147,7 @@ class Lexer {
    * @private
    */
   skipSpace_() {
-    const match = this.WHITE_.exec(this.source_.slice(this.offset_));
+    const match = this.WHITE.exec(this.source_.slice(this.offset_));
     this.REGEXP_.lastIndex += match[0].length;
     this.updateAfterMatch_(match[0]);
   };
@@ -199,13 +162,14 @@ class Lexer {
  * @throws Will throw if there are syntactical errors
  */
 const parseExpression = (lexer) => {
-  const token = lexer.nextToken();
-  lexer.consumeToken();
+  const token = lexer.getLookAhead();
   if (token.type === 'WORD') {
+    lexer.advanceToken();
     return parseCall(token, lexer);
   }
   if (token.type === 'STRING' || token.type === 'NUMBER') {
     token.type = 'VALUE';
+    lexer.advanceToken();
     return token;
   }
   throw new SyntaxError(
@@ -222,11 +186,9 @@ const parseExpression = (lexer) => {
  * @throws Will throw if there are syntactical errors
  */
 const parseCall = (ast, lexer) => {
-  if (lexer.isEmpty()) {
-    return ast;
-  }
-  let token = lexer.nextToken();
-  if (token.type === 'RIGHT_PARENTHESIS' || token.type === 'COMMA') {
+  let token = lexer.getLookAhead();
+  if (token.type === 'EOF' || token.type === 'RIGHT_PARENTHESIS' ||
+     token.type === 'COMMA') {
     return ast;
   }
   if (token.type !== 'LEFT_PARENTHESIS') {
@@ -235,16 +197,19 @@ const parseCall = (ast, lexer) => {
         ` ${token.line} and column ${token.column}, expected '('`,
     );
   }
-  lexer.consumeToken();
+  lexer.advanceToken();
   ast = {type: 'CALL', operator: ast, args: []};
-  token = lexer.nextToken();
+  token = lexer.getLookAhead();
   while (token.type !== 'RIGHT_PARENTHESIS') {
+    if (token.type === 'EOF') {
+      throw new SyntaxError(`Unexpected EOF`);
+    }
     const arg = parseExpression(lexer);
     ast.args.push(arg);
-    token = lexer.nextToken();
+    token = lexer.getLookAhead();
     if (token.type === 'COMMA') {
-      lexer.consumeToken();
-      token = lexer.nextToken();
+      lexer.advanceToken();
+      token = lexer.getLookAhead();
     } else if (token.type !== 'RIGHT_PARENTHESIS') {
       throw new SyntaxError(
           `Expected ',' or ')' at line ${token.line} ` +
@@ -252,7 +217,7 @@ const parseCall = (ast, lexer) => {
       );
     }
   }
-  lexer.consumeToken();
+  lexer.advanceToken();
   return parseCall(ast, lexer);
 };
 
@@ -264,8 +229,9 @@ const parseCall = (ast, lexer) => {
  */
 const parse = (program) => {
   const lexer = new Lexer(program);
+  lexer.advanceToken();
   const ast = parseExpression(lexer);
-  if (!lexer.isEmpty()) {
+  if (lexer.getLookAhead().type !== 'EOF') {
     throw new SyntaxError('Unexpected text after program');
   }
   return ast;

@@ -75,18 +75,6 @@ describe('Compiler errors', () => {
     }, /Expected ',' or '\)'/);
   });
 
-  it('Unexpected comma after program', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'comma-after-end.pls');
-    }, /Unexpected comma/);
-  });
-
-  it('Unmatched parenthesis', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'unmatched-parenthesis.pls');
-    }, /Unmatched parenthesis/);
-  });
-
   it('Unexpected text', () => {
     should.throw(() => {
       parseFromFile(basePath + 'unexpected-text.pls');

@@ -78,6 +78,7 @@ rl.on('SIGINT', () => {
   console.log('\nExpression discarded'.red);
   program = '';
   stack = 0;
+  // @ts-ignore
   rl.clearLine(process.stdout);
   rl.setPrompt((PROMPT).green);
   rl.prompt();
