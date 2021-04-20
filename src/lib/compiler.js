@@ -11,6 +11,11 @@
 const fs = require('fs');
 
 /**
+ * The defition of whitespace in the Please language
+ */
+const WHITE = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
+
+/**
  * A lexer class that takes care of the lexical analysis
  */
 class Lexer {
@@ -47,7 +52,7 @@ class Lexer {
     /**
      * @const {RegExp}
     */
-    this.WHITE = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
+    this.WHITE = WHITE;
     /**
      * @const {RegExp}
      * @private
@@ -266,4 +271,4 @@ const compile = (origin, destination = undefined) => {
 };
 
 module.exports =
-    {parse, parseCall, parseExpression, parseFromFile, compile, Lexer};
+    {parse, parseCall, parseExpression, parseFromFile, compile, Lexer, WHITE};

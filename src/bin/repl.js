@@ -13,7 +13,8 @@ const readline = require('readline');
 const {parse, evaluate, createTopScope, Lexer, keywords} =
     require('../main.js');
 require('colors');
-const ALL_WHITE = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*$/;
+const {WHITE} = require('../lib/compiler');
+const ALL_WHITE = new RegExp(WHITE.source + '$');
 const PROMPT = '>';
 
 const topScope = createTopScope();
@@ -21,12 +22,16 @@ const topScope = createTopScope();
 let program = '';
 let stack = 0;
 const completer = (line) => {
+  if (ALL_WHITE.test(line)) {
+    return [];
+  }
   const lexer = new Lexer(line);
   const tokens = [];
-  while (true) {
+  lexer.advanceToken();
+  while (lexer.getLookAhead().type !== 'EOF') {
     try {
-      tokens.push(lexer.nextToken());
-      lexer.consumeToken();
+      tokens.push(lexer.getLookAhead());
+      lexer.advanceToken();
     } catch (err) {
       break;
     }
