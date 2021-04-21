@@ -34,7 +34,7 @@
         <ul></ul>
     </div>
     
-    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-PleaseLangCompiler.html">PleaseLangCompiler</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~compile">compile</a></li><li><a href="module-PleaseLangCompiler.html#~parse">parse</a></li><li><a href="module-PleaseLangCompiler.html#~parseCall">parseCall</a></li><li><a href="module-PleaseLangCompiler.html#~parseExpression">parseExpression</a></li><li><a href="module-PleaseLangCompiler.html#~parseFromFile">parseFromFile</a></li></ul></div></li><li><a href="module-PleaseLangInterpreter.html">PleaseLangInterpreter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangInterpreter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~keywords">keywords</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~createTopScope">createTopScope</a></li><li><a href="module-PleaseLangInterpreter.html#~evaluate">evaluate</a></li><li><a href="module-PleaseLangInterpreter.html#~interpret">interpret</a></li><li><a href="module-PleaseLangInterpreter.html#~interpretFromFile">interpretFromFile</a></li><li><a href="module-PleaseLangInterpreter.html#~run">run</a></li><li><a href="module-PleaseLangInterpreter.html#~runFromFile">runFromFile</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-PleaseLangCompiler-Lexer.html">Lexer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler~Lexer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#consumeToken">consumeToken</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#isEmpty">isEmpty</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#nextToken">nextToken</a></li></ul></div></li></ul></div>
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-PleaseLangCompiler.html">PleaseLangCompiler</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~WHITE">WHITE</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~compile">compile</a></li><li><a href="module-PleaseLangCompiler.html#~parse">parse</a></li><li><a href="module-PleaseLangCompiler.html#~parseCall">parseCall</a></li><li><a href="module-PleaseLangCompiler.html#~parseExpression">parseExpression</a></li><li><a href="module-PleaseLangCompiler.html#~parseFromFile">parseFromFile</a></li></ul></div></li><li><a href="module-PleaseLangInterpreter.html">PleaseLangInterpreter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangInterpreter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~keywords">keywords</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~createTopScope">createTopScope</a></li><li><a href="module-PleaseLangInterpreter.html#~evaluate">evaluate</a></li><li><a href="module-PleaseLangInterpreter.html#~interpret">interpret</a></li><li><a href="module-PleaseLangInterpreter.html#~interpretFromFile">interpretFromFile</a></li><li><a href="module-PleaseLangInterpreter.html#~run">run</a></li><li><a href="module-PleaseLangInterpreter.html#~runFromFile">runFromFile</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-PleaseLangCompiler-Lexer.html">Lexer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler~Lexer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#WHITE">WHITE</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#advanceToken">advanceToken</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#getLookAhead">getLookAhead</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#isEmpty">isEmpty</a></li></ul></div></li></ul></div>
 </nav>
 <div id="resizer"></div>
 
@@ -111,7 +111,7 @@ keywords.while = (args, scope) => {
  * @param {Object} scope The scope
  * @return {*} The return value of the last executed expression
  */
-keywords.run = (args, scope) => {
+keywords.run = keywords.do = (args, scope) => {
   let value = false;
   args.forEach((arg) => {
     value = evaluate(arg, scope);
@@ -126,7 +126,7 @@ keywords.run = (args, scope) => {
  * @return {*} The value of the binding
  * @throws Will throw if there are syntactical errors
  */
-keywords.let = (args, scope) => {
+keywords.let = keywords.def = keywords[':='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('let needs two arguments');
   }
@@ -148,7 +148,7 @@ keywords.let = (args, scope) => {
  * @return {function} The created function
  * @throws Will throw if there are syntactical errors
  */
-keywords.fn = (args, scope) => {
+keywords.fn = keywords.function = keywords['->'] = (args, scope) => {
   if (!args.length) {
     throw new SyntaxError('Functions need a body');
   }
@@ -180,7 +180,7 @@ keywords.fn = (args, scope) => {
  * @return {function} The value of the new variable
  * @throws Will throw if there are syntactical or semantical errors
  */
-keywords.assign = (args, scope) => {
+keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Assign needs two arguments');
   }
@@ -250,6 +250,15 @@ const createTopScope = () => {
   topScope.println = (value) => {
     console.log(value);
     return value;
+  };
+  topScope.arr = topScope.array = (...args) => {
+    return args;
+  };
+  topScope.len = topScope.length = (array) => {
+    return array.length;
+  };
+  topScope.element = (array, n) => {
+    return array[n];
   };
   return topScope;
 };

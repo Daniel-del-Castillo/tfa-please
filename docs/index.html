@@ -32,7 +32,7 @@
         <ul></ul>
     </div>
     
-    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-PleaseLangCompiler.html">PleaseLangCompiler</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~compile">compile</a></li><li><a href="module-PleaseLangCompiler.html#~parse">parse</a></li><li><a href="module-PleaseLangCompiler.html#~parseCall">parseCall</a></li><li><a href="module-PleaseLangCompiler.html#~parseExpression">parseExpression</a></li><li><a href="module-PleaseLangCompiler.html#~parseFromFile">parseFromFile</a></li></ul></div></li><li><a href="module-PleaseLangInterpreter.html">PleaseLangInterpreter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangInterpreter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~keywords">keywords</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~createTopScope">createTopScope</a></li><li><a href="module-PleaseLangInterpreter.html#~evaluate">evaluate</a></li><li><a href="module-PleaseLangInterpreter.html#~interpret">interpret</a></li><li><a href="module-PleaseLangInterpreter.html#~interpretFromFile">interpretFromFile</a></li><li><a href="module-PleaseLangInterpreter.html#~run">run</a></li><li><a href="module-PleaseLangInterpreter.html#~runFromFile">runFromFile</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-PleaseLangCompiler-Lexer.html">Lexer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler~Lexer_sub"><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#consumeToken">consumeToken</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#isEmpty">isEmpty</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#nextToken">nextToken</a></li></ul></div></li></ul></div>
+    <div class="lnb-api hidden"><h3>Modules</h3><ul><li><a href="module-PleaseLangCompiler.html">PleaseLangCompiler</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~WHITE">WHITE</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler.html#~compile">compile</a></li><li><a href="module-PleaseLangCompiler.html#~parse">parse</a></li><li><a href="module-PleaseLangCompiler.html#~parseCall">parseCall</a></li><li><a href="module-PleaseLangCompiler.html#~parseExpression">parseExpression</a></li><li><a href="module-PleaseLangCompiler.html#~parseFromFile">parseFromFile</a></li></ul></div></li><li><a href="module-PleaseLangInterpreter.html">PleaseLangInterpreter</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangInterpreter_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~keywords">keywords</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangInterpreter.html#~createTopScope">createTopScope</a></li><li><a href="module-PleaseLangInterpreter.html#~evaluate">evaluate</a></li><li><a href="module-PleaseLangInterpreter.html#~interpret">interpret</a></li><li><a href="module-PleaseLangInterpreter.html#~interpretFromFile">interpretFromFile</a></li><li><a href="module-PleaseLangInterpreter.html#~run">run</a></li><li><a href="module-PleaseLangInterpreter.html#~runFromFile">runFromFile</a></li></ul></div></li></ul></div><div class="lnb-api hidden"><h3>Classes</h3><ul><li><a href="module-PleaseLangCompiler-Lexer.html">Lexer</a><button type="button" class="hidden toggle-subnav btn btn-link">  <span class="glyphicon glyphicon-plus"></span></button><div class="hidden" id="module:PleaseLangCompiler~Lexer_sub"><div class="member-type">Members</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#WHITE">WHITE</a></li></ul><div class="member-type">Methods</div><ul class="inner"><li><a href="module-PleaseLangCompiler-Lexer.html#advanceToken">advanceToken</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#getLookAhead">getLookAhead</a></li><li><a href="module-PleaseLangCompiler-Lexer.html#isEmpty">isEmpty</a></li></ul></div></li></ul></div>
 </nav>
 <div id="resizer"></div>
 
@@ -76,7 +76,8 @@ Options:
   -h, --help              display help for command
 
 Commands:
-  run &lt;fileName>          Run a Please lang file
+  repl                    Run the Please lang repl
+  run|r &lt;fileName>        Run a Please lang file
   compile|c &lt;origin>      compile a Please lang file
   interpret|i &lt;fileName>  interpret a compiled Please lang file
   help [command]          display help for command
@@ -99,7 +100,9 @@ Commands:
   compile,
 };
 </code></pre>
-<p>You can check what each of them do in the documentation.</p></article>
+<p>You can check what each of them does in the documentation.</p>
+<h2>Documentation</h2>
+<p>The code is extensively documented. The generated documentation can be consulted <a href="https://ull-esit-pl-2021.github.io/please-Daniel-del-Castillo/">here</a></p></article>
     </section>
 
 
