@@ -50,6 +50,10 @@ describe('Interpreter', () => {
     runFromFile(basePath + 'array.pls');
     result.should.eql([[1, 4], 3, 3]);
   });
+  it('array-sum', () => {
+    runFromFile(basePath + 'array-sum.pls');
+    result.should.eql(['sum(array(1, 2, 3)) := 6']);
+  });
 });
 
 describe('Interpreter errors', () => {

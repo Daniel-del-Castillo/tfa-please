@@ -26,6 +26,7 @@ describe('Compiler', () => {
     'if-else',
     'false-if',
     'array',
+    'array-sum',
   ];
 
   testList.forEach((test) => {

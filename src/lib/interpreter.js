@@ -78,7 +78,7 @@ keywords.run = keywords.do = (args, scope) => {
  * @return {*} The value of the binding
  * @throws Will throw if there are syntactical errors
  */
-keywords.let = keywords.def = (args, scope) => {
+keywords.let = keywords.def = keywords[':='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('let needs two arguments');
   }
@@ -100,7 +100,7 @@ keywords.let = keywords.def = (args, scope) => {
  * @return {function} The created function
  * @throws Will throw if there are syntactical errors
  */
-keywords.fn = keywords.function = (args, scope) => {
+keywords.fn = keywords.function = keywords['->'] = (args, scope) => {
   if (!args.length) {
     throw new SyntaxError('Functions need a body');
   }
@@ -132,7 +132,7 @@ keywords.fn = keywords.function = (args, scope) => {
  * @return {function} The value of the new variable
  * @throws Will throw if there are syntactical or semantical errors
  */
-keywords.assign = keywords.set = (args, scope) => {
+keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Assign needs two arguments');
   }
