@@ -18,28 +18,19 @@ describe('Compiler', () => {
     parseFromFile('test/pls/' + testName + '.pls').should.eql(expected);
   };
 
-  it('Fixing scope', () => {
-    runTest('fixing-scope');
-  });
+  const testList = [
+    'fixing-scope',
+    'println',
+    'while',
+    'if',
+    'if-else',
+    'false-if',
+  ];
 
-  it('println', () => {
-    runTest('println');
-  });
-
-  it('while', () => {
-    runTest('while');
-  });
-
-  it('if', () => {
-    runTest('if');
-  });
-
-  it('if else', () => {
-    runTest('if-else');
-  });
-
-  it('false if', () => {
-    runTest('false-if');
+  testList.forEach((test) => {
+    it(test, () => {
+      runTest(test);
+    });
   });
 });
 
