@@ -35,6 +35,10 @@ describe('Interpreter', () => {
   it('false if', () => {
     interpretFromFile(basePath + 'false-if.cpls').should.eql(false);
   });
+
+  it('array', () => {
+    interpretFromFile(basePath + 'array.cpls').should.eql(3);
+  });
 });
 
 describe('Interpreter errors', () => {

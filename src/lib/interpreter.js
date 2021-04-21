@@ -63,7 +63,7 @@ keywords.while = (args, scope) => {
  * @param {Object} scope The scope
  * @return {*} The return value of the last executed expression
  */
-keywords.run = (args, scope) => {
+keywords.run = keywords.do = (args, scope) => {
   let value = false;
   args.forEach((arg) => {
     value = evaluate(arg, scope);
@@ -78,7 +78,7 @@ keywords.run = (args, scope) => {
  * @return {*} The value of the binding
  * @throws Will throw if there are syntactical errors
  */
-keywords.let = (args, scope) => {
+keywords.let = keywords.def = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('let needs two arguments');
   }
@@ -100,7 +100,7 @@ keywords.let = (args, scope) => {
  * @return {function} The created function
  * @throws Will throw if there are syntactical errors
  */
-keywords.fn = (args, scope) => {
+keywords.fn = keywords.function = (args, scope) => {
   if (!args.length) {
     throw new SyntaxError('Functions need a body');
   }
@@ -132,7 +132,7 @@ keywords.fn = (args, scope) => {
  * @return {function} The value of the new variable
  * @throws Will throw if there are syntactical or semantical errors
  */
-keywords.assign = (args, scope) => {
+keywords.assign = keywords.set = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Assign needs two arguments');
   }
@@ -202,6 +202,15 @@ const createTopScope = () => {
   topScope.println = (value) => {
     console.log(value);
     return value;
+  };
+  topScope.arr = topScope.array = (...args) => {
+    return args;
+  };
+  topScope.len = topScope.length = (array) => {
+    return array.length;
+  };
+  topScope.element = (array, n) => {
+    return array[n];
   };
   return topScope;
 };

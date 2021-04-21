@@ -25,6 +25,7 @@ describe('Compiler', () => {
     'if',
     'if-else',
     'false-if',
+    'array',
   ];
 
   testList.forEach((test) => {
