@@ -9,15 +9,25 @@
 
 const should = require('chai').should();
 const {runFromFile} = require('../src/main.js');
+const sinon = require('sinon');
 
 describe('Interpreter', () => {
   const basePath = 'test/pls/';
+  const result = [];
+  const logStub = sinon.stub(console, 'log');
+  logStub.callsFake((arg) => result.push(arg));
+
+  afterEach(() => {
+    result.splice(0, result.length);
+  });
+
   it('Fixing scope', () => {
     runFromFile(basePath + 'fixing-scope.pls').should.eql(50);
   });
 
   it('println', () => {
-    runFromFile(basePath + 'println.pls').should.eql('Hello world');
+    runFromFile(basePath + 'println.pls');
+    result.should.eql(['Hello world']);
   });
 
   it('while', () => {
@@ -37,7 +47,8 @@ describe('Interpreter', () => {
   });
 
   it('array', () => {
-    runFromFile(basePath + 'array.pls').should.eql(3);
+    runFromFile(basePath + 'array.pls');
+    result.should.eql([[1, 4], 3, 3]);
   });
 });
 
