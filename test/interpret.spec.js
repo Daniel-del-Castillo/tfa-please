@@ -8,117 +8,111 @@
 'use strict';
 
 const should = require('chai').should();
-const {interpretFromFile} = require('../src/main.js');
+const {runFromFile} = require('../src/main.js');
 
 describe('Interpreter', () => {
-  const basePath = 'test/cpls/';
+  const basePath = 'test/pls/';
   it('Fixing scope', () => {
-    interpretFromFile(basePath + 'fixing-scope.cpls').should.eql(50);
+    runFromFile(basePath + 'fixing-scope.pls').should.eql(50);
   });
 
   it('println', () => {
-    interpretFromFile(basePath + 'println.cpls').should.eql('Hello world');
+    runFromFile(basePath + 'println.pls').should.eql('Hello world');
   });
 
   it('while', () => {
-    interpretFromFile(basePath + 'while.cpls').should.eql(false);
+    runFromFile(basePath + 'while.pls').should.eql(false);
   });
 
   it('if', () => {
-    interpretFromFile(basePath + 'if.cpls').should.eql(5);
+    runFromFile(basePath + 'if.pls').should.eql(5);
   });
 
   it('if else', () => {
-    interpretFromFile(basePath + 'if-else.cpls').should.eql(10);
+    runFromFile(basePath + 'if-else.pls').should.eql(10);
   });
 
   it('false if', () => {
-    interpretFromFile(basePath + 'false-if.cpls').should.eql(false);
+    runFromFile(basePath + 'false-if.pls').should.eql(false);
   });
 
   it('array', () => {
-    interpretFromFile(basePath + 'array.cpls').should.eql(3);
+    runFromFile(basePath + 'array.pls').should.eql(3);
   });
 });
 
 describe('Interpreter errors', () => {
-  const basePath = 'test/cpls/errors/';
+  const basePath = 'test/pls/interpreter-errors/';
 
   it('Tried to assign to non existent variable', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'assign-non-existent-var.cpls');
+      runFromFile(basePath + 'assign-non-existent-var.pls');
     }, /Tried to assign/);
   });
 
   it('Tried to call non function', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'call-non-function.cpls');
+      runFromFile(basePath + 'call-non-function.pls');
     }, /Calling a non-function/);
   });
 
   it('Undefined binding', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'undefined-binding.cpls');
+      runFromFile(basePath + 'undefined-binding.pls');
     }, /Undefined binding/);
-  });
-
-  it('Assign to non existent var', () => {
-    should.throw(() => {
-      interpretFromFile(basePath + 'assign-non-existent.cpls');
-    }, /Tried to assign to a non existent var/);
   });
 
   it('First argument to assign must be a variable name', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'assign-first-arg.cpls');
+      runFromFile(basePath + 'assign-first-arg.pls');
     }, /The first argument to assign/);
   });
 
   it('Assign needs two arguments', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'assign-two-args.cpls');
+      runFromFile(basePath + 'assign-two-args.pls');
     }, /Assign needs two arg/);
   });
 
   it('Functions won\'t accept a different number of args', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'fn-wrong-arg-numbers.cpls');
+      runFromFile(basePath + 'fn-wrong-arg-numbers.pls');
     }, /Wrong number of arg/);
   });
 
   it('Parameter names must be words', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'parameter-names.cpls');
+      runFromFile(basePath + 'parameter-names.pls');
     }, /Parameter names/);
   });
 
   it('Functions need bodies', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'fn-needs-body.cpls');
+      runFromFile(basePath + 'fn-needs-body.pls');
     }, /Functions need a body/);
   });
 
   it('The first argument to let must be a valid variable name', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'first-let-arg.cpls');
+      runFromFile(basePath + 'first-let-arg.pls');
     }, /The first argument to let/);
   });
 
   it('let needs two arguments', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'let-two-args.cpls');
+      runFromFile(basePath + 'let-two-args.pls');
     }, /let needs two arguments/);
   });
 
   it('Wrong number of args for while', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'while-args-number.cpls');
+      runFromFile(basePath + 'while-args-number.pls');
     }, /Wrong number of arg/);
   });
 
   it('Wrong number of args for if', () => {
     should.throw(() => {
-      interpretFromFile(basePath + 'if-args-number.cpls');
+      runFromFile(basePath + 'if-args-number.pls');
     }, /Wrong number of arg/);
   });
 });

@@ -8,12 +8,12 @@
 'use strict';
 
 require('chai').should();
-const {runFromFile, compile} = require('../src/main.js');
+const {interpretFromFile, compile} = require('../src/main.js');
 const fs = require('fs');
 
 describe('Miscellanous', () => {
   it('Run from file', () => {
-    runFromFile('test/pls/fixing-scope.pls').should.eql(50);
+    interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
   });
   it('Compile', () => {
     compile('test/pls/fixing-scope.pls');

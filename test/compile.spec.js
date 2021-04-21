@@ -36,7 +36,7 @@ describe('Compiler', () => {
 });
 
 describe('Compiler errors', () => {
-  const basePath = 'test/pls/errors/';
+  const basePath = 'test/pls/compiler-errors/';
   it('Unexpected token in call', () => {
     should.throw(() => {
       parseFromFile(basePath + 'unexpected-token-call.pls');
