@@ -13,10 +13,10 @@ const {
   interpretFromFile,
   run,
   runFromFile,
-  createTopScope,
+  topScope,
   keywords,
   evaluate,
-} = require('./lib/interpreter.js');
+} = require('./lib/interpreter/interpreter.js');
 
 const {
   parse,
@@ -32,7 +32,7 @@ module.exports = {
   interpretFromFile,
   run,
   runFromFile,
-  createTopScope,
+  topScope,
   keywords,
   evaluate,
   parse,

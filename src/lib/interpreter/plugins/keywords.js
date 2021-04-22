@@ -1,20 +1,14 @@
 // @ts-check
 /**
- * @description The file with the code to interpret the Please lang
+ * @description The file with the keywords of the Please lang
  * @author Daniel del Castillo de la Rosa <alu0101225548@ull.edu.es>
- * @since 8/04/2021
- * @module PleaseLangInterpreter
+ * @since 22/04/2021
+ * @module PleaseLangKeywords
  */
 
 'use strict';
 
-const fs = require('fs');
-const {parse} = require('./compiler.js');
-
-/**
- * An object with the different keywords of the language
- */
-const keywords = Object.create(null);
+const {evaluate, keywords} = require('../evaluate.js');
 
 /**
  * The if function
@@ -156,115 +150,4 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   );
 };
 
-/**
- * A function that evaluates an expression
- * @param {Object} tree The expression as a JSON AST
- * @param {Object} scope The scope
- * @return {*} The value of the evaluated expression
- * @throws Will throw if there are semantical errors
- */
-const evaluate = (tree, scope) => {
-  if (tree.type === 'VALUE') {
-    return tree.value;
-  } else if (tree.type === 'WORD') {
-    if (tree.name in scope) {
-      return scope[tree.name];
-    } else {
-      throw new ReferenceError(`Undefined binding: ${tree.name}`);
-    }
-  } else if (tree.type === 'CALL') {
-    const {operator, args} = tree;
-    if (operator.type === 'WORD' &&
-        operator.name in keywords) {
-      return keywords[operator.name](tree.args, scope);
-    } else {
-      const op = evaluate(operator, scope);
-      if (typeof op === 'function') {
-        return op(...args.map((arg) => evaluate(arg, scope)));
-      } else {
-        throw new TypeError('Calling a non-function.');
-      }
-    }
-  }
-};
-
-/**
- * A function that creates the top scope
- * @return {Object} The value of the initial scope
- */
-const createTopScope = () => {
-  const topScope = Object.create(null);
-  topScope.true = true;
-  topScope.false = false;
-  ['+', '-', '*', '/', '==', '!=', '<', '>', '&&', '||'].forEach((op) => {
-    topScope[op] = Function('a, b', `return a ${op} b;`);
-  });
-  topScope.println = (value) => {
-    console.log(value);
-    return value;
-  };
-  topScope.arr = topScope.array = (...args) => {
-    return args;
-  };
-  topScope.len = topScope.length = (array) => {
-    return array.length;
-  };
-  topScope.element = (array, n) => {
-    return array[n];
-  };
-  return topScope;
-};
-
-/**
- * A function that interprets a Please JSON AST
- * @param {Object} program The AST of the program to interpret
- * @return {*} The return value of the program
- * @throws Will throw if there are syntactical errors
- */
-const interpret = (program) => {
-  return evaluate(program, createTopScope());
-};
-
-/**
- * A function that interprets a compiled Please file
- * @param {string} fileName The name of the file
- * @return {*} The return value of the program
- * @throws Will throw if it isn't possible to read the file or if there
- *     are syntactical errors
- */
-const interpretFromFile = (fileName) => {
-  const source = fs.readFileSync(fileName, 'utf8');
-  return interpret(JSON.parse(source));
-};
-
-/**
- * Parses and executes a Please program
- * @param {Object} program The Please program to run
- * @return {*} The return value of the program
- * @throws Will throw if there are errors in the program
- */
-const run = (program) => {
-  return interpret(parse(program));
-};
-
-/**
- * A function that interprets a Please file
- * @param {string} fileName The name of the file
- * @return {*} The return value of the program
- * @throws Will throw if it isn't possible to read the file or if there
- *     are errors in the program
- */
-const runFromFile = (fileName) => {
-  const source = fs.readFileSync(fileName, 'utf8');
-  return run(source);
-};
-
-module.exports = {
-  interpret,
-  interpretFromFile,
-  run,
-  runFromFile,
-  createTopScope,
-  keywords,
-  evaluate,
-};
+module.exports = {keywords};
