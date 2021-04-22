@@ -14,11 +14,16 @@ const sinon = require('sinon');
 describe('Interpreter', () => {
   const basePath = 'test/pls/';
   const result = [];
-  const logStub = sinon.stub(console, 'log');
-  logStub.callsFake((arg) => result.push(arg));
+  let logStub;
+
+  beforeEach(() => {
+    logStub = sinon.stub(console, 'log');
+    logStub.callsFake((arg) => result.push(arg));
+  });
 
   afterEach(() => {
     result.splice(0, result.length);
+    logStub.restore();
   });
 
   it('Fixing scope', () => {
