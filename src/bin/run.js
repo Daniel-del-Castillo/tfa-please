@@ -15,12 +15,20 @@ const {runFromFile} = require('../main.js');
 program
     .version(version)
     .arguments('<fileName>')
+    .option(
+        '-p, --plugin <plugins...>', 'Paths for the plugin files',
+    )
     .description(
         'Run a Please lang file',
         {fileName: 'The path of the file to execute'},
     )
-    .action((fileName) => {
+    .action((fileName, options) => {
       try {
+        if (options.plugin != undefined) {
+          options.plugin.forEach((plugin) => {
+            require(process.cwd() + '/' + plugin);
+          });
+        }
         runFromFile(fileName);
       } catch (err) {
         console.log('There was an error: ' + err.message);

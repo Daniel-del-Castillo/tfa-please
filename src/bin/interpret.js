@@ -15,12 +15,20 @@ const {interpretFromFile} = require('../main.js');
 program
     .version(version)
     .arguments('<fileName>')
+    .option(
+        '-p, --plugin <plugins...>', 'Paths for the plugin files',
+    )
     .description(
         'Interpret a Please lang file',
         {fileName: 'The path of the file to interpret'},
     )
-    .action((fileName) => {
+    .action((fileName, options) => {
       try {
+        if (options.plugin != undefined) {
+          options.plugin.forEach((plugin) => {
+            require(process.cwd() + plugin);
+          });
+        }
         interpretFromFile(fileName);
       } catch (err) {
         console.log('There was an error: ' + err.message);

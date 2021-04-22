@@ -7,10 +7,11 @@
 
 'use strict';
 
-require('chai').should();
-const {evaluate, parse} = require('../src/main.js');
+const should = require('chai').should();
+const {evaluate, parse, topScope} = require('../src/main.js');
 const {topScopeREPL} = require('../src/lib/interpreter/plugins/repl.js');
 const sinon = require('sinon');
+require('../src/lib/interpreter/plugins/require.js');
 
 describe('REPL', () => {
   const result = [];
@@ -39,5 +40,31 @@ describe('REPL', () => {
     result.should.eql([
       '\nPlease come back soon!'.blue,
     ]);
+  });
+});
+
+describe('require', () => {
+  const result = [];
+  let logStub;
+
+  beforeEach(() => {
+    logStub = sinon.stub(console, 'log');
+    logStub.callsFake((arg) => result.push(arg));
+  });
+
+  afterEach(() => {
+    result.splice(0, result.length);
+    logStub.restore();
+  });
+
+  it('require', () => {
+    const require = 'require("./test/pls/println.pls")';
+    evaluate(parse('do(' + require + ', ' + require + ')'), topScope);
+    result.should.eql(['Hello world']);
+  });
+
+  it('invalid require', () => {
+    should.throw(() => evaluate(parse('require(2)'), topScope),
+        /Invalid argument/);
   });
 });
