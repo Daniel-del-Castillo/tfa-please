@@ -63,10 +63,8 @@ class Lexer {
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
           /(?<WORD>[^\s(){},"'\\]+)/,
           /(?<COMMA>,)/,
-          /(?<LEFT_PARENTHESIS>\()/,
-          /(?<RIGHT_PARENTHESIS>\))/,
-          /(?<LEFT_CURLY_BRACE>\{)/,
-          /(?<RIGHT_CURLY_BRACE>\})/,
+          /(?<LEFT_PARENTHESIS>[({])/,
+          /(?<RIGHT_PARENTHESIS>[)}])/,
         ].map((regexp) => regexp.source).join('|'),
         'y',
     );
@@ -198,19 +196,17 @@ const parseCall = (ast, lexer) => {
      token.type === 'COMMA' || token.type === 'RIGHT_CURLY_BRACE') {
     return ast;
   }
-  if (token.type !== 'LEFT_PARENTHESIS' && token.type !== 'LEFT_CURLY_BRACE') {
+  if (token.type !== 'LEFT_PARENTHESIS') {
     throw new SyntaxError(
         `Unexpected token: ${token.value} at line` +
         ` ${token.line} and column ${token.column}, expected '(' or '{'`,
     );
   }
-  const finisher = token.type === 'LEFT_PARENTHESIS' ?
-      {type: 'RIGHT_PARENTHESIS', value: ')'} :
-       {type: 'RIGHT_CURLY_BRACE', value: '}'};
+  const finisher = token.value === '(' ? ')' : '}';
   lexer.advanceToken();
   ast = {type: 'CALL', operator: ast, args: []};
   token = lexer.getLookAhead();
-  while (token.type !== finisher.type) {
+  while (token.value !== finisher) {
     if (token.type === 'EOF') {
       throw new SyntaxError(`Unexpected EOF`);
     }
@@ -220,9 +216,9 @@ const parseCall = (ast, lexer) => {
     if (token.type === 'COMMA') {
       lexer.advanceToken();
       token = lexer.getLookAhead();
-    } else if (token.type !== finisher.type) {
+    } else if (token.value !== finisher) {
       throw new SyntaxError(
-          `Expected ',' or '${finisher.value}' at line ${token.line} ` +
+          `Expected ',' or '${finisher}' at line ${token.line} ` +
           `and column ${token.column}`,
       );
     }
