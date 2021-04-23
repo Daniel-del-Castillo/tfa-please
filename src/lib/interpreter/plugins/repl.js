@@ -10,16 +10,13 @@
 'use strict';
 
 const {topScope} = require('./top-scope.js');
-const topScopeREPL = Object.create(topScope);
 require('colors');
 
-topScopeREPL.exit = () => {
+topScope.exit = () => {
   console.log('\nPlease come back soon!'.blue);
 };
 
-topScopeREPL.help = () => {
+topScope.help = () => {
   console.log('help()'.blue + ' shows this message'.green);
   console.log('exit() or CTRL-D'.blue + ' exits the REPL'.green);
 };
-
-module.exports = {topScopeREPL};

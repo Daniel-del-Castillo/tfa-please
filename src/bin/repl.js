@@ -10,13 +10,13 @@
 
 const {version} = require('../../package.json');
 const readline = require('readline');
-const {parse, evaluate, Lexer, keywords} = require('../main.js');
+const {parse, evaluate, Lexer, keywords, topScope} = require('../main.js');
 require('colors');
-const {topScopeREPL} = require('../lib/interpreter/plugins/repl.js');
+require('../lib/interpreter/plugins/repl.js');
 const {WHITE} = require('../lib/compiler');
 const ALL_WHITE = new RegExp(WHITE.source + '$');
 const PROMPT = '>';
-
+const scope = Object.create(topScope);
 
 let program = '';
 let stack = 0;
@@ -36,7 +36,7 @@ const completer = (line) => {
     }
   }
   const word = tokens.filter((token) => token.type === 'WORD').pop().name;
-  const allWords = Object.keys(topScopeREPL).concat(Object.keys(keywords));
+  const allWords = Object.keys(topScope).concat(Object.keys(keywords));
   const hits = allWords.filter((w) => w.startsWith(word));
   return [hits, word];
 };
@@ -55,7 +55,7 @@ rl.on('line', (line) => {
     stack = 0;
   } else if (stack === 0 && !ALL_WHITE.test(program)) {
     try {
-      const r = evaluate(parse(program), Object.create(topScopeREPL));
+      const r = evaluate(parse(program), scope);
       console.log(r ? r.toString().blue : 'No value returned'.blue);
     } catch (err) {
       console.log(err.toString().red);
@@ -67,7 +67,7 @@ rl.on('line', (line) => {
   rl.prompt();
 });
 
-rl.on('close', topScopeREPL.exit);
+rl.on('close', topScope.exit);
 
 rl.on('SIGINT', () => {
   console.log('\nExpression discarded'.red);

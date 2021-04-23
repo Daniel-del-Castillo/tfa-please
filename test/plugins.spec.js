@@ -9,7 +9,7 @@
 
 const should = require('chai').should();
 const {evaluate, parse, topScope} = require('../src/main.js');
-const {topScopeREPL} = require('../src/lib/interpreter/plugins/repl.js');
+require('../src/lib/interpreter/plugins/repl.js');
 const sinon = require('sinon');
 require('../src/lib/interpreter/plugins/require.js');
 
@@ -28,7 +28,7 @@ describe('REPL', () => {
   });
 
   it('help', () => {
-    evaluate(parse('help()'), topScopeREPL);
+    evaluate(parse('help()'), topScope);
     result.should.eql([
       'help()'.blue + ' shows this message'.green,
       'exit() or CTRL-D'.blue + ' exits the REPL'.green,
@@ -36,7 +36,7 @@ describe('REPL', () => {
   });
 
   it('exit', () => {
-    evaluate(parse('exit()'), topScopeREPL);
+    evaluate(parse('exit()'), topScope);
     result.should.eql([
       '\nPlease come back soon!'.blue,
     ]);

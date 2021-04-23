@@ -14,7 +14,6 @@ const {
   run,
   runFromFile,
   topScope,
-  topScopeREPL,
   keywords,
   evaluate,
 } = require('./lib/interpreter/interpreter.js');
@@ -34,7 +33,6 @@ module.exports = {
   run,
   runFromFile,
   topScope,
-  topScopeREPL,
   keywords,
   evaluate,
   parse,

@@ -37,7 +37,6 @@ module.exports = {
   run,
   runFromFile,
   topScope,
-  topScopeREPL,
   keywords,
   evaluate,
   parse,
