@@ -59,7 +59,8 @@ The Please language has severals features:
 * If else constructs
 * Functions (closure-like)
 * Arrays
-There examples inside the test folder for each of this ones
+
+There are examples inside the test folder for each of this ones
 
 ## Contribution
 You can contribute to the code if you want! Just keep in mind this isn't a serious project and that your code will be under release to the public domain, because this project uses [Unlicense](https://unlicense.org/)
