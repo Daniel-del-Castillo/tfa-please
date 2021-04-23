@@ -11,6 +11,7 @@
 const {program} = require('commander');
 const {version} = require('../../package.json');
 const {runFromFile} = require('../main.js');
+const path = require('path');
 
 program
     .version(version)
@@ -26,7 +27,7 @@ program
       try {
         if (options.plugin != undefined) {
           options.plugin.forEach((plugin) => {
-            require(process.cwd() + '/' + plugin);
+            require(path.join(process.cwd(), plugin));
           });
         }
         runFromFile(fileName);

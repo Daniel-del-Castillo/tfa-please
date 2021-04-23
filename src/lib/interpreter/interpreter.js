@@ -13,7 +13,6 @@ const {parse} = require('../compiler.js');
 const {evaluate} = require('./evaluate.js');
 const {keywords} = require('./plugins/keywords.js');
 const {topScope} = require('./plugins/top-scope.js');
-const {topScopeREPL} = require('./plugins/repl.js');
 
 /**
  * A function that interprets a Please JSON AST
@@ -65,7 +64,6 @@ module.exports = {
   run,
   runFromFile,
   topScope,
-  topScopeREPL,
   keywords,
   evaluate,
 };

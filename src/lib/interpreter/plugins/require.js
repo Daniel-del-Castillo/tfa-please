@@ -10,7 +10,6 @@
 
 const {topScope} = require('./top-scope.js');
 const {runFromFile} = require('../interpreter.js');
-const path = require('path');
 
 const requireResults = Object.create(null);
 
