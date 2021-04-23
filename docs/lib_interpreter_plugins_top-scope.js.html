@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home | Home</title>
+    <title>Source: lib/interpreter/plugins/top-scope.js | Source: lib/interpreter/plugins/top-scope.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Home</a></h1>
+        <h1><a href="index.html" class="link">Source: lib/interpreter/plugins/top-scope.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -42,70 +44,82 @@
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
     <section>
-        <article class="readme"><p><a href="https://github.com/ULL-ESIT-PL-2021/please-Daniel-del-Castillo/actions/workflows/test.yaml"><img src="https://github.com/ULL-ESIT-PL-2021/please-Daniel-del-Castillo/actions/workflows/test.yaml/badge.svg?branch=main" alt="Test"></a></p>
-<h1>Please Lang</h1>
-<h2>Made by Daniel del Castillo de la Rosa</h2>
-<p>This respository contains a language called Please. This language has been designed to run on top of JavaScript, mimicking the <a href="https://eloquentjavascript.net/12_language.html">Egg language</a>.</p>
-<h2>Installation</h2>
-<p>You can install the language like this:</p>
-<pre class="prettyprint source lang-sh"><code>npm i -g @ull-esit-pl-2021/please-Daniel-del-Castillo
-</code></pre>
-<p>You can also install locally.</p>
-<h2>Use</h2>
-<h3>From the CLI</h3>
-<p>There is a main executable <code>please</code> that acts as compiler and interpreter. Please is an interpreted language, but it can be sort of compiled to a JSON AST. Below the help the please executable help:</p>
-<pre class="prettyprint source lang-sh"><code>Usage: please [options] [command]
+        <article>
+            <pre class="prettyprint source linenums"><code>// @ts-check
+/**
+ * @description The file with the always available Please functions
+ * @author Daniel del Castillo de la Rosa &lt;alu0101225548@ull.edu.es>
+ * @since 22/04/2021
+ * @module PleaseLangTopScope
+ */
 
-A simple programming language built on top of JavaScript
+'use strict';
 
-Options:
-  -V, --version           output the version number
-  -h, --help              display help for command
+/**
+ * Some functions that are always available in Please
+ */
+const topScope = Object.create(null);
 
-Commands:
-  repl                    Run the Please lang repl
-  run|r &lt;fileName>        Run a Please lang file
-  compile|c &lt;origin>      compile a Please lang file
-  interpret|i &lt;fileName>  interpret a compiled Please lang file
-  help [command]          display help for command
-</code></pre>
-<p>The subcommands can also be used as executables and are also exported.</p>
-<h3>From code</h3>
-<p>The module exports the following functions:</p>
-<pre class="prettyprint source lang-js"><code>module.exports = {
-  interpret,
-  interpretFromFile,
-  run,
-  runFromFile,
-  createTopScope,
-  keywords,
-  evaluate,
-  parse,
-  parseCall,
-  parseExpression,
-  parseFromFile,
-  compile,
+/**
+ * The true value
+ */
+topScope.true = true;
+
+/**
+ * The false value
+ */
+topScope.false = false;
+
+/**
+ * The basic Please operators
+ */
+['+', '-', '*', '/', '==', '!=', '&lt;', '>', '&amp;&amp;', '||'].forEach((op) => {
+  topScope[op] = Function('a, b', `return a ${op} b;`);
+});
+
+/**
+ * A function to print a line
+ * @param {*} value The value to be printed
+ * @return {*} The value that was printed
+ */
+topScope.println = (value) => {
+  console.log(value);
+  return value;
 };
+
+/**
+ * A function to create an array
+ * @param {...*} args The values of the array
+ * @return {Array} The array
+ */
+topScope.arr = topScope.array = (...args) => {
+  return args;
+};
+
+/**
+ * A function to get the length of an array
+ * @param {Array} array An array
+ * @return {number} The length
+ */
+topScope.len = topScope.length = (array) => {
+  return array.length;
+};
+
+/**
+ * A function to access an element of an array
+ * @param {Array} array An array
+ * @param {number} index The index of the position to be accessed
+ * @return {*} The value in that position
+ */
+topScope.element = (array, index) => {
+  return array[index];
+};
+
+module.exports = {topScope};
 </code></pre>
-<p>You can check what each of them does in the documentation.</p>
-<h2>Documentation</h2>
-<p>The code is extensively documented. The generated documentation can be consulted <a href="https://ull-esit-pl-2021.github.io/please-Daniel-del-Castillo/">here</a></p></article>
+        </article>
     </section>
-
-
 
 
 
@@ -122,7 +136,7 @@ Commands:
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'package:undefined_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

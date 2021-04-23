@@ -1,8 +1,14 @@
 {
     "source": {
         "include": [
+            "src/main.js",
             "src/lib/compiler.js",
-            "src/lib/interpreter.js",
+            "src/lib/interpreter/interpreter.js",
+            "src/lib/interpreter/evaluate.js",
+            "src/lib/interpreter/plugins/keywords.js",
+            "src/lib/interpreter/plugins/repl.js",
+            "src/lib/interpreter/plugins/top-scope.js",
+            "src/lib/interpreter/plugins/require.js",
             "README.md"
         ]
     },
