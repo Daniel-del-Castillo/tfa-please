@@ -1,224 +1,149 @@
 {
-  "type": "CALL",
+  "type": "Call",
   "operator": {
-    "type": "WORD",
-    "name": "do",
-    "offset": 0,
-    "line": 1,
-    "column": 1
+    "type": "Word",
+    "name": "do"
   },
   "args": [
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "def",
-        "offset": 9,
-        "line": 2,
-        "column": 5
+        "type": "Word",
+        "name": "def"
       },
       "args": [
         {
-          "type": "WORD",
-          "name": "sum",
-          "offset": 13,
-          "line": 2,
-          "column": 9
+          "type": "Word",
+          "name": "sum"
         },
         {
-          "type": "CALL",
+          "type": "Call",
           "operator": {
-            "type": "WORD",
-            "name": "->",
-            "offset": 37,
-            "line": 3,
-            "column": 7
+            "type": "Word",
+            "name": "->"
           },
           "args": [
             {
-              "type": "WORD",
-              "name": "nums",
-              "offset": 42,
-              "line": 3,
-              "column": 12
+              "type": "Word",
+              "name": "nums"
             },
             {
-              "type": "CALL",
+              "type": "Call",
               "operator": {
-                "type": "WORD",
-                "name": "do",
-                "offset": 57,
-                "line": 4,
-                "column": 9
+                "type": "Word",
+                "name": "do"
               },
               "args": [
                 {
-                  "type": "CALL",
+                  "type": "Call",
                   "operator": {
-                    "type": "WORD",
-                    "name": ":=",
-                    "offset": 73,
-                    "line": 5,
-                    "column": 12
+                    "type": "Word",
+                    "name": ":="
                   },
                   "args": [
                     {
-                      "type": "WORD",
-                      "name": "i",
-                      "offset": 77,
-                      "line": 5,
-                      "column": 16
+                      "type": "Word",
+                      "name": "i"
                     },
                     {
-                      "type": "VALUE",
-                      "value": 0,
-                      "offset": 80,
-                      "line": 5,
-                      "column": 19
+                      "type": "Value",
+                      "value": 0
                     }
                   ]
                 },
                 {
-                  "type": "CALL",
+                  "type": "Call",
                   "operator": {
-                    "type": "WORD",
-                    "name": ":=",
-                    "offset": 139,
-                    "line": 6,
-                    "column": 12
+                    "type": "Word",
+                    "name": ":="
                   },
                   "args": [
                     {
-                      "type": "WORD",
-                      "name": "s",
-                      "offset": 143,
-                      "line": 6,
-                      "column": 16
+                      "type": "Word",
+                      "name": "s"
                     },
                     {
-                      "type": "VALUE",
-                      "value": 0,
-                      "offset": 146,
-                      "line": 6,
-                      "column": 19
+                      "type": "Value",
+                      "value": 0
                     }
                   ]
                 },
                 {
-                  "type": "CALL",
+                  "type": "Call",
                   "operator": {
-                    "type": "WORD",
-                    "name": "while",
-                    "offset": 198,
-                    "line": 7,
-                    "column": 12
+                    "type": "Word",
+                    "name": "while"
                   },
                   "args": [
                     {
-                      "type": "CALL",
+                      "type": "Call",
                       "operator": {
-                        "type": "WORD",
-                        "name": "<",
-                        "offset": 206,
-                        "line": 7,
-                        "column": 20
+                        "type": "Word",
+                        "name": "<"
                       },
                       "args": [
                         {
-                          "type": "WORD",
-                          "name": "i",
-                          "offset": 208,
-                          "line": 7,
-                          "column": 22
+                          "type": "Word",
+                          "name": "i"
                         },
                         {
-                          "type": "CALL",
+                          "type": "Call",
                           "operator": {
-                            "type": "WORD",
-                            "name": "length",
-                            "offset": 211,
-                            "line": 7,
-                            "column": 25
+                            "type": "Word",
+                            "name": "length"
                           },
                           "args": [
                             {
-                              "type": "WORD",
-                              "name": "nums",
-                              "offset": 218,
-                              "line": 7,
-                              "column": 32
+                              "type": "Word",
+                              "name": "nums"
                             }
                           ]
                         }
                       ]
                     },
                     {
-                      "type": "CALL",
+                      "type": "Call",
                       "operator": {
-                        "type": "WORD",
-                        "name": "do",
-                        "offset": 239,
-                        "line": 8,
-                        "column": 14
+                        "type": "Word",
+                        "name": "do"
                       },
                       "args": [
                         {
-                          "type": "CALL",
+                          "type": "Call",
                           "operator": {
-                            "type": "WORD",
-                            "name": "=",
-                            "offset": 244,
-                            "line": 8,
-                            "column": 19
+                            "type": "Word",
+                            "name": "="
                           },
                           "args": [
                             {
-                              "type": "WORD",
-                              "name": "s",
-                              "offset": 246,
-                              "line": 8,
-                              "column": 21
+                              "type": "Word",
+                              "name": "s"
                             },
                             {
-                              "type": "CALL",
+                              "type": "Call",
                               "operator": {
-                                "type": "WORD",
-                                "name": "+",
-                                "offset": 249,
-                                "line": 8,
-                                "column": 24
+                                "type": "Word",
+                                "name": "+"
                               },
                               "args": [
                                 {
-                                  "type": "WORD",
-                                  "name": "s",
-                                  "offset": 251,
-                                  "line": 8,
-                                  "column": 26
+                                  "type": "Word",
+                                  "name": "s"
                                 },
                                 {
-                                  "type": "CALL",
+                                  "type": "Call",
                                   "operator": {
-                                    "type": "WORD",
-                                    "name": "element",
-                                    "offset": 254,
-                                    "line": 8,
-                                    "column": 29
+                                    "type": "Word",
+                                    "name": "element"
                                   },
                                   "args": [
                                     {
-                                      "type": "WORD",
-                                      "name": "nums",
-                                      "offset": 262,
-                                      "line": 8,
-                                      "column": 37
+                                      "type": "Word",
+                                      "name": "nums"
                                     },
                                     {
-                                      "type": "WORD",
-                                      "name": "i",
-                                      "offset": 268,
-                                      "line": 8,
-                                      "column": 43
+                                      "type": "Word",
+                                      "name": "i"
                                     }
                                   ]
                                 }
@@ -227,45 +152,30 @@
                           ]
                         },
                         {
-                          "type": "CALL",
+                          "type": "Call",
                           "operator": {
-                            "type": "WORD",
-                            "name": "=",
-                            "offset": 290,
-                            "line": 9,
-                            "column": 17
+                            "type": "Word",
+                            "name": "="
                           },
                           "args": [
                             {
-                              "type": "WORD",
-                              "name": "i",
-                              "offset": 292,
-                              "line": 9,
-                              "column": 19
+                              "type": "Word",
+                              "name": "i"
                             },
                             {
-                              "type": "CALL",
+                              "type": "Call",
                               "operator": {
-                                "type": "WORD",
-                                "name": "+",
-                                "offset": 295,
-                                "line": 9,
-                                "column": 22
+                                "type": "Word",
+                                "name": "+"
                               },
                               "args": [
                                 {
-                                  "type": "WORD",
-                                  "name": "i",
-                                  "offset": 297,
-                                  "line": 9,
-                                  "column": 24
+                                  "type": "Word",
+                                  "name": "i"
                                 },
                                 {
-                                  "type": "VALUE",
-                                  "value": 1,
-                                  "offset": 300,
-                                  "line": 9,
-                                  "column": 27
+                                  "type": "Value",
+                                  "value": 1
                                 }
                               ]
                             }
@@ -276,11 +186,8 @@
                   ]
                 },
                 {
-                  "type": "WORD",
-                  "name": "s",
-                  "offset": 344,
-                  "line": 12,
-                  "column": 12
+                  "type": "Word",
+                  "name": "s"
                 }
               ]
             }
@@ -289,72 +196,48 @@
       ]
     },
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "println",
-        "offset": 373,
-        "line": 16,
-        "column": 4
+        "type": "Word",
+        "name": "println"
       },
       "args": [
         {
-          "type": "CALL",
+          "type": "Call",
           "operator": {
-            "type": "WORD",
-            "name": "+",
-            "offset": 381,
-            "line": 16,
-            "column": 12
+            "type": "Word",
+            "name": "+"
           },
           "args": [
             {
-              "type": "VALUE",
-              "value": "sum(array(1, 2, 3)) := ",
-              "offset": 383,
-              "line": 16,
-              "column": 14
+              "type": "Value",
+              "value": "sum(array(1, 2, 3)) := "
             },
             {
-              "type": "CALL",
+              "type": "Call",
               "operator": {
-                "type": "WORD",
-                "name": "sum",
-                "offset": 410,
-                "line": 16,
-                "column": 41
+                "type": "Word",
+                "name": "sum"
               },
               "args": [
                 {
-                  "type": "CALL",
+                  "type": "Call",
                   "operator": {
-                    "type": "WORD",
-                    "name": "array",
-                    "offset": 414,
-                    "line": 16,
-                    "column": 45
+                    "type": "Word",
+                    "name": "array"
                   },
                   "args": [
                     {
-                      "type": "VALUE",
-                      "value": 1,
-                      "offset": 420,
-                      "line": 16,
-                      "column": 51
+                      "type": "Value",
+                      "value": 1
                     },
                     {
-                      "type": "VALUE",
-                      "value": 2,
-                      "offset": 423,
-                      "line": 16,
-                      "column": 54
+                      "type": "Value",
+                      "value": 2
                     },
                     {
-                      "type": "VALUE",
-                      "value": 3,
-                      "offset": 426,
-                      "line": 16,
-                      "column": 57
+                      "type": "Value",
+                      "value": 3
                     }
                   ]
                 }

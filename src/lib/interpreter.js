@@ -9,19 +9,19 @@
 'use strict';
 
 const fs = require('fs');
-const {parse} = require('../compiler.js');
-const {evaluate} = require('./evaluate.js');
+const {parse} = require('./compiler.js');
 const {keywords} = require('./plugins/keywords.js');
 const {topScope} = require('./plugins/top-scope.js');
+const {jsonToAST} = require('./json_to_ast.js');
 
 /**
- * A function that interprets a Please JSON AST
+ * A function that interprets a Please AST
  * @param {Object} program The AST of the program to interpret
  * @return {*} The return value of the program
  * @throws Will throw if there are syntactical errors
  */
 const interpret = (program) => {
-  return evaluate(program, Object.create(topScope));
+  return program.evaluate(Object.create(topScope));
 };
 
 /**
@@ -33,7 +33,9 @@ const interpret = (program) => {
  */
 const interpretFromFile = (fileName) => {
   const source = fs.readFileSync(fileName, 'utf8');
-  return interpret(JSON.parse(source));
+  const json = JSON.parse(source);
+  const ast = jsonToAST(json);
+  return interpret(ast);
 };
 
 /**
@@ -65,5 +67,4 @@ module.exports = {
   runFromFile,
   topScope,
   keywords,
-  evaluate,
 };

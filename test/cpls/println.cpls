@@ -1,19 +1,13 @@
 {
-  "type": "CALL",
+  "type": "Call",
   "operator": {
-    "type": "WORD",
-    "name": "println",
-    "offset": 0,
-    "line": 1,
-    "column": 1
+    "type": "Word",
+    "name": "println"
   },
   "args": [
     {
-      "type": "VALUE",
-      "value": "Hello world",
-      "offset": 8,
-      "line": 1,
-      "column": 9
+      "type": "Value",
+      "value": "Hello world"
     }
   ]
 }

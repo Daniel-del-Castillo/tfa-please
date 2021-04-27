@@ -1,45 +1,30 @@
 {
-  "type": "CALL",
+  "type": "Call",
   "operator": {
-    "type": "WORD",
-    "name": "if",
-    "offset": 0,
-    "line": 1,
-    "column": 1
+    "type": "Word",
+    "name": "if"
   },
   "args": [
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "==",
-        "offset": 3,
-        "line": 1,
-        "column": 4
+        "type": "Word",
+        "name": "=="
       },
       "args": [
         {
-          "type": "VALUE",
-          "value": 1,
-          "offset": 6,
-          "line": 1,
-          "column": 7
+          "type": "Value",
+          "value": 1
         },
         {
-          "type": "VALUE",
-          "value": 1,
-          "offset": 9,
-          "line": 1,
-          "column": 10
+          "type": "Value",
+          "value": 1
         }
       ]
     },
     {
-      "type": "VALUE",
-      "value": 5,
-      "offset": 13,
-      "line": 1,
-      "column": 14
+      "type": "Value",
+      "value": 5
     }
   ]
 }

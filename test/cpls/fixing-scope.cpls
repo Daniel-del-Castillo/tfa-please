@@ -1,96 +1,63 @@
 {
-  "type": "CALL",
+  "type": "Call",
   "operator": {
-    "type": "WORD",
-    "name": "run",
-    "offset": 0,
-    "line": 1,
-    "column": 1
+    "type": "Word",
+    "name": "run"
   },
   "args": [
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "let",
-        "offset": 9,
-        "line": 2,
-        "column": 5
+        "type": "Word",
+        "name": "let"
       },
       "args": [
         {
-          "type": "WORD",
-          "name": "x",
-          "offset": 13,
-          "line": 2,
-          "column": 9
+          "type": "Word",
+          "name": "x"
         },
         {
-          "type": "VALUE",
-          "value": 4,
-          "offset": 16,
-          "line": 2,
-          "column": 12
+          "type": "Value",
+          "value": 4
         }
       ]
     },
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "let",
-        "offset": 24,
-        "line": 3,
-        "column": 5
+        "type": "Word",
+        "name": "let"
       },
       "args": [
         {
-          "type": "WORD",
-          "name": "assignx",
-          "offset": 28,
-          "line": 3,
-          "column": 9
+          "type": "Word",
+          "name": "assignx"
         },
         {
-          "type": "CALL",
+          "type": "Call",
           "operator": {
-            "type": "WORD",
-            "name": "fn",
-            "offset": 37,
-            "line": 3,
-            "column": 18
+            "type": "Word",
+            "name": "fn"
           },
           "args": [
             {
-              "type": "WORD",
-              "name": "val",
-              "offset": 40,
-              "line": 3,
-              "column": 21
+              "type": "Word",
+              "name": "val"
             },
             {
-              "type": "CALL",
+              "type": "Call",
               "operator": {
-                "type": "WORD",
-                "name": "assign",
-                "offset": 53,
-                "line": 4,
-                "column": 9
+                "type": "Word",
+                "name": "assign"
               },
               "args": [
                 {
-                  "type": "WORD",
-                  "name": "x",
-                  "offset": 60,
-                  "line": 4,
-                  "column": 16
+                  "type": "Word",
+                  "name": "x"
                 },
                 {
-                  "type": "WORD",
-                  "name": "val",
-                  "offset": 63,
-                  "line": 4,
-                  "column": 19
+                  "type": "Word",
+                  "name": "val"
                 }
               ]
             }
@@ -99,30 +66,21 @@
       ]
     },
     {
-      "type": "CALL",
+      "type": "Call",
       "operator": {
-        "type": "WORD",
-        "name": "assignx",
-        "offset": 80,
-        "line": 6,
-        "column": 5
+        "type": "Word",
+        "name": "assignx"
       },
       "args": [
         {
-          "type": "VALUE",
-          "value": 50,
-          "offset": 88,
-          "line": 6,
-          "column": 13
+          "type": "Value",
+          "value": 50
         }
       ]
     },
     {
-      "type": "WORD",
-      "name": "x",
-      "offset": 97,
-      "line": 7,
-      "column": 5
+      "type": "Word",
+      "name": "x"
     }
   ]
 }

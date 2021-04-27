@@ -15,8 +15,7 @@ const {
   runFromFile,
   topScope,
   keywords,
-  evaluate,
-} = require('./lib/interpreter/interpreter.js');
+} = require('./lib/interpreter.js');
 
 const {
   parse,
@@ -27,6 +26,17 @@ const {
   Lexer,
 } = require('./lib/compiler.js');
 
+const {
+  Value,
+  Word,
+  Call,
+} = require('./lib/ast.js');
+
+const {
+  jsonToASTMap,
+  jsonToAST,
+} = require('./lib/json_to_ast.js');
+
 module.exports = {
   interpret,
   interpretFromFile,
@@ -34,11 +44,15 @@ module.exports = {
   runFromFile,
   topScope,
   keywords,
-  evaluate,
+  Value,
+  Word,
+  Call,
   parse,
   parseCall,
   parseExpression,
   parseFromFile,
   compile,
   Lexer,
+  jsonToASTMap,
+  jsonToAST,
 };

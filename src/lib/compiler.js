@@ -9,6 +9,7 @@
 'use strict';
 
 const fs = require('fs');
+const {Value, Word, Call} = require('./ast.js');
 
 /**
  * The defition of whitespace in the Please language
@@ -170,12 +171,12 @@ const parseExpression = (lexer) => {
   const token = lexer.getLookAhead();
   if (token.type === 'WORD') {
     lexer.advanceToken();
-    return parseCall(token, lexer);
+    const expression = new Word(token);
+    return parseCall(expression, lexer);
   }
   if (token.type === 'STRING' || token.type === 'NUMBER') {
-    token.type = 'VALUE';
     lexer.advanceToken();
-    return token;
+    return new Value(token);
   }
   throw new SyntaxError(
       `Unexpected token: ${token.value} at line` +
@@ -185,16 +186,16 @@ const parseExpression = (lexer) => {
 
 /**
  * A function that parses a call
- * @param {Object} ast The already parsed previous part of the program
+ * @param {Object} operator The already parsed operator of the operator
  * @param {Lexer} lexer An instance of the Lexer class properly initialized
  * @return {Object} The JSON AST of the call
  * @throws Will throw if there are syntactical errors
  */
-const parseCall = (ast, lexer) => {
+const parseCall = (operator, lexer) => {
   let token = lexer.getLookAhead();
   if (token.type === 'EOF' || token.type === 'RIGHT_PARENTHESIS' ||
      token.type === 'COMMA' || token.type === 'RIGHT_CURLY_BRACE') {
-    return ast;
+    return operator;
   }
   if (token.type !== 'LEFT_PARENTHESIS') {
     throw new SyntaxError(
@@ -204,14 +205,14 @@ const parseCall = (ast, lexer) => {
   }
   const finisher = token.value === '(' ? ')' : '}';
   lexer.advanceToken();
-  ast = {type: 'CALL', operator: ast, args: []};
   token = lexer.getLookAhead();
+  const args = [];
   while (token.value !== finisher) {
     if (token.type === 'EOF') {
       throw new SyntaxError(`Unexpected EOF`);
     }
     const arg = parseExpression(lexer);
-    ast.args.push(arg);
+    args.push(arg);
     token = lexer.getLookAhead();
     if (token.type === 'COMMA') {
       lexer.advanceToken();
@@ -223,8 +224,9 @@ const parseCall = (ast, lexer) => {
       );
     }
   }
+  const call = new Call(operator, args);
   lexer.advanceToken();
-  return parseCall(ast, lexer);
+  return parseCall(call, lexer);
 };
 
 /**

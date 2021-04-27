@@ -8,14 +8,15 @@
 
 'use strict';
 
-const {evaluate, keywords} = require('../evaluate.js');
+const {keywords, Word} = require('../ast.js');
 
 /**
  * The if function
  * @param {Array} args An array with the arguments, it can have two or three
- *     elements. The first is a condition, the second the action to perform
- *     if the condition evaluates to true and the optional third argument
- *     is the action to perform if the condition evaluates to false
+ *     elements. Each element must be an AST node. The first is a condition,
+ *     the second the action to perform if the condition evaluates to true
+ *     and the optional third argument is the action to perform if the
+ *     condition evaluates to false
  * @param {Object} scope The scope for executing the if
  * @return {*} What the if evaluates to
  * @throws Will throw if there are syntactical errors
@@ -24,11 +25,11 @@ keywords.if = (args, scope) => {
   if (args.length > 3 || args.length < 2) {
     throw new SyntaxError('Wrong number of args to if');
   }
-  if (evaluate(args[0], scope) !== false) {
-    return evaluate(args[1], scope);
+  if (args[0].evaluate(scope) !== false) {
+    return args[1].evaluate(scope);
   }
   if (args.length === 3) {
-    return evaluate(args[2], scope);
+    return args[2].evaluate(scope);
   }
   return false;
 };
@@ -36,7 +37,8 @@ keywords.if = (args, scope) => {
 /**
  * The while keyword
  * @param {Array} args An array with the arguments. It must have length 2.
- *     The first argument is a condition and the body of the while
+ *     The first argument is a condition and the body of the while. Both
+ *     must AST nodes
  * @param {Object} scope The scope for executing the while
  * @return {boolean} A while loop always evaluates to false
  * @throws Will throw if there are syntactical errors
@@ -45,22 +47,22 @@ keywords.while = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Wrong number of arguments to while');
   }
-  while (evaluate(args[0], scope) !== false) {
-    evaluate(args[1], scope);
+  while (args[0].evaluate(scope) !== false) {
+    args[1].evaluate(scope);
   }
   return false;
 };
 
 /**
  * The run keyword. Runs the code passed as arguments
- * @param {Array} args A list of expressions to run
+ * @param {Array} args A list of expression nodes to run
  * @param {Object} scope The scope
  * @return {*} The return value of the last executed expression
  */
 keywords.run = keywords.do = (args, scope) => {
   let value = false;
   args.forEach((arg) => {
-    value = evaluate(arg, scope);
+    value = arg.evaluate(scope);
   });
   return value;
 };
@@ -76,12 +78,12 @@ keywords.let = keywords.def = keywords[':='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('let needs two arguments');
   }
-  if (args[0].type !== 'WORD') {
+  if (!(args[0] instanceof Word)) {
     throw new SyntaxError(
         'The first argument to let must be a valid variable name',
     );
   }
-  const value = evaluate(args[1], scope);
+  const value = args[1].evaluate(scope);
   scope[args[0].name] = value;
   return value;
 };
@@ -100,10 +102,10 @@ keywords.fn = keywords.function = keywords['->'] = (args, scope) => {
   }
   const body = args[args.length - 1];
   const params = args.slice(0, args.length - 1).map((expr) => {
-    if (expr.type !== 'WORD') {
+    if (!(expr instanceof Word)) {
       throw new SyntaxError('Parameter names must be words');
     }
-    return expr.name;
+    return expr.getName();
   });
 
   return (...args) => {
@@ -114,7 +116,7 @@ keywords.fn = keywords.function = keywords['->'] = (args, scope) => {
     for (let i = 0; i < args.length; i++) {
       localScope[params[i]] = args[i];
     }
-    return evaluate(body, localScope);
+    return body.evaluate(localScope);
   };
 };
 
@@ -130,13 +132,13 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Assign needs two arguments');
   }
-  if (args[0].type !== 'WORD') {
+  if (!(args[0] instanceof Word)) {
     throw new SyntaxError(
         'The first argument to assign must be a variable name',
     );
   }
-  const varName = args[0].name;
-  const value = evaluate(args[1], scope);
+  const varName = args[0].getName();
+  const value = args[1].evaluate(scope);
   const hasProperty = Object.prototype.hasOwnProperty;
   while (scope != null) {
     if (hasProperty.call(scope, varName)) {

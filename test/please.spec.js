@@ -12,7 +12,7 @@ const {interpretFromFile, compile} = require('../src/main.js');
 const fs = require('fs');
 
 describe('Miscellanous', () => {
-  it('Run from file', () => {
+  it('interpret from file', () => {
     interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
   });
   it('Compile', () => {
