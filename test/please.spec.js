@@ -7,7 +7,7 @@
 
 'use strict';
 
-require('chai').should();
+const should = require('chai').should();
 const {interpretFromFile, compile} = require('../src/main.js');
 const fs = require('fs');
 
@@ -15,6 +15,13 @@ describe('Miscellanous', () => {
   it('interpret from file', () => {
     interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
   });
+
+  it('invalid node type', () => {
+    should.throw(() => {
+      interpretFromFile('test/cpls/invalid-node.cpls');
+    }, /Invalid node/);
+  });
+
   it('Compile', () => {
     compile('test/pls/fixing-scope.pls');
     const actual = JSON.parse(
