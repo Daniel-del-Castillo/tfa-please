@@ -26,38 +26,39 @@ describe('Interpreter', () => {
     logStub.restore();
   });
 
-  it('Fixing scope', () => {
-    runFromFile(basePath + 'fixing-scope.pls').should.eql(50);
+  const testList = [
+    {name: 'fixing-scope', result: 50},
+    {name: 'while', result: false},
+    {name: 'if', result: 5},
+    {name: 'if-else', result: 10},
+    {name: 'false-if', result: false},
+  ];
+
+  const runTest = (test) => {
+    it(test.name, () => {
+      runFromFile(basePath + test.name + '.pls').should.eql(test.result);
+    });
+  };
+
+  testList.forEach((test) => {
+    runTest(test);
   });
 
-  it('println', () => {
-    runFromFile(basePath + 'println.pls');
-    result.should.eql(['Hello world']);
-  });
+  const logTestList = [
+    {name: 'array', result: [[1, 4], 3, 3]},
+    {name: 'array-sum', result: ['sum(array(1, 2, 3)) := 6']},
+    {name: 'println', result: ['Hello world']},
+  ];
 
-  it('while', () => {
-    runFromFile(basePath + 'while.pls').should.eql(false);
-  });
+  const runLogTest = (test) => {
+    it(test.name, () => {
+      runFromFile(basePath + test.name + '.pls');
+      result.should.eql(test.result);
+    });
+  };
 
-  it('if', () => {
-    runFromFile(basePath + 'if.pls').should.eql(5);
-  });
-
-  it('if else', () => {
-    runFromFile(basePath + 'if-else.pls').should.eql(10);
-  });
-
-  it('false if', () => {
-    runFromFile(basePath + 'false-if.pls').should.eql(false);
-  });
-
-  it('array', () => {
-    runFromFile(basePath + 'array.pls');
-    result.should.eql([[1, 4], 3, 3]);
-  });
-  it('array-sum', () => {
-    runFromFile(basePath + 'array-sum.pls');
-    result.should.eql(['sum(array(1, 2, 3)) := 6']);
+  logTestList.forEach((test) => {
+    runLogTest(test);
   });
 });
 

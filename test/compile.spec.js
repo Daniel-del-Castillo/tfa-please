@@ -38,39 +38,25 @@ describe('Compiler', () => {
 
 describe('Compiler errors', () => {
   const basePath = 'test/pls/compiler-errors/';
-  it('Unexpected token in call', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'unexpected-token-call.pls');
-    }, /Unexpected token/);
-  });
 
-  it('Unexpected token in expr', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'unexpected-token-expr.pls');
-    }, /Unexpected token/);
-  });
+  const testList = [
+    {name: 'unexpected-token-call', error: /Unexpected token/},
+    {name: 'unexpected-token-expr', error: /Unexpected token/},
+    {name: 'unexpected-eof', error: /EOF/},
+    {name: 'invalid-token', error: /Invalid token/},
+    {name: 'expected,or)', error: /Expected ',' or '\)'/},
+    {name: 'unexpected-text', error: /Unexpected text/},
+  ];
 
-  it('Unexpected EOF', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'unexpected-eof.pls');
-    }, /EOF/);
-  });
+  const runTest = (test) => {
+    it(test.name, () => {
+      should.throw(() => {
+        parseFromFile(basePath + test.name + '.pls');
+      }, test.error);
+    });
+  };
 
-  it('Invalid token', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'invalid-token.pls');
-    }, /Invalid token/);
-  });
-
-  it('Expected , or )', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'expected,or).pls');
-    }, /Expected ',' or '\)'/);
-  });
-
-  it('Unexpected text', () => {
-    should.throw(() => {
-      parseFromFile(basePath + 'unexpected-text.pls');
-    }, /Unexpected text/);
+  testList.forEach((test) => {
+    runTest(test);
   });
 });
