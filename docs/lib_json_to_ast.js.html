@@ -1,8 +1,10 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: PleaseLangREPLExtension | Module: PleaseLangREPLExtension</title>
+    <title>Source: lib/json_to_ast.js | Source: lib/json_to_ast.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: PleaseLangREPLExtension</a></h1>
+        <h1><a href="index.html" class="link">Source: lib/json_to_ast.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -41,135 +43,67 @@
 
 
 
-
-<section>
-
-<header>
     
-        <h2>PleaseLangREPLExtension</h2>
-        
-            
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// @ts-check
+/**
+ * @description Exports a function and a map that allow to convert a compiled
+ *     Please program already parsed as JSON into an AST
+ * @author Daniel del Castillo de la Rosa &lt;alu0101225548@ull.edu.es>
+ * @since 27/04/2021
+ * @module PleaseLangJsonToAST
+ */
 
-<article>
-    
-        <div class="container-overview">
-        
-            
-                <div class="description">The file contains some extensions of the Please language
-    made for the REPL loop</div>
-            
+'use strict';
 
-            
-                
+const {Word, Value, Call} = require('./ast.js');
 
-<dt>
-    
-</dt>
-<dd>
+/**
+ * Stores functions capable of transforming a node type from parsed JSON to AST
+ */
+const jsonToASTMap = Object.create(null);
 
-    
+/**
+ * Converts a Value node
+ * @param {object} json The already parsed JSON representation
+ * @return {Value} The AST representation
+ */
+jsonToASTMap.Value = (json) => {
+  return new Value(json);
+};
 
-    
+/**
+ * Converts a Word node
+ * @param {object} json The already parsed JSON representation
+ * @return {Word} The AST representation
+ */
+jsonToASTMap.Word = (json) => {
+  return new Word(json);
+};
 
-    
+/**
+ * Converts a Call node
+ * @param {object} json The already parsed JSON representation
+ * @return {Call} The AST representation
+ */
+jsonToASTMap.Call = (json) => {
+  const operator = jsonToAST(json.operator);
+  const args = json.args.map(jsonToAST);
+  return new Call(operator, args);
+};
 
-    
+const jsonToAST = (json) => {
+  if (jsonToASTMap[json.type] != undefined) {
+    return jsonToASTMap[json.type](json);
+  }
+  throw new SyntaxError('Invalid node type: ' + json.type);
+};
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-
-<dl class="details">
-
-    
-
-    
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>22/04/2021</li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:alu0101225548@ull.edu.es">Daniel del Castillo de la Rosa</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-</dd>
-
-            
-        
-        </div>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = {jsonToAST, jsonToASTMap};
+</code></pre>
+        </article>
+    </section>
 
 
 
@@ -186,7 +120,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:PleaseLangREPLExtension_sub'.replace(/"/g, '_');
+        var id = '_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: lib/compiler.js | Source: lib/compiler.js</title>
+    <title>Source: lib/ast.js | Source: lib/ast.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +26,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: lib/compiler.js</a></h1>
+        <h1><a href="index.html" class="link">Source: lib/ast.js</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -48,281 +48,124 @@
         <article>
             <pre class="prettyprint source linenums"><code>// @ts-check
 /**
- * @description The file with the code to interpret the Please lang
+ * @description The file with the classes representing the different
+ *     node types of the AST
  * @author Daniel del Castillo de la Rosa &lt;alu0101225548@ull.edu.es>
- * @since 8/04/2021
- * @module PleaseLangCompiler
+ * @since 27/04/2021
+ * @module PleaseLangAST
  */
 
 'use strict';
 
-const fs = require('fs');
-const {Value, Word, Call} = require('./ast.js');
+/**
+ * An object with the different keywords of the language
+ */
+const keywords = Object.create(null);
 
 /**
- * The defition of whitespace in the Please language
+ * A class representing a value. Can be a String or a Number
  */
-const WHITE = /^(?:\s|\/\/.*|\/\*(?:.|\n)*?\*\/)*/;
-
-/**
- * A lexer class that takes care of the lexical analysis
- */
-class Lexer {
+class Value {
   /**
-   * The constructor of the lexer
-   * @param {string} source The source code of the program to analyze
+   * The constructor
+   * @param {object} token A single token of type string or number
    */
-  constructor(source) {
-    /**
-     * @const {string}
-     * @private
-     */
-    this.source_= source.replace(/\r/g, '');
-    /**
-     * @property {Object}
-     * @private
-    */
-    this.cachedToken_ = undefined;
-    /**
-     * @const {number}
-     * @private
-    */
-    this.line_ = 1;
-    /**
-     * @const {number}
-     * @private
-    */
-    this.column_ = 1;
-    /**
-     * @const {number}
-     * @private
-    */
-    this.offset_ = 0;
-    /**
-     * @const {RegExp}
-    */
-    this.WHITE = WHITE;
-    /**
-     * @const {RegExp}
-     * @private
-    */
-    this.REGEXP_ = new RegExp(
-        [
-          /(?&lt;STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
-          /(?&lt;NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
-          /(?&lt;WORD>[^\s(){},"'\\]+)/,
-          /(?&lt;COMMA>,)/,
-          /(?&lt;LEFT_PARENTHESIS>[({])/,
-          /(?&lt;RIGHT_PARENTHESIS>[)}])/,
-        ].map((regexp) => regexp.source).join('|'),
-        'y',
-    );
+  constructor(token) {
+    this.type = 'Value';
+    this.value = token.value;
   }
 
   /**
-   * A method that returns the next token of the source
-   * @throws Will throw if there are invalid tokens
+   * Evaluate the node
+   * @return {string|number} The result of the evaluation
    */
-  advanceToken() {
-    this.skipSpace_();
-    if (this.isEmpty()) {
-      this.cachedToken_ = {type: 'EOF', line: this.line_, column: this.column_};
-      return;
-    }
-    let match = this.REGEXP_.exec(this.source_);
-    if (match == null) {
-      match = /..*?\b|.*$/.exec(this.source_.slice(this.REGEXP_.lastIndex));
-      throw new SyntaxError(
-          `Invalid token: ${match[0]} ` +
-          `at line ${this.line_} and column ${this.column_}`,
-      );
-    }
-    this.cachedToken_ = this.constructResult_(match);
-    this.cachedToken_.offset = this.offset_;
-    this.cachedToken_.line = this.line_;
-    this.cachedToken_.column = this.column_;
-    this.updateAfterMatch_(match.groups[this.cachedToken_.type]);
+  evaluate() {
+    return this.value;
   }
-
-  /**
-   * A helper function that construct the result from the match
-   * @param {Object} match The string that matched with the RegExp
-   * @return {Object} The constructed result
-   * @private
-   */
-  constructResult_(match) {
-    const result = {};
-    result.type = Object.keys(match.groups)
-        .find((type) => match.groups[type] !== undefined);
-    if (result.type === 'WORD') {
-      result.name = match.groups[result.type];
-    } else if (result.type === 'NUMBER') {
-      result.value = Number(match.groups[result.type]);
-    } else if (result.type === 'STRING') {
-      const string = match.groups[result.type];
-      result.value = string.slice(1, string.length - 1);
-    } else {
-      result.value = match.groups[result.type];
-    }
-    return result;
-  }
-
-  /**
-   * A method that returns the actual token
-   * @return {Object} The actual token
-   */
-  getLookAhead() {
-    return this.cachedToken_;
-  }
-
-  /**
-   * A function to update the lexer after consuming a token
-   * @param {string} token The token found
-   * @private
-   */
-  updateAfterMatch_(token) {
-    const lineStart = this.source_.lastIndexOf('\n', this.offset_);
-    this.offset_ += token.length;
-    this.column_ = this.offset_ - lineStart;
-    this.line_ += token.split(/\n/).length - 1;
-  }
-
-  /**
-   * A function to check if there are more tokens in the input
-   * @return {boolean} Whether is it empty or not
-   */
-  isEmpty() {
-    this.skipSpace_();
-    return this.source_.length === this.offset_;
-  }
-
-  /**
-   * A function that deletes starting whites from the source
-   * @private
-   */
-  skipSpace_() {
-    const match = this.WHITE.exec(this.source_.slice(this.offset_));
-    this.REGEXP_.lastIndex += match[0].length;
-    this.updateAfterMatch_(match[0]);
-  };
 }
 
-
 /**
- * A function that parses an expression
- * @param {Lexer} lexer An instance of the Lexer class initialized with
- *     the source of the program
- * @return {Object} The JSON AST of the expression
- * @throws Will throw if there are syntactical errors
+ * A class representing a word
  */
-const parseExpression = (lexer) => {
-  const token = lexer.getLookAhead();
-  if (token.type === 'WORD') {
-    lexer.advanceToken();
-    const expression = new Word(token);
-    return parseCall(expression, lexer);
+class Word {
+  /**
+   * The constructor
+   * @param {object} token A single token of type word
+   */
+  constructor(token) {
+    this.type = 'Word';
+    this.name = token.name;
   }
-  if (token.type === 'STRING' || token.type === 'NUMBER') {
-    lexer.advanceToken();
-    return new Value(token);
-  }
-  throw new SyntaxError(
-      `Unexpected token: ${token.value} at line` +
-      ` ${token.line} and column ${token.column}`,
-  );
-};
 
-/**
- * A function that parses a call
- * @param {Object} operator The already parsed operator of the operator
- * @param {Lexer} lexer An instance of the Lexer class properly initialized
- * @return {Object} The JSON AST of the call
- * @throws Will throw if there are syntactical errors
- */
-const parseCall = (operator, lexer) => {
-  let token = lexer.getLookAhead();
-  if (token.type === 'EOF' || token.type === 'RIGHT_PARENTHESIS' ||
-     token.type === 'COMMA' || token.type === 'RIGHT_CURLY_BRACE') {
-    return operator;
-  }
-  if (token.type !== 'LEFT_PARENTHESIS') {
-    throw new SyntaxError(
-        `Unexpected token: ${token.value} at line` +
-        ` ${token.line} and column ${token.column}, expected '(' or '{'`,
-    );
-  }
-  const finisher = token.value === '(' ? ')' : '}';
-  lexer.advanceToken();
-  token = lexer.getLookAhead();
-  const args = [];
-  while (token.value !== finisher) {
-    if (token.type === 'EOF') {
-      throw new SyntaxError(`Unexpected EOF`);
-    }
-    const arg = parseExpression(lexer);
-    args.push(arg);
-    token = lexer.getLookAhead();
-    if (token.type === 'COMMA') {
-      lexer.advanceToken();
-      token = lexer.getLookAhead();
-    } else if (token.value !== finisher) {
-      throw new SyntaxError(
-          `Expected ',' or '${finisher}' at line ${token.line} ` +
-          `and column ${token.column}`,
-      );
+  /**
+   * Evaluate the node
+   * @param {object} scope The scope in which the node will be evaluated
+   * @return {*} The result of the evaluation
+   */
+  evaluate(scope) {
+    if (this.name in scope) {
+      return scope[this.name];
+    } else {
+      throw new ReferenceError(`Undefined binding: ${this.name}`);
     }
   }
-  const call = new Call(operator, args);
-  lexer.advanceToken();
-  return parseCall(call, lexer);
-};
 
-/**
- * A function that parses a Please program
- * @param {string} program The string with the unparsed program
- * @return {Object} The AST of the program
- * @throws Will throw if there are errors in the program
- */
-const parse = (program) => {
-  const lexer = new Lexer(program);
-  lexer.advanceToken();
-  const ast = parseExpression(lexer);
-  if (lexer.getLookAhead().type !== 'EOF') {
-    throw new SyntaxError('Unexpected text after program');
+  /**
+   * Checks if the word is a keyword
+   * @param {object} keywords The set of keywords
+   * @return {boolean} Whether this instance is a keyword or not
+   */
+  isKeyword(keywords) {
+    return this.name in keywords;
   }
-  return ast;
-};
 
-/**
- * A function that reads a file and parses its contents
- * @param {string} fileName The name of the file
- * @return {Object} The JSON AST of the program
- * @throws Will throw if there are errors in the program or if the file
- *     can't be opened
- */
-const parseFromFile = (fileName) => {
-  const source = fs.readFileSync(fileName, 'utf8');
-  return parse(source);
-};
-
-/**
- * A function that compiles a Please file
- * @param {string} origin The name of the origin file
- * @param {string} destination The name of the destination file
- * @throws Will throw if there are errors in the program or if the files
- *     can't be opened
- */
-const compile = (origin, destination = undefined) => {
-  const source = fs.readFileSync(origin, 'utf8');
-  if (destination == undefined) {
-    destination = origin.match(/^[^\.]*/)[0] + '.cpls';
+  /**
+   * Getter
+   * @return {string} The inner value of the word
+   */
+  getName() {
+    return this.name;
   }
-  const ast = JSON.stringify(parse(source), null, 2);
-  fs.writeFileSync(destination, ast);
-};
+}
 
-module.exports =
-    {parse, parseCall, parseExpression, parseFromFile, compile, Lexer, WHITE};
+/**
+ * A class representing a call
+ */
+class Call {
+  /**
+   * The constructor
+   * @param {object} operator A node representing the operator. Should
+   *     evaluate to a function or a Word with the value of a keyword
+   * @param {Array} args An array of nodes representing the arguments.
+   *     Should be filled with nodes that evaluate to arbitrary values
+   */
+  constructor(operator, args) {
+    this.type = 'Call';
+    this.operator = operator;
+    this.args = args;
+  }
+
+  /**
+   * Evaluate the node
+   * @param {object} scope The scope in which the node will be evaluated
+   * @return {*} The result of the evaluation
+   */
+  evaluate(scope) {
+    if (this.operator instanceof Word &amp;&amp;
+        this.operator.isKeyword(keywords)) {
+      return keywords[this.operator.getName()](this.args, scope);
+    } else {
+      const op = this.operator.evaluate(scope);
+      if (typeof op === 'function') {
+        return op(...this.args.map((arg) => arg.evaluate(scope)));
+      } else {
+        throw new TypeError('Calling a non-function.');
+      }
+    }
+  }
+}
+
+module.exports = {Value, Word, Call, keywords};
 </code></pre>
         </article>
     </section>

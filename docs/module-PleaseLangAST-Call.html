@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: PleaseLangREPLExtension | Module: PleaseLangREPLExtension</title>
+    <title>Class: Call | Class: Call</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: PleaseLangREPLExtension</a></h1>
+        <h1><a href="index.html" class="link">Class: Call</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,9 +46,10 @@
 
 <header>
     
-        <h2>PleaseLangREPLExtension</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-PleaseLangAST.html">PleaseLangAST</a>~</span>Call<span class="signature">(operator, args)</span><span class="type-signature"></span></h2>
         
-            
+            <div class="class-description">A class representing a call</div>
         
     
 </header>
@@ -58,26 +59,113 @@
         <div class="container-overview">
         
             
-                <div class="description">The file contains some extensions of the Please language
-    made for the REPL loop</div>
-            
-
-            
-                
 
 <dt>
+    
+        <h4 class="name" id="Call">
+            
+                new <span class="type-signature"></span>Call<span class="signature">(operator, args)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="lib_ast.js.html">lib/ast.js</a></code>,
+                <code><a href="lib_ast.js.html#line86">line 86</a></code>
+            </div>
+            
+        </h4>
+
+        
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        The constructor
+    </div>
     
 
     
 
     
 
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>operator</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A node representing the operator. Should
+    evaluate to a function or a Word with the value of a keyword</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An array of nodes representing the arguments.
+    Should be filled with nodes that evaluate to arbitrary values</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
     
 
     
@@ -100,9 +188,6 @@
     
 
     
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>22/04/2021</li></ul></dd>
-    
 
     
 
@@ -116,13 +201,6 @@
 
     
 
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:alu0101225548@ull.edu.es">Daniel del Castillo de la Rosa</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -143,7 +221,6 @@
 
 </dd>
 
-            
         
         </div>
     
@@ -162,6 +239,170 @@
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="evaluate">
+            
+                <span class="type-signature"></span>evaluate<span class="signature">(scope)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="lib_ast.js.html">lib/ast.js</a></code>,
+                <code><a href="lib_ast.js.html#line105">line 105</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Evaluate the node
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The scope in which the node will be evaluated</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+- The result of the evaluation
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
     
 
     
@@ -186,7 +427,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:PleaseLangREPLExtension_sub'.replace(/"/g, '_');
+        var id = 'module:PleaseLangAST~Call_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
