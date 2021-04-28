@@ -117,4 +117,40 @@ class Call {
   }
 }
 
-module.exports = {Value, Word, Call, keywords};
+/**
+ * A class representing a method call
+ */
+class MethodCall {
+  /**
+   * The constructor
+   * @param {object} operator A node representing the operator. Should
+   *     evaluate to a function or a Word with the value of a keyword
+   * @param {Array} args An array of nodes representing the arguments.
+   *     Should be filled with nodes that evaluate to arbitrary values
+   */
+  constructor(operator, args) {
+    this.type = 'MethodCall';
+    this.operator = operator;
+    this.args = args;
+  }
+
+  /**
+   * Evaluate the node
+   * @param {object} scope The scope in which the node will be evaluated
+   * @return {*} The result of the evaluation
+   */
+  evaluate(scope) {
+    const op = this.operator.evaluate(scope);
+    if (op == undefined) {
+      return undefined;
+    }
+    const processedArgs = this.args.map((arg) => arg.evaluate(scope));
+    const methodName = processedArgs.shift().toString();
+    if (typeof op[methodName] !== 'function') {
+      return op[methodName];
+    }
+    return (...args) => op[methodName](...processedArgs, ...args);
+  }
+}
+
+module.exports = {Value, Word, Call, MethodCall, keywords};

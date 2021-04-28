@@ -16,6 +16,10 @@ describe('Miscellanous', () => {
     interpretFromFile('test/cpls/fixing-scope.cpls').should.eql(50);
   });
 
+  it('interpret from file with method call', () => {
+    interpretFromFile('test/cpls/method-undefined.cpls').should.eql(true);
+  });
+
   it('invalid node type', () => {
     should.throw(() => {
       interpretFromFile('test/cpls/invalid-node.cpls');

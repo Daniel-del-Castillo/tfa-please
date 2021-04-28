@@ -27,6 +27,11 @@ describe('Compiler', () => {
     'false-if',
     'array',
     'array-sum',
+    'method-example',
+    'method-undefined',
+    'array-properties',
+    'js-methods',
+    'map',
   ];
 
   testList.forEach((test) => {

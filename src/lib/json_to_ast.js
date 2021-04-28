@@ -9,7 +9,7 @@
 
 'use strict';
 
-const {Word, Value, Call} = require('./ast.js');
+const {Word, Value, Call, MethodCall} = require('./ast.js');
 
 /**
  * Stores functions capable of transforming a node type from parsed JSON to AST
@@ -43,6 +43,17 @@ jsonToASTMap.Call = (json) => {
   const operator = jsonToAST(json.operator);
   const args = json.args.map(jsonToAST);
   return new Call(operator, args);
+};
+
+/**
+ * Converts a MethodCall node
+ * @param {object} json The already parsed JSON representation
+ * @return {MethodCall} The AST representation
+ */
+jsonToASTMap.MethodCall = (json) => {
+  const operator = jsonToAST(json.operator);
+  const args = json.args.map(jsonToAST);
+  return new MethodCall(operator, args);
 };
 
 const jsonToAST = (json) => {

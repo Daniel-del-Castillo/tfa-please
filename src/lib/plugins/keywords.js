@@ -31,7 +31,6 @@ keywords.if = (args, scope) => {
   if (args.length === 3) {
     return args[2].evaluate(scope);
   }
-  return false;
 };
 
 /**
@@ -40,7 +39,6 @@ keywords.if = (args, scope) => {
  *     The first argument is a condition and the body of the while. Both
  *     must AST nodes
  * @param {Object} scope The scope for executing the while
- * @return {boolean} A while loop always evaluates to false
  * @throws Will throw if there are syntactical errors
  */
 keywords.while = (args, scope) => {
@@ -50,7 +48,6 @@ keywords.while = (args, scope) => {
   while (args[0].evaluate(scope) !== false) {
     args[1].evaluate(scope);
   }
-  return false;
 };
 
 /**

@@ -3,4 +3,5 @@ run(
     while(!=(x, 2), 
         assign(x, +(x, 1))
     ),
+    x
 )

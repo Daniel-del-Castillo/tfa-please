@@ -24,6 +24,11 @@ topScope.true = true;
 topScope.false = false;
 
 /**
+ * An undefined value
+ */
+topScope.undefined = undefined;
+
+/**
  * The basic Please operators
  */
 ['+', '-', '*', '/', '==', '!=', '<', '>', '&&', '||'].forEach((op) => {

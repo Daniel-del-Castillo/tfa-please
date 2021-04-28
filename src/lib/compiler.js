@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const {unraw} = require('unraw');
-const {Value, Word, Call} = require('./ast.js');
+const {Value, Word, Call, MethodCall} = require('./ast.js');
 
 /**
  * The defition of whitespace in the Please language
@@ -63,10 +63,12 @@ class Lexer {
         [
           /(?<STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
-          /(?<WORD>[^\s(){},"'\\]+)/,
+          /(?<WORD>[^\s(){}\[\],"'\\]+)/,
           /(?<COMMA>,)/,
           /(?<LEFT_PARENTHESIS>[({])/,
           /(?<RIGHT_PARENTHESIS>[)}])/,
+          /(?<LEFT_BRACKET>\[)/,
+          /(?<RIGHT_BRACKET>\])/,
         ].map((regexp) => regexp.source).join('|'),
         'y',
     );
@@ -173,12 +175,11 @@ const parseExpression = (lexer) => {
   const token = lexer.getLookAhead();
   if (token.type === 'WORD') {
     lexer.advanceToken();
-    const expression = new Word(token);
-    return parseCall(expression, lexer);
+    return parseCall(new Word(token), lexer);
   }
   if (token.type === 'STRING' || token.type === 'NUMBER') {
     lexer.advanceToken();
-    return new Value(token);
+    return parseCall(new Value(token), lexer);
   }
   throw new SyntaxError(
       `Unexpected token: ${token.value} at line` +
@@ -196,16 +197,16 @@ const parseExpression = (lexer) => {
 const parseCall = (operator, lexer) => {
   let token = lexer.getLookAhead();
   if (token.type === 'EOF' || token.type === 'RIGHT_PARENTHESIS' ||
-     token.type === 'COMMA' || token.type === 'RIGHT_CURLY_BRACE') {
+     token.type === 'COMMA' || token.type === 'RIGHT_BRACKET') {
     return operator;
   }
-  if (token.type !== 'LEFT_PARENTHESIS') {
+  if (token.type !== 'LEFT_PARENTHESIS' && token.type !== 'LEFT_BRACKET') {
     throw new SyntaxError(
         `Unexpected token: ${token.value} at line` +
-        ` ${token.line} and column ${token.column}, expected '(' or '{'`,
+        ` ${token.line} and column ${token.column}, expected '[', '(' or '{'`,
     );
   }
-  const finisher = token.value === '(' ? ')' : '}';
+  const finisher = token.value === '[' ? ']' : token.value === '(' ? ')' : '}';
   lexer.advanceToken();
   token = lexer.getLookAhead();
   const args = [];
@@ -226,7 +227,8 @@ const parseCall = (operator, lexer) => {
       );
     }
   }
-  const call = new Call(operator, args);
+  const call = finisher === ']' ?
+      new MethodCall(operator, args) : new Call(operator, args);
   lexer.advanceToken();
   return parseCall(call, lexer);
 };
