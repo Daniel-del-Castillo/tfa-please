@@ -10,9 +10,9 @@
 
 const {version} = require('../../package.json');
 const readline = require('readline');
-const {parse, evaluate, Lexer, keywords, topScope} = require('../main.js');
+const {parse, Lexer, keywords, topScope} = require('../main.js');
 require('colors');
-require('../lib/interpreter/plugins/repl.js');
+require('../lib/plugins/repl.js');
 const {WHITE} = require('../lib/compiler');
 const ALL_WHITE = new RegExp(WHITE.source + '$');
 const PROMPT = '>';
@@ -55,7 +55,7 @@ rl.on('line', (line) => {
     stack = 0;
   } else if (stack === 0 && !ALL_WHITE.test(program)) {
     try {
-      const r = evaluate(parse(program), scope);
+      const r = parse(program).evaluate(scope);
       console.log(r ? r.toString().blue : 'No value returned'.blue);
     } catch (err) {
       console.log(err.toString().red);
