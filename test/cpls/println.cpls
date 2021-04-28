@@ -7,7 +7,7 @@
   "args": [
     {
       "type": "Value",
-      "value": "Hello world"
+      "value": "Hello world\nHello"
     }
   ]
 }

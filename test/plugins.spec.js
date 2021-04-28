@@ -60,7 +60,7 @@ describe('require', () => {
   it('require', () => {
     const require = 'require("./test/pls/println.pls")';
     parse('do(' + require + ', ' + require + ')').evaluate(topScope);
-    result.should.eql(['Hello world']);
+    result.should.eql(['Hello world\nHello']);
   });
 
   it('invalid require', () => {

@@ -47,7 +47,7 @@ describe('Interpreter', () => {
   const logTestList = [
     {name: 'array', result: [[1, 4], 3, 3]},
     {name: 'array-sum', result: ['sum(array(1, 2, 3)) := 6']},
-    {name: 'println', result: ['Hello world']},
+    {name: 'println', result: ['Hello world\nHello']},
   ];
 
   const runLogTest = (test) => {

@@ -9,6 +9,7 @@
 'use strict';
 
 const fs = require('fs');
+const {unraw} = require('unraw');
 const {Value, Word, Call} = require('./ast.js');
 
 /**
@@ -113,6 +114,7 @@ class Lexer {
     } else if (result.type === 'STRING') {
       const string = match.groups[result.type];
       result.value = string.slice(1, string.length - 1);
+      result.value = unraw(result.value);
     } else {
       result.value = match.groups[result.type];
     }
