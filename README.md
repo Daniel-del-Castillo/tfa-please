@@ -38,13 +38,18 @@ module.exports = {
   runFromFile,
   topScope,
   keywords,
-  evaluate,
+  Value,
+  Word,
+  Call,
+  MethodCall,
   parse,
   parseCall,
   parseExpression,
   parseFromFile,
   compile,
   Lexer,
+  jsonToASTMap,
+  jsonToAST,
 };
 
 ```
@@ -58,8 +63,9 @@ The Please language has severals features:
 * If else constructs
 * Functions (closure-like)
 * Arrays
+* Currying
 
-There are examples inside the test folder for each of this ones
+There are examples inside the test folder for each of these ones
 
 ## Contribution
 You can contribute to the code if you want! Just keep in mind this isn't a serious project and that your code will be under release to the public domain, because this project uses [Unlicense](https://unlicense.org/)

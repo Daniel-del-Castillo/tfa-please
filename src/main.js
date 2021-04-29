@@ -30,6 +30,7 @@ const {
   Value,
   Word,
   Call,
+  MethodCall,
 } = require('./lib/ast.js');
 
 const {
@@ -47,6 +48,7 @@ module.exports = {
   Value,
   Word,
   Call,
+  MethodCall,
   parse,
   parseCall,
   parseExpression,
