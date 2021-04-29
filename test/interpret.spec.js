@@ -53,6 +53,11 @@ describe('Interpreter', () => {
     {name: 'array-properties', result: [1, [5, 3], 3]},
     {name: 'js-methods', result: ['HELLO']},
     {name: 'map', result: [[2, 3, 4, 5]]},
+    {name: 'sub', result: [4, 4]},
+    {name: '=', result: [[[1, 5], [3, 4]]]},
+    {name: 'currying', result: [12]},
+    {name: 'undefined-sub', result: [undefined]},
+    {name: 'operation-methods', result: [1, 2, 12]},
   ];
 
   const runLogTest = (test) => {
@@ -70,75 +75,30 @@ describe('Interpreter', () => {
 describe('Interpreter errors', () => {
   const basePath = 'test/pls/interpreter-errors/';
 
-  it('Tried to assign to non existent variable', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'assign-non-existent-var.pls');
-    }, /Tried to assign/);
-  });
+  const testList = [
+    {name: 'if-args-number', error: /Wrong number of arg/},
+    {name: 'while-args-number', error: /Wrong number of arg/},
+    {name: 'let-two-args', error: /let needs two arguments/},
+    {name: 'first-let-arg', error: /The first argument to let/},
+    {name: 'fn-needs-body', error: /Functions need a body/},
+    {name: 'parameter-names', error: /Parameter names/},
+    {name: 'fn-wrong-arg-numbers', error: /Wrong number of arg/},
+    {name: 'assign-two-args', error: /Assign needs two arg/},
+    {name: 'assign-first-arg', error: /The first argument to assign/},
+    {name: 'undefined-binding', error: /Undefined binding/},
+    {name: 'call-non-function', error: /Calling a non-function/},
+    {name: 'assign-non-existent-var', error: /Tried to assign/},
+  ];
 
-  it('Tried to call non function', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'call-non-function.pls');
-    }, /Calling a non-function/);
-  });
+  const runTest = (test) => {
+    it(test.name, () => {
+      should.throw(() => {
+        runFromFile(basePath + test.name + '.pls');
+      }, test.error);
+    });
+  };
 
-  it('Undefined binding', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'undefined-binding.pls');
-    }, /Undefined binding/);
-  });
-
-  it('First argument to assign must be a variable name', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'assign-first-arg.pls');
-    }, /The first argument to assign/);
-  });
-
-  it('Assign needs two arguments', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'assign-two-args.pls');
-    }, /Assign needs two arg/);
-  });
-
-  it('Functions won\'t accept a different number of args', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'fn-wrong-arg-numbers.pls');
-    }, /Wrong number of arg/);
-  });
-
-  it('Parameter names must be words', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'parameter-names.pls');
-    }, /Parameter names/);
-  });
-
-  it('Functions need bodies', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'fn-needs-body.pls');
-    }, /Functions need a body/);
-  });
-
-  it('The first argument to let must be a valid variable name', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'first-let-arg.pls');
-    }, /The first argument to let/);
-  });
-
-  it('let needs two arguments', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'let-two-args.pls');
-    }, /let needs two arguments/);
-  });
-
-  it('Wrong number of args for while', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'while-args-number.pls');
-    }, /Wrong number of arg/);
-  });
-
-  it('Wrong number of args for if', () => {
-    should.throw(() => {
-      runFromFile(basePath + 'if-args-number.pls');
-    }, /Wrong number of arg/);
+  testList.forEach((test) => {
+    runTest(test);
   });
 });

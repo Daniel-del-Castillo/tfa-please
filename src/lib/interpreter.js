@@ -12,6 +12,7 @@ const fs = require('fs');
 const {parse} = require('./compiler.js');
 const {keywords} = require('./plugins/keywords.js');
 const {topScope} = require('./plugins/top-scope.js');
+require('./plugins/monkey-patch.js');
 const {jsonToAST} = require('./json_to_ast.js');
 
 /**

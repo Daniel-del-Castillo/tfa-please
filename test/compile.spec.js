@@ -32,6 +32,11 @@ describe('Compiler', () => {
     'array-properties',
     'js-methods',
     'map',
+    'sub',
+    '=',
+    'currying',
+    'undefined-sub',
+    'operation-methods',
   ];
 
   testList.forEach((test) => {

@@ -57,10 +57,16 @@ describe('require', () => {
     logStub.restore();
   });
 
-  it('require', () => {
+  it('require with default value', () => {
     const require = 'require("./test/pls/println.pls")';
     parse('do(' + require + ', ' + require + ')').evaluate(topScope);
     result.should.eql(['Hello world\nHello']);
+  });
+
+  it('require with value', () => {
+    const require = 'require("./test/pls/currying.pls")';
+    parse('do(' + require + ', ' + require + ')').evaluate(topScope);
+    result.should.eql([12]);
   });
 
   it('invalid require', () => {

@@ -38,11 +38,9 @@ topScope.undefined = undefined;
 /**
  * A function to print a line
  * @param {*} value The value to be printed
- * @return {*} The value that was printed
  */
 topScope.println = (value) => {
   console.log(value);
-  return value;
 };
 
 /**
@@ -66,11 +64,12 @@ topScope.len = topScope.length = (array) => {
 /**
  * A function to access an element of an array
  * @param {Array} array An array
- * @param {number} index The index of the position to be accessed
+ * @param {...*} indexes The index of the position to be accessed
  * @return {*} The value in that position
  */
-topScope.element = (array, index) => {
-  return array[index];
+topScope.element = (array, ...indexes) => {
+  // @ts-ignore
+  return array.sub(...indexes);
 };
 
 module.exports = {topScope};

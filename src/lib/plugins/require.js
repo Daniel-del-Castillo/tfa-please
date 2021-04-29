@@ -21,7 +21,8 @@ topScope.require = (filePath) => {
     return requireResults[filePath];
   } else {
     const result = runFromFile(filePath);
-    requireResults[filePath] = result;
+    requireResults[filePath] = result == undefined ?
+        Object.create(null) : result;
     return result;
   }
 };
