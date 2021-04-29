@@ -1,10 +1,8 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Source: main.js | Source: main.js</title>
+    <title>Module: PleaseLangMonkeyPatch | Module: PleaseLangMonkeyPatch</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -26,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Source: main.js</a></h1>
+        <h1><a href="index.html" class="link">Module: PleaseLangMonkeyPatch</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -43,70 +41,134 @@
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>// @ts-check
-/**
- * @description The main file of the Please lang implementation
- * @author Daniel del Castillo de la Rosa &lt;alu0101225548@ull.edu.es>
- * @since 8/04/2021
- * @module PleaseLang
- */
+        <h2>PleaseLangMonkeyPatch</h2>
+        
+            
+        
+    
+</header>
 
-'use strict';
+<article>
+    
+        <div class="container-overview">
+        
+            
+                <div class="description">The file with the methods added to base objects in Please</div>
+            
 
-const {
-  interpret,
-  interpretFromFile,
-  run,
-  runFromFile,
-  topScope,
-  keywords,
-} = require('./lib/interpreter.js');
+            
+                
 
-const {
-  parse,
-  parseCall,
-  parseExpression,
-  parseFromFile,
-  compile,
-  Lexer,
-} = require('./lib/compiler.js');
+<dt>
+    
+</dt>
+<dd>
 
-const {
-  Value,
-  Word,
-  Call,
-} = require('./lib/ast.js');
+    
 
-const {
-  jsonToASTMap,
-  jsonToAST,
-} = require('./lib/json_to_ast.js');
+    
 
-module.exports = {
-  interpret,
-  interpretFromFile,
-  run,
-  runFromFile,
-  topScope,
-  keywords,
-  Value,
-  Word,
-  Call,
-  parse,
-  parseCall,
-  parseExpression,
-  parseFromFile,
-  compile,
-  Lexer,
-  jsonToASTMap,
-  jsonToAST,
-};
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+    <dt class="tag-since">Since:</dt>
+    <dd class="tag-since"><ul class="dummy"><li>29/04/2021</li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:alu0101225548@ull.edu.es">Daniel del Castillo de la Rosa</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -123,7 +185,7 @@ module.exports = {
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = '_sub'.replace(/"/g, '_');
+        var id = 'module:PleaseLangMonkeyPatch_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 

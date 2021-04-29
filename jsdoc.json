@@ -7,6 +7,7 @@
             "src/lib/ast.js",
             "src/lib/json_to_ast.js",
             "src/lib/plugins/keywords.js",
+            "src/lib/plugins/monkey-patch.js",
             "src/lib/plugins/repl.js",
             "src/lib/plugins/top-scope.js",
             "src/lib/plugins/require.js",
