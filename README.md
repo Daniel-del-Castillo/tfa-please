@@ -67,5 +67,7 @@ The Please language has severals features:
 
 There are examples inside the test folder for each of these ones
 
+Indexes work differently if used inside [] or with the element function or sub method. In the latter they work like ruby indexes, meaning if you use a negative index it will start counting from the end, but in the normal brackets negative indexes aren't allowed in arrays. With brackets they work as expected in objects with negative integers as keys.
+
 ## Contribution
 You can contribute to the code if you want! Just keep in mind this isn't a serious project and that your code will be under release to the public domain, because this project uses [Unlicense](https://unlicense.org/)

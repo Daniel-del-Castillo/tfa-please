@@ -37,6 +37,7 @@ describe('Compiler', () => {
     'currying',
     'undefined-sub',
     'operation-methods',
+    'negative-indexes',
   ];
 
   testList.forEach((test) => {

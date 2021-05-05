@@ -58,6 +58,7 @@ describe('Interpreter', () => {
     {name: 'currying', result: [12]},
     {name: 'undefined-sub', result: [undefined]},
     {name: 'operation-methods', result: [1, 2, 12]},
+    {name: 'negative-indexes', result: [[2, 3]]},
   ];
 
   const runLogTest = (test) => {

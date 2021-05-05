@@ -16,6 +16,9 @@
  * @return {*} The element behind that index
  */
 Object.prototype.sub = function(...indexes) {
+  if (indexes[0] < 0) {
+    indexes[0] += this.length;
+  }
   if (this[indexes[0]] == undefined) {
     return undefined;
   }
