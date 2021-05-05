@@ -72,4 +72,23 @@ topScope.element = (array, ...indexes) => {
   return array.sub(...indexes);
 };
 
+/**
+ * A function to create hashes or maps
+ * @param {...*} args The arguments are ordered as keys and then
+ *     the value for that key
+ * @return {object} The newly created object
+ */
+topScope.map = topScope.hash = (...args) => {
+  const hash = {};
+  if (args.length % 2 !== 0) {
+    throw new Error(
+        'To create a hash the number of arguments must be a multiple of two',
+    );
+  }
+  for (let index = 0; index < args.length; index += 2) {
+    hash[args[index]] = args[index + 1];
+  }
+  return hash;
+};
+
 module.exports = {topScope};

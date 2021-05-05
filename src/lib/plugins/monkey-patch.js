@@ -16,7 +16,7 @@
  * @return {*} The element behind that index
  */
 Object.prototype.sub = function(...indexes) {
-  if (indexes[0] < 0) {
+  if (indexes[0] < 0 && this instanceof Array) {
     indexes[0] += this.length;
   }
   if (this[indexes[0]] == undefined) {
@@ -36,12 +36,18 @@ Object.prototype.sub = function(...indexes) {
  * @param  {...*} indexes The indexes
  */
 Object.prototype['='] = function(value, ...indexes) {
-  if (this[indexes[0]] == undefined) {
-    return;
+  if (typeof this !== 'object' || this == undefined) {
+    throw new TypeError(
+        `The object ${JSON.stringify(this)} isn't indexable`,
+    );
+  }
+  if (indexes[0] < 0 && this instanceof Array) {
+    indexes[0] += this.length;
   }
   const rest = indexes.slice(1);
   if (rest.length === 0) {
     this[indexes[0]] = value;
+    return;
   }
   this[indexes[0]]['='](value, rest);
 };

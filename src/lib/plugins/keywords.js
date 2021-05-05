@@ -135,22 +135,18 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
     );
   }
   const varName = args[0].getName();
+  const indexes = args.slice(1, -1).map((arg) => {
+    return arg.evaluate(scope);
+  });
   const value = args[args.length - 1].evaluate(scope);
   const hasProperty = Object.prototype.hasOwnProperty;
   while (scope != null) {
     if (hasProperty.call(scope, varName)) {
-      let object = scope;
-      let index = varName;
-      for (let i = 1; i < args.length - 1; i++) {
-        object = object[index];
-        index = args[i].evaluate(scope);
-        if (typeof object !== 'object' || object == undefined) {
-          throw new TypeError(
-              `The object ${JSON.stringify(object)} isn't indexable`,
-          );
-        }
+      if (indexes.length === 0) {
+        scope[varName] = value;
+      } else {
+        scope[varName]['='](value, ...indexes);
       }
-      object[index] = value;
       return value;
     }
     scope = Object.getPrototypeOf(scope);

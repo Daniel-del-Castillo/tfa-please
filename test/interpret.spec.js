@@ -60,6 +60,7 @@ describe('Interpreter', () => {
     {name: 'operation-methods', result: [1, 2, 12]},
     {name: 'negative-indexes', result: [[2, 3]]},
     {name: 'multilevel-assign', result: [[1, 9, [1000]]]},
+    {name: 'hash', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
   ];
 
   const runLogTest = (test) => {
@@ -91,6 +92,7 @@ describe('Interpreter errors', () => {
     {name: 'call-non-function', error: /Calling a non-function/},
     {name: 'assign-non-existent-var', error: /Tried to assign/},
     {name: 'multilevel-assign-error', error: /The object/},
+    {name: 'hash-args', error: /To create a hash/},
   ];
 
   const runTest = (test) => {

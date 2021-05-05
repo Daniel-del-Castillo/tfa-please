@@ -39,6 +39,7 @@ describe('Compiler', () => {
     'operation-methods',
     'negative-indexes',
     'multilevel-assign',
+    'hash',
   ];
 
   testList.forEach((test) => {

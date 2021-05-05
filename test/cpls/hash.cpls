@@ -20,27 +20,35 @@
           "type": "Call",
           "operator": {
             "type": "Word",
-            "name": "array"
+            "name": "map"
           },
           "args": [
             {
               "type": "Value",
-              "value": 1
+              "value": "x"
             },
             {
               "type": "Value",
-              "value": 3
+              "value": 4
+            },
+            {
+              "type": "Value",
+              "value": "y"
             },
             {
               "type": "Call",
               "operator": {
                 "type": "Word",
-                "name": "array"
+                "name": "map"
               },
               "args": [
                 {
                   "type": "Value",
-                  "value": 7
+                  "value": "z"
+                },
+                {
+                  "type": "Value",
+                  "value": 3
                 }
               ]
             }
@@ -52,20 +60,29 @@
       "type": "Call",
       "operator": {
         "type": "Word",
-        "name": "assign"
+        "name": "println"
       },
       "args": [
         {
-          "type": "Word",
-          "name": "x"
-        },
-        {
-          "type": "Value",
-          "value": 1
-        },
-        {
-          "type": "Value",
-          "value": 9
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "element"
+          },
+          "args": [
+            {
+              "type": "Word",
+              "name": "x"
+            },
+            {
+              "type": "Value",
+              "value": "y"
+            },
+            {
+              "type": "Value",
+              "value": "z"
+            }
+          ]
         }
       ]
     },
@@ -73,7 +90,7 @@
       "type": "Call",
       "operator": {
         "type": "Word",
-        "name": "assign"
+        "name": "set"
       },
       "args": [
         {
@@ -82,15 +99,15 @@
         },
         {
           "type": "Value",
-          "value": -1
+          "value": "y"
         },
         {
           "type": "Value",
-          "value": 0
+          "value": "z"
         },
         {
           "type": "Value",
-          "value": 1000
+          "value": 50
         }
       ]
     },
@@ -104,6 +121,32 @@
         {
           "type": "Word",
           "name": "x"
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "println"
+      },
+      "args": [
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "element"
+          },
+          "args": [
+            {
+              "type": "Word",
+              "name": "x"
+            },
+            {
+              "type": "Value",
+              "value": "y"
+            }
+          ]
         }
       ]
     }
