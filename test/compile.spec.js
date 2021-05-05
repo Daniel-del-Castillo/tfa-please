@@ -38,6 +38,7 @@ describe('Compiler', () => {
     'undefined-sub',
     'operation-methods',
     'negative-indexes',
+    'multilevel-assign',
   ];
 
   testList.forEach((test) => {

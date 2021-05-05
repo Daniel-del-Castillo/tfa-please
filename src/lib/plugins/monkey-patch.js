@@ -34,11 +34,10 @@ Object.prototype.sub = function(...indexes) {
  *     an object. The position can be indexed through more than one level
  * @param  {*} value The value to assign
  * @param  {...*} indexes The indexes
- * @return {*} The element behind that index
  */
 Object.prototype['='] = function(value, ...indexes) {
   if (this[indexes[0]] == undefined) {
-    return undefined;
+    return;
   }
   const rest = indexes.slice(1);
   if (rest.length === 0) {

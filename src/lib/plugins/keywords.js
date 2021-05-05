@@ -119,15 +119,15 @@ keywords.fn = keywords.function = keywords['->'] = (args, scope) => {
 
 /**
  * The assign keyword. Allows to assign a different value to a variable
- * @param {Array} args The args should be the name of a variable and a
- *     expression that evaluates to a new value
+ * @param {Array} args The args should be the name of a variable, a list of
+ *     indexes and a expression that evaluates to a new value
  * @param {Object} scope The scope
  * @return {function} The value of the new variable
  * @throws Will throw if there are syntactical or semantical errors
  */
 keywords.assign = keywords.set = keywords['='] = (args, scope) => {
-  if (args.length !== 2) {
-    throw new SyntaxError('Assign needs two arguments');
+  if (args.length < 2) {
+    throw new SyntaxError('Assign needs at least two arguments');
   }
   if (!(args[0] instanceof Word)) {
     throw new SyntaxError(
@@ -135,11 +135,22 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
     );
   }
   const varName = args[0].getName();
-  const value = args[1].evaluate(scope);
+  const value = args[args.length - 1].evaluate(scope);
   const hasProperty = Object.prototype.hasOwnProperty;
   while (scope != null) {
     if (hasProperty.call(scope, varName)) {
-      scope[varName] = value;
+      let object = scope;
+      let index = varName;
+      for (let i = 1; i < args.length - 1; i++) {
+        object = object[index];
+        index = args[i].evaluate(scope);
+        if (typeof object !== 'object' || object == undefined) {
+          throw new TypeError(
+              `The object ${JSON.stringify(object)} isn't indexable`,
+          );
+        }
+      }
+      object[index] = value;
       return value;
     }
     scope = Object.getPrototypeOf(scope);

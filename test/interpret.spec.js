@@ -59,6 +59,7 @@ describe('Interpreter', () => {
     {name: 'undefined-sub', result: [undefined]},
     {name: 'operation-methods', result: [1, 2, 12]},
     {name: 'negative-indexes', result: [[2, 3]]},
+    {name: 'multilevel-assign', result: [[1, 9, [1000]]]},
   ];
 
   const runLogTest = (test) => {
@@ -84,11 +85,12 @@ describe('Interpreter errors', () => {
     {name: 'fn-needs-body', error: /Functions need a body/},
     {name: 'parameter-names', error: /Parameter names/},
     {name: 'fn-wrong-arg-numbers', error: /Wrong number of arg/},
-    {name: 'assign-two-args', error: /Assign needs two arg/},
+    {name: 'assign-two-args', error: /Assign needs at least two arg/},
     {name: 'assign-first-arg', error: /The first argument to assign/},
     {name: 'undefined-binding', error: /Undefined binding/},
     {name: 'call-non-function', error: /Calling a non-function/},
     {name: 'assign-non-existent-var', error: /Tried to assign/},
+    {name: 'multilevel-assign-error', error: /The object/},
   ];
 
   const runTest = (test) => {
