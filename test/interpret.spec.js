@@ -65,6 +65,8 @@ describe('Interpreter', () => {
     {name: 'sub-in-hash', result: [1, 5, 3, 4]},
     {name: 'object', result: [0, 4, 5, 5]},
     {name: 'dot-operator', result: [0, 0, 0, 5, 9]},
+    {name: 'regexp', result: [true, ['a 42', 'a', '42']]},
+    {name: 'regexp2', result: [true, '1987-07-14', 0, '2015', '02']},
   ];
 
   const runLogTest = (test) => {

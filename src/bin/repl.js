@@ -56,7 +56,7 @@ rl.on('line', (line) => {
   } else if (stack === 0 && !ALL_WHITE.test(program)) {
     try {
       const r = parse(program).evaluate(scope);
-      console.log(r ? r.toString().blue : 'No value returned'.blue);
+      console.log(r ? JSON.stringify(r).blue : 'No value returned'.blue);
     } catch (err) {
       console.log(err.toString().red);
     }

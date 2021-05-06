@@ -8,6 +8,7 @@
 
 'use strict';
 
+
 /**
  * Some functions that are always available in Please
  */
@@ -27,6 +28,11 @@ topScope.false = false;
  * An undefined value
  */
 topScope.undefined = undefined;
+
+/**
+ * Import the XRegExp
+ */
+topScope.XRegExp = require('xregexp');
 
 /**
  * The basic Please operators

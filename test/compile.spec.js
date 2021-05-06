@@ -44,6 +44,8 @@ describe('Compiler', () => {
     'sub-in-hash',
     'object',
     'dot-operator',
+    'regexp',
+    'regexp2',
   ];
 
   testList.forEach((test) => {

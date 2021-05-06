@@ -9,6 +9,8 @@
 
 'use strict';
 
+const XRegExp = require('xregexp');
+
 /**
  * An object with the different keywords of the language
  */
@@ -77,6 +79,31 @@ class Word {
    */
   getName() {
     return this.name;
+  }
+}
+
+/**
+ * A class representing a regular expression
+ */
+class REGEXP {
+  /**
+   * The constructor
+   * @param {object} token A single token of type regexp
+   */
+  constructor(token) {
+    this.type = 'RegExp';
+    this.expression = token.value.slice(2, token.value.lastIndexOf('/'));
+    this.flags = token.value.slice(token.value.lastIndexOf('/') + 1);
+  }
+
+  /**
+   * Evaluate the node
+   * @param {object} scope The scope in which the node will be evaluated
+   * @return {*} The result of the evaluation
+   */
+  evaluate(scope) {
+    // eslint-disable-next-line new-cap
+    return XRegExp(this.expression, this.flags);
   }
 }
 
@@ -153,4 +180,4 @@ class MethodCall {
   }
 }
 
-module.exports = {Value, Word, Call, MethodCall, keywords};
+module.exports = {Value, Word, REGEXP, Call, MethodCall, keywords};

@@ -10,7 +10,7 @@
 
 const fs = require('fs');
 const {unraw} = require('unraw');
-const {Value, Word, Call, MethodCall} = require('./ast.js');
+const {Value, Word, REGEXP, Call, MethodCall} = require('./ast.js');
 
 /**
  * The defition of whitespace in the Please language
@@ -58,6 +58,7 @@ class Lexer {
         [
           /(?<STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
+          /(?<REGEXP>r\/(?:[^\/]|(?<=\\)\/)+?\/[nsxAgimuy]*)/,
           /(?<WORD>[^\s()\.{}\[\],":'\\]+|:=)/,
           /(?<COMMA>,|:(?!=))/,
           /(?<DOT>\.)/,
@@ -230,6 +231,10 @@ const parseExpression = (lexer) => {
   if (token.type === 'STRING' || token.type === 'NUMBER') {
     lexer.advanceToken();
     return parseCall(new Value(token), lexer);
+  }
+  if (token.type === 'REGEXP') {
+    lexer.advanceToken();
+    return parseCall(new REGEXP(token), lexer);
   }
   throw new SyntaxError(
       `Unexpected token: ${token.value} at line` +
