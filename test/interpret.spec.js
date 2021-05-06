@@ -61,6 +61,8 @@ describe('Interpreter', () => {
     {name: 'negative-indexes', result: [[2, 3]]},
     {name: 'multilevel-assign', result: [[1, 9, [1000]]]},
     {name: 'hash', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
+    {name: 'hash-colon', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
+    {name: 'sub-in-hash', result: [1, 5, 3, 4]},
   ];
 
   const runLogTest = (test) => {

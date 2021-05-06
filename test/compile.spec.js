@@ -40,6 +40,8 @@ describe('Compiler', () => {
     'negative-indexes',
     'multilevel-assign',
     'hash',
+    'hash-colon',
+    'sub-in-hash',
   ];
 
   testList.forEach((test) => {

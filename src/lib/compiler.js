@@ -32,11 +32,6 @@ class Lexer {
      */
     this.source_= source.replace(/\r/g, '');
     /**
-     * @property {Object}
-     * @private
-    */
-    this.cachedToken_ = undefined;
-    /**
      * @const {number}
      * @private
     */
@@ -63,8 +58,8 @@ class Lexer {
         [
           /(?<STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
-          /(?<WORD>[^\s(){}\[\],"'\\]+)/,
-          /(?<COMMA>,)/,
+          /(?<WORD>[^\s(){}\[\],":'\\]+|:=)/,
+          /(?<COMMA>,|:(?!=))/,
           /(?<LEFT_PARENTHESIS>[({])/,
           /(?<RIGHT_PARENTHESIS>[)}])/,
           /(?<LEFT_BRACKET>\[)/,
@@ -72,16 +67,31 @@ class Lexer {
         ].map((regexp) => regexp.source).join('|'),
         'y',
     );
+    /**
+     * @property {number} index The current position in the token list
+     * @private
+    */
+    this.index_ = -1;
+    /**
+     * @const {Array} tokens An array with the parsed tokens
+     * @private
+    */
+    this.tokens_ = [];
+    this.advanceToken_();
+    while (this.tokens_[this.tokens_.length - 1].type !== 'EOF') {
+      this.advanceToken_();
+    }
+    this.transformTokens_();
   }
 
   /**
-   * A method that returns the next token of the source
+   * A method that computes the next token and adds it to the list
    * @throws Will throw if there are invalid tokens
    */
-  advanceToken() {
+  advanceToken_() {
     this.skipSpace_();
     if (this.isEmpty()) {
-      this.cachedToken_ = {type: 'EOF', line: this.line_, column: this.column_};
+      this.tokens_.push({type: 'EOF', line: this.line_, column: this.column_});
       return;
     }
     let match = this.REGEXP_.exec(this.source_);
@@ -92,11 +102,12 @@ class Lexer {
           `at line ${this.line_} and column ${this.column_}`,
       );
     }
-    this.cachedToken_ = this.constructResult_(match);
-    this.cachedToken_.offset = this.offset_;
-    this.cachedToken_.line = this.line_;
-    this.cachedToken_.column = this.column_;
-    this.updateAfterMatch_(match.groups[this.cachedToken_.type]);
+    const result = this.constructResult_(match);
+    result.offset = this.offset_;
+    result.line = this.line_;
+    result.column = this.column_;
+    this.updateAfterMatch_(match.groups[result.type]);
+    this.tokens_.push(result);
   }
 
   /**
@@ -124,11 +135,40 @@ class Lexer {
   }
 
   /**
+   * Transforms the tokens that apply lexical transformations
+   */
+  transformTokens_() {
+    for (let i = 0; i < this.tokens_.length; i++) {
+      // x: => "x",
+      if (this.tokens_[i].type === 'WORD') {
+        const nextToken = this.tokens_[i + 1];
+        if (nextToken.value === ':') {
+          this.tokens_[i] = {
+            type: 'STRING',
+            value: this.tokens_[i].name,
+            offset: this.tokens_[i].offset,
+            column: this.tokens_[i].column,
+            line: this.tokens_[i].line,
+          };
+        }
+      }
+    }
+  }
+
+  /**
+   * A method that advances the lexer so the next returned token is
+   *     a different one
+   */
+  advanceToken() {
+    this.index_ += 1;
+  }
+
+  /**
    * A method that returns the actual token
    * @return {Object} The actual token
    */
   getLookAhead() {
-    return this.cachedToken_;
+    return this.tokens_[this.index_];
   }
 
   /**
