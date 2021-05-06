@@ -58,8 +58,9 @@ class Lexer {
         [
           /(?<STRING>(["'])(?:[^\2\\]|\\.)*?\2)/,
           /(?<NUMBER>[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?)/,
-          /(?<WORD>[^\s(){}\[\],":'\\]+|:=)/,
+          /(?<WORD>[^\s()\.{}\[\],":'\\]+|:=)/,
           /(?<COMMA>,|:(?!=))/,
+          /(?<DOT>\.)/,
           /(?<LEFT_PARENTHESIS>[({])/,
           /(?<RIGHT_PARENTHESIS>[)}])/,
           /(?<LEFT_BRACKET>\[)/,
@@ -140,17 +141,26 @@ class Lexer {
   transformTokens_() {
     for (let i = 0; i < this.tokens_.length; i++) {
       // x: => "x",
-      if (this.tokens_[i].type === 'WORD') {
-        const nextToken = this.tokens_[i + 1];
-        if (nextToken.value === ':') {
-          this.tokens_[i] = {
-            type: 'STRING',
-            value: this.tokens_[i].name,
-            offset: this.tokens_[i].offset,
-            column: this.tokens_[i].column,
-            line: this.tokens_[i].line,
-          };
-        }
+      if (this.tokens_[i].type === 'WORD' &&
+         this.tokens_[i + 1].value === ':') {
+        this.tokens_[i].type = 'STRING';
+        this.tokens_[i].value = this.tokens_[i].name;
+        delete this.tokens_[i].name;
+      // .x => ["x"],
+      } else if (this.tokens_[i].type === 'DOT' &&
+          this.tokens_[i + 1].type === 'WORD') {
+        this.tokens_[i].type = 'LEFT_BRACKET';
+        this.tokens_[i].value = '[';
+        this.tokens_[i + 1].type = 'STRING';
+        this.tokens_[i + 1].value = this.tokens_[i + 1].name;
+        delete this.tokens_[i + 1].name;
+        this.tokens_.splice(i + 2, 0, {
+          type: 'RIGHT_BRACKET',
+          value: ']',
+          offset: this.tokens_[i + 1].offset + this.tokens_[i + 1].value.length,
+          line: this.tokens_[i + 1].line,
+          column: this.tokens_[i + 1].column + this.tokens_[i + 1].value.length,
+        });
       }
     }
   }

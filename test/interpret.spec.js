@@ -64,6 +64,7 @@ describe('Interpreter', () => {
     {name: 'hash-colon', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
     {name: 'sub-in-hash', result: [1, 5, 3, 4]},
     {name: 'object', result: [0, 4, 5, 5]},
+    {name: 'dot-operator', result: [0, 0, 0, 5, 9]},
   ];
 
   const runLogTest = (test) => {

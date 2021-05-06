@@ -172,8 +172,10 @@ keywords.object = (args, scope) => {
   const objectEnv = Object.create(scope);
   const object = Object.create(objectEnv);
   objectEnv.self = object;
-  for (const key of Object.keys(Object.prototype)) {
-    objectEnv[key] = Object.prototype[key];
+  for (const key of Object.getOwnPropertyNames(Object.prototype)) {
+    if (key[0] !== '_') {
+      objectEnv[key] = Object.prototype[key];
+    }
   };
   for (let i = 0; i < args.length; i += 2) {
     const name = typeof args[i].getName === 'function' ?

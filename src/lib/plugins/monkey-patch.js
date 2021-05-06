@@ -53,6 +53,14 @@ Object.prototype['='] = function(value, ...indexes) {
 };
 
 /**
+ * A method that allows getting a string representation of the object
+ * @return {string} The string representation
+ */
+Object.prototype.toString = function() {
+  return JSON.stringify(this);
+};
+
+/**
  * A method that allows adding numbers
  * @param  {*} values The values to add
  * @return {*} The result of the operation
