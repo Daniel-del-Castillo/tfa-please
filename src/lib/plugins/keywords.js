@@ -156,4 +156,32 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   );
 };
 
+/**
+ * The object keyword. Allows to create an object
+ * @param {Array} args The args should be a list of key and value pairs
+ * @param {Object} scope The scope
+ * @return {object} The created object
+ * @throws Will throw if there are syntactical or semantical errors
+ */
+keywords.object = (args, scope) => {
+  if (args.length % 2 !== 0) {
+    throw new Error(
+        'To create an object the number of arguments must be a multiple of two',
+    );
+  }
+  const objectEnv = Object.create(scope);
+  const object = Object.create(objectEnv);
+  objectEnv.self = object;
+  for (const key of Object.keys(Object.prototype)) {
+    objectEnv[key] = Object.prototype[key];
+  };
+  for (let i = 0; i < args.length; i += 2) {
+    const name = typeof args[i].getName === 'function' ?
+       args[i].getName() : args[i].evaluate(object);
+    const value = args[i + 1].evaluate(object);
+    object[name] = value;
+  }
+  return object;
+};
+
 module.exports = {keywords};

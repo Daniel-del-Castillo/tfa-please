@@ -42,6 +42,7 @@ describe('Compiler', () => {
     'hash',
     'hash-colon',
     'sub-in-hash',
+    'object',
   ];
 
   testList.forEach((test) => {

@@ -63,6 +63,7 @@ describe('Interpreter', () => {
     {name: 'hash', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
     {name: 'hash-colon', result: [3, {'x': 4, 'y': {'z': 50}}, {'z': 50}]},
     {name: 'sub-in-hash', result: [1, 5, 3, 4]},
+    {name: 'object', result: [0, 4, 5, 5]},
   ];
 
   const runLogTest = (test) => {
@@ -95,6 +96,7 @@ describe('Interpreter errors', () => {
     {name: 'assign-non-existent-var', error: /Tried to assign/},
     {name: 'multilevel-assign-error', error: /The object/},
     {name: 'hash-args', error: /To create a hash/},
+    {name: 'object-args', error: /To create an object/},
   ];
 
   const runTest = (test) => {
