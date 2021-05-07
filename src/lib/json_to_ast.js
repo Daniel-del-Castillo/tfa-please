@@ -9,7 +9,7 @@
 
 'use strict';
 
-const {Word, Value, Call, MethodCall} = require('./ast.js');
+const {Word, Value, Call, MethodCall, REGEXP} = require('./ast.js');
 
 /**
  * Stores functions capable of transforming a node type from parsed JSON to AST
@@ -32,6 +32,15 @@ jsonToASTMap.Value = (json) => {
  */
 jsonToASTMap.Word = (json) => {
   return new Word(json);
+};
+
+/**
+ * Converts a REGEXP node
+ * @param {object} json The already parsed JSON representation
+ * @return {REGEXP} The AST representation
+ */
+jsonToASTMap.RegExp = (json) => {
+  return new REGEXP(json.expression, json.flags);
 };
 
 /**

@@ -88,12 +88,13 @@ class Word {
 class REGEXP {
   /**
    * The constructor
-   * @param {object} token A single token of type regexp
+   * @param {object} expression The representation of the regular expression
+   * @param {object} flags The regular expression flags
    */
-  constructor(token) {
+  constructor(expression, flags) {
     this.type = 'RegExp';
-    this.expression = token.value.slice(2, token.value.lastIndexOf('/'));
-    this.flags = token.value.slice(token.value.lastIndexOf('/') + 1);
+    this.expression = expression;
+    this.flags = flags;
   }
 
   /**

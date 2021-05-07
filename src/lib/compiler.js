@@ -234,7 +234,10 @@ const parseExpression = (lexer) => {
   }
   if (token.type === 'REGEXP') {
     lexer.advanceToken();
-    return parseCall(new REGEXP(token), lexer);
+    return parseCall(new REGEXP(
+        token.value.slice(2, token.value.lastIndexOf('/')),
+        token.value.slice(token.value.lastIndexOf('/') + 1),
+    ), lexer);
   }
   throw new SyntaxError(
       `Unexpected token: ${token.value} at line` +

@@ -10,6 +10,7 @@
 const should = require('chai').should();
 const {interpretFromFile, compile} = require('../src/main.js');
 const fs = require('fs');
+const sinon = require('sinon');
 
 describe('Miscellanous', () => {
   it('interpret from file', () => {
@@ -18,6 +19,15 @@ describe('Miscellanous', () => {
 
   it('interpret from file with method call', () => {
     interpretFromFile('test/cpls/method-undefined.cpls').should.eql(true);
+  });
+
+  it('interpret from file with a regexp', () => {
+    const logStub = sinon.stub(console, 'log');
+    const result = [];
+    logStub.callsFake((arg) => result.push(arg));
+    interpretFromFile('test/cpls/regexp2.cpls');
+    logStub.restore();
+    result.should.eql([true, '1987-07-14', 0, '2015', '02']);
   });
 
   it('invalid node type', () => {
