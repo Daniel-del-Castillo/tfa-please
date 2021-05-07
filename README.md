@@ -64,6 +64,11 @@ The Please language has severals features:
 * Functions (closure-like)
 * Arrays
 * Currying
+* For loops
+* Foreach loops
+* Objects
+* Hashes
+* Regular expressions
 
 There are examples inside the test folder for each of these ones
 
