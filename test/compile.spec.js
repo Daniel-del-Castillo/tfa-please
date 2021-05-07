@@ -47,6 +47,7 @@ describe('Compiler', () => {
     'regexp',
     'regexp2',
     'for',
+    'foreach',
   ];
 
   testList.forEach((test) => {

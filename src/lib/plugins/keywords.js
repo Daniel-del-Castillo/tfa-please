@@ -62,10 +62,31 @@ keywords.for = (args, scope) => {
   if (args.length !== 4) {
     throw new SyntaxError('Wrong number of arguments to for');
   }
+  const forScope = Object.create(scope);
   // eslint-disable-next-line max-len
-  for (args[0].evaluate(scope); args[1].evaluate(scope) !== false; args[2].evaluate(scope)) {
-    args[3].evaluate(scope);
+  for (args[0].evaluate(forScope); args[1].evaluate(forScope) !== false; args[2].evaluate(forScope)) {
+    args[3].evaluate(forScope);
   }
+};
+
+/**
+ * The foreach keyword
+ * @param {Array} args An array with the arguments. It must have length 3.
+ *     The first argument must be a word node that represents the name the
+ *     parameter will have, the second has to be an Array and the third the
+ *     code to execute for each element of the array
+ * @param {Object} scope The scope for executing the foreach loop
+ * @throws Will throw if there are syntactical errors
+ */
+keywords.foreach = (args, scope) => {
+  if (args.length !== 3) {
+    throw new SyntaxError('Wrong number of arguments to foreach');
+  }
+  args[1].evaluate(scope).forEach((x) => {
+    const foreachScope = Object.create(scope);
+    foreachScope[args[0].getName()] = x;
+    args[2].evaluate(foreachScope);
+  });
 };
 
 /**

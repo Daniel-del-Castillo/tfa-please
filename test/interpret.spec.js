@@ -67,7 +67,8 @@ describe('Interpreter', () => {
     {name: 'dot-operator', result: [0, 0, 0, 5, 9]},
     {name: 'regexp', result: [true, ['a 42', 'a', '42']]},
     {name: 'regexp2', result: [true, '1987-07-14', 0, '2015', '02']},
-    {name: 'for', result: [0, 1, 2, 3, 4]},
+    {name: 'for', result: [0, 1, 2, 3, 4, 7]},
+    {name: 'foreach', result: [1, 2, 3]},
   ];
 
   const runLogTest = (test) => {
@@ -102,6 +103,7 @@ describe('Interpreter errors', () => {
     {name: 'hash-args', error: /To create a hash/},
     {name: 'object-args', error: /To create an object/},
     {name: 'for', error: /Wrong number of arg/},
+    {name: 'foreach', error: /Wrong number of arg/},
   ];
 
   const runTest = (test) => {
