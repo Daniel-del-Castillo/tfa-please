@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Module: PleaseLang | Module: PleaseLang</title>
+    <title>Class: REGEXP | Class: REGEXP</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -24,7 +24,7 @@
         
     </div>
     <div class="title">
-        <h1><a href="index.html" class="link">Module: PleaseLang</a></h1>
+        <h1><a href="index.html" class="link">Class: REGEXP</a></h1>
         
     </div>
     <div class="search-container" id="search-container">
@@ -46,9 +46,10 @@
 
 <header>
     
-        <h2>PleaseLang</h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="module-PleaseLangAST.html">PleaseLangAST</a>~</span>REGEXP<span class="signature">(expression, flags)</span><span class="type-signature"></span></h2>
         
-            
+            <div class="class-description">A class representing a regular expression</div>
         
     
 </header>
@@ -58,25 +59,111 @@
         <div class="container-overview">
         
             
-                <div class="description">The main file of the Please lang implementation</div>
-            
-
-            
-                
 
 <dt>
+    
+        <h4 class="name" id="REGEXP">
+            
+                new <span class="type-signature"></span>REGEXP<span class="signature">(expression, flags)</span><span class="type-signature"></span>
+                
+            
+            <div class="container-source members">
+                <code><a href="lib_ast.js.html">lib/ast.js</a></code>,
+                <code><a href="lib_ast.js.html#line88">line 88</a></code>
+            </div>
+            
+        </h4>
+
+        
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        The constructor
+    </div>
     
 
     
 
     
 
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>expression</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The representation of the regular expression</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>flags</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The regular expression flags</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
     
 
     
@@ -99,9 +186,6 @@
     
 
     
-    <dt class="tag-since">Since:</dt>
-    <dd class="tag-since"><ul class="dummy"><li>8/04/2021</li></ul></dd>
-    
 
     
 
@@ -115,13 +199,6 @@
 
     
 
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:alu0101225548@ull.edu.es">Daniel del Castillo de la Rosa</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -142,7 +219,6 @@
 
 </dd>
 
-            
         
         </div>
     
@@ -161,6 +237,170 @@
 
     
 
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+                
+
+<dt>
+    
+        <h4 class="name" id="evaluate">
+            
+                <span class="type-signature"></span>evaluate<span class="signature">(scope)</span><span class="type-signature"> &rarr; {*}</span>
+                
+            
+            <div class="container-source members">
+                <code><a href="lib_ast.js.html">lib/ast.js</a></code>,
+                <code><a href="lib_ast.js.html#line105">line 105</a></code>
+            </div>
+            
+        </h4>
+
+        
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Evaluate the node
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-params">
+        <h5>Parameters:</h5>
+        
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The scope in which the node will be evaluated</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <div class="container-returns">
+        <h5>Returns:</h5>
+        
+                
+
+
+
+<span class="param-type">*</span>
+
+
+
+
+
+- The result of the evaluation
+
+
+
+
+            
+    </div>
+    
+
+    
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+    
+
+</dd>
+
+            </dl>
     
 
     
@@ -185,7 +425,7 @@
 <script src="scripts/linenumber.js"></script>
 
     <script>
-        var id = 'module:PleaseLang_sub'.replace(/"/g, '_');
+        var id = 'module:PleaseLangAST~REGEXP_sub'.replace(/"/g, '_');
         var selectedApi = document.getElementById(id); // do not use jquery selector
         var $selectedApi = $(selectedApi);
 
