@@ -46,6 +46,7 @@ describe('Compiler', () => {
     'dot-operator',
     'regexp',
     'regexp2',
+    'for',
   ];
 
   testList.forEach((test) => {

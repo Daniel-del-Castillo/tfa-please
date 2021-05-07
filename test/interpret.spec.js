@@ -67,6 +67,7 @@ describe('Interpreter', () => {
     {name: 'dot-operator', result: [0, 0, 0, 5, 9]},
     {name: 'regexp', result: [true, ['a 42', 'a', '42']]},
     {name: 'regexp2', result: [true, '1987-07-14', 0, '2015', '02']},
+    {name: 'for', result: [0, 1, 2, 3, 4]},
   ];
 
   const runLogTest = (test) => {
@@ -100,6 +101,7 @@ describe('Interpreter errors', () => {
     {name: 'multilevel-assign-error', error: /The object/},
     {name: 'hash-args', error: /To create a hash/},
     {name: 'object-args', error: /To create an object/},
+    {name: 'for', error: /Wrong number of arg/},
   ];
 
   const runTest = (test) => {

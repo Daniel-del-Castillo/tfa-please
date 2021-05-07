@@ -51,6 +51,24 @@ keywords.while = (args, scope) => {
 };
 
 /**
+ * The for keyword
+ * @param {Array} args An array with the arguments. It must have length 4.
+ *     Each argument corresponds to the normal parts of a typical JS for loop
+ *     and the last one being the body of the loop
+ * @param {Object} scope The scope for executing the for loop
+ * @throws Will throw if there are syntactical errors
+ */
+keywords.for = (args, scope) => {
+  if (args.length !== 4) {
+    throw new SyntaxError('Wrong number of arguments to for');
+  }
+  // eslint-disable-next-line max-len
+  for (args[0].evaluate(scope); args[1].evaluate(scope) !== false; args[2].evaluate(scope)) {
+    args[3].evaluate(scope);
+  }
+};
+
+/**
  * The run keyword. Runs the code passed as arguments
  * @param {Array} args A list of expression nodes to run
  * @param {Object} scope The scope
