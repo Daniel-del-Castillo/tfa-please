@@ -43,10 +43,12 @@ topScope.XRegExp = require('xregexp');
 
 /**
  * A function to print a line
- * @param {*} value The value to be printed
+ * @param {...*} values The values to be printed
+ * @return {Array} The printed values
  */
-topScope.println = (value) => {
-  console.log(value);
+topScope.println = (...values) => {
+  console.log(...values);
+  return values;
 };
 
 /**

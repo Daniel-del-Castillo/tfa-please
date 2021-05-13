@@ -34,6 +34,11 @@ program
         'interpret <fileName>',
         'interpret a compiled Please lang file',
         {executableFile: 'interpret.js'},
-    ).alias('i');
+    ).alias('i')
+    .command(
+        'transpile <fileName>',
+        'transpile a Please lang file to JS',
+        {executableFile: 'transpile.js'},
+    ).alias('t');
 
 program.parse(process.argv);

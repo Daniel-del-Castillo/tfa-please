@@ -97,8 +97,9 @@ keywords.foreach = (args, scope) => {
  */
 keywords.run = keywords.do = (args, scope) => {
   let value = false;
+  const doScope = Object.create(scope);
   args.forEach((arg) => {
-    value = arg.evaluate(scope);
+    value = arg.evaluate(doScope);
   });
   return value;
 };

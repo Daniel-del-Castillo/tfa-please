@@ -10,6 +10,7 @@
 'use strict';
 
 const XRegExp = require('xregexp');
+const {generateJS} = require('./generate_js.js');
 
 /**
  * An object with the different keywords of the language
@@ -34,6 +35,17 @@ class Value {
    * @return {string|number} The result of the evaluation
    */
   evaluate() {
+    return this.value;
+  }
+
+  /**
+   * Convert the node to JS
+   * @return {string} The result of the convertion
+   */
+  toJS() {
+    if (typeof this.value === 'string') {
+      return `'${this.value}'`;
+    }
     return this.value;
   }
 }
@@ -80,6 +92,14 @@ class Word {
   getName() {
     return this.name;
   }
+
+  /**
+   * Convert the node to JS
+   * @return {string} The result of the convertion
+   */
+  toJS() {
+    return '$' + this.name;
+  }
 }
 
 /**
@@ -105,6 +125,14 @@ class REGEXP {
   evaluate(scope) {
     // eslint-disable-next-line new-cap
     return XRegExp(this.expression, this.flags);
+  }
+
+  /**
+   * Convert the node to JS
+   * @return {string} The result of the convertion
+   */
+  toJS() {
+    return `XRegExp(${this.expression}, ${this.flags})`;
   }
 }
 
@@ -143,6 +171,19 @@ class Call {
       }
     }
   }
+
+  /**
+   * Convert the node to JS
+   * @return {string} The result of the convertion
+   */
+  toJS() {
+    const args = this.args.map((arg) => arg.toJS());
+    if (this.operator instanceof Word &&
+        generateJS[this.operator.name] != undefined) {
+      return generateJS[this.operator.name](...args);
+    }
+    return this.operator.toJS() + '(' + args.join(',') + ')';
+  }
 }
 
 /**
@@ -178,6 +219,15 @@ class MethodCall {
       return op[methodName];
     }
     return (...args) => op[methodName](...processedArgs, ...args);
+  }
+
+  /**
+   * Convert the node to JS
+   * @return {string} The result of the convertion
+   */
+  toJS() {
+    const args = this.args.map((arg) => arg.toJS());
+    return this.operator.toJS() + '[' + args.join(',') + ']';
   }
 }
 

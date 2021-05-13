@@ -41,8 +41,10 @@
     "tui-jsdoc-template": "^1.2.2"
   },
   "dependencies": {
+    "@vercel/ncc": "^0.28.5",
     "colors": "^1.4.0",
     "commander": "^7.2.0",
+    "js-beautify": "^1.13.13",
     "unraw": "^2.0.0",
     "xregexp": "^5.0.2"
   }

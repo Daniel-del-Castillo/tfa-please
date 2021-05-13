@@ -38,6 +38,14 @@ const {
   jsonToAST,
 } = require('./lib/json_to_ast.js');
 
+const {
+  convertToJS,
+  convertToJSFromCompiledFile,
+  convertToJSFromFile,
+  transpile,
+  transpileFromCompiled,
+} = require('./lib/transpiler.js');
+
 module.exports = {
   interpret,
   interpretFromFile,
@@ -57,4 +65,9 @@ module.exports = {
   Lexer,
   jsonToASTMap,
   jsonToAST,
+  convertToJS,
+  convertToJSFromCompiledFile,
+  convertToJSFromFile,
+  transpile,
+  transpileFromCompiled,
 };

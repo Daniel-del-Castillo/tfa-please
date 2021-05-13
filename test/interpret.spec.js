@@ -18,7 +18,7 @@ describe('Interpreter', () => {
 
   beforeEach(() => {
     logStub = sinon.stub(console, 'log');
-    logStub.callsFake((arg) => result.push(arg));
+    logStub.callsFake((...args) => args.forEach((arg) => result.push(arg)));
   });
 
   afterEach(() => {
@@ -69,6 +69,9 @@ describe('Interpreter', () => {
     {name: 'regexp2', result: [true, '1987-07-14', 0, '2015', '02']},
     {name: 'for', result: [0, 1, 2, 3, 4, 7]},
     {name: 'foreach', result: [1, 2, 3]},
+    {name: 'times', result: [23, 6]},
+    {name: 'hello-scope', result: ['computed value = ', 5]},
+    {name: 'funfun', result: [6]},
   ];
 
   const runLogTest = (test) => {

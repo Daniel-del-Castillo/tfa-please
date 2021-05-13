@@ -48,6 +48,9 @@ describe('Compiler', () => {
     'regexp2',
     'for',
     'foreach',
+    'times',
+    'hello-scope',
+    'funfun',
   ];
 
   testList.forEach((test) => {
