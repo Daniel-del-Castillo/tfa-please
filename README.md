@@ -25,9 +25,10 @@ Commands:
   run|r <fileName>        Run a Please lang file
   compile|c <origin>      compile a Please lang file
   interpret|i <fileName>  interpret a compiled Please lang file
+  transpile|t <fileName>  transpile a Please lang file to JS
   help [command]          display help for command
 ```
-The subcommands can also be used as executables and are also exported. Each subcommand also has its own help.
+The subcommands can also be used as executables and are also exported. Each subcommand also has its own help. It is possible to compile the Please file to a compiled format, to interpret a compiled Please file, to run a Please file and to transpile a Please file to JavaScript. The transpiled files are minified and bundled with the necessary dependencies so they can be executed as standalone files, but is possible to transpile to a intermediate JS representation with the -l option. Keep in mind the file produced this way won't work on their own, this option is only provided for the case that you want to inspect this intermediate representation.
 ### From code
 The module exports the following functions:
 ```js
@@ -50,6 +51,11 @@ module.exports = {
   Lexer,
   jsonToASTMap,
   jsonToAST,
+  convertToJS,
+  convertToJSFromCompiledFile,
+  convertToJSFromFile,
+  transpile,
+  transpileFromCompiled,
 };
 
 ```
