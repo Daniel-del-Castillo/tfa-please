@@ -65,7 +65,7 @@ generateJS.for = (initial, condition, final, body) => {
  * The foreach keyword
  * @param {string} name The name for the parameter
  * @param {string} iterable A JS code that evaluates to an iterable object
- * @param {string} body The JS code for the body{
+ * @param {string} body The JS code for the body
  * @return {string} The JS code
  */
 generateJS.foreach = (name, iterable, body) => {
