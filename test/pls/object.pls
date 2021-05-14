@@ -1,6 +1,6 @@
 do {
   def(x, object {
-    c, 0,
+    "c", 0,
     "gc",  ->{element(self, "c")},
     "sc",  ->{value, =(self, "c", value)},
     "inc", ->{=(self, "c", +(element(self, "c"),1))}

@@ -24,8 +24,8 @@
           },
           "args": [
             {
-              "type": "Word",
-              "name": "c"
+              "type": "Value",
+              "value": "c"
             },
             {
               "type": "Value",

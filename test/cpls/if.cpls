@@ -23,8 +23,17 @@
       ]
     },
     {
-      "type": "Value",
-      "value": 5
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "println"
+      },
+      "args": [
+        {
+          "type": "Value",
+          "value": 5
+        }
+      ]
     }
   ]
 }

@@ -218,8 +218,7 @@ keywords.object = (args, scope) => {
     }
   };
   for (let i = 0; i < args.length; i += 2) {
-    const name = typeof args[i].getName === 'function' ?
-       args[i].getName() : args[i].evaluate(object);
+    const name = args[i].evaluate(object);
     const value = args[i + 1].evaluate(object);
     object[name] = value;
   }

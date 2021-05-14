@@ -98,6 +98,9 @@ class Word {
    * @return {string} The result of the convertion
    */
   toJS() {
+    if (generateJS[this.name] != undefined) {
+      return generateJS[this.name]();
+    }
     return '$' + this.name;
   }
 }

@@ -51,6 +51,7 @@ describe('Compiler', () => {
     'times',
     'hello-scope',
     'funfun',
+    'do-with-let-at-end',
   ];
 
   testList.forEach((test) => {

@@ -11,7 +11,7 @@
     "please-repl": "src/bin/repl.js"
   },
   "scripts": {
-    "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
+    "test": "c8 -x **/preface.js --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
     "doc": "jsdoc -d docs -c jsdoc.json"
   },
   "repository": {

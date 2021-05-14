@@ -24,13 +24,13 @@ const generateJS = {};
  */
 generateJS.if = (condition, action1, action2) => {
   const result = `if (${condition} !== false) {
-    ${action1};
+    return ${action1};
   }`;
   if (action2 == undefined) {
     return result;
   } else {
     return result + ` else {
-      ${action2}
+      return ${action2};
     }`;
   }
 };
@@ -150,8 +150,6 @@ generateJS.object = (...args) => {
         let f = ${args[i + 1]};
         return f(...args);
       },`;
-    } else if (args[i].startsWith('$')) {
-      result += `'${args[i].slice(1)}': ${args[i + 1]},`;
     } else {
       result += `${args[i]}: ${args[i + 1]},`;
     }
@@ -164,19 +162,25 @@ generateJS.object = (...args) => {
  * The true value
  * @return {string} The JS code
  */
-generateJS.true = () => 'true';
+generateJS.true = () => {
+  return 'true';
+};
 
 /**
  * The false value
  * @return {string} The JS code
  */
-generateJS.false = () => 'false';
+generateJS.false = () => {
+  return 'false';
+};
 
 /**
  * An undefined value
  * @return {string} The JS code
  */
-generateJS.undefined = () => 'undefined';
+generateJS.undefined = () => {
+  return 'undefined';
+};
 
 /**
  * The basic Please operators
@@ -237,11 +241,7 @@ generateJS.element = (array, ...indexes) => {
 generateJS.map = generateJS.hash = (...args) => {
   let result = '{';
   for (let i = 0; i < args.length; i += 2) {
-    if (args[i].startsWith('$')) {
-      result += `'${args[i].slice(1)}': ${args[i + 1]},`;
-    } else {
-      result += `${args[i]}: ${args[i + 1]},`;
-    }
+    result += `${args[i]}: ${args[i + 1]},`;
   }
   result += '}';
   return result;

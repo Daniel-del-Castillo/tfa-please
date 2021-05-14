@@ -29,8 +29,6 @@ describe('Interpreter', () => {
   const testList = [
     {name: 'fixing-scope', result: 50},
     {name: 'while', result: 2},
-    {name: 'if', result: 5},
-    {name: 'if-else', result: 10},
     {name: 'false-if', result: 2},
     {name: 'method-undefined', result: true},
   ];
@@ -46,6 +44,8 @@ describe('Interpreter', () => {
   });
 
   const logTestList = [
+    {name: 'if', result: [5]},
+    {name: 'if-else', result: [10]},
     {name: 'array', result: [[1, 4], 3, 3]},
     {name: 'array-sum', result: ['sum(array(1, 2, 3)) := 6']},
     {name: 'println', result: ['Hello world\nHello']},
@@ -72,6 +72,7 @@ describe('Interpreter', () => {
     {name: 'times', result: [23, 6]},
     {name: 'hello-scope', result: ['computed value = ', 5]},
     {name: 'funfun', result: [6]},
+    {name: 'do-with-let-at-end', result: [1]},
   ];
 
   const runLogTest = (test) => {

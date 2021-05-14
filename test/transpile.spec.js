@@ -22,6 +22,8 @@ describe('Transpiler', () => {
   };
 
   const testList = [
+    'if',
+    'if-else',
     'println',
     'array',
     'array-sum',
@@ -48,6 +50,7 @@ describe('Transpiler', () => {
     'times',
     'hello-scope',
     'funfun',
+    'do-with-let-at-end',
   ];
 
   testList.forEach((test) => {
@@ -78,6 +81,8 @@ describe('Correct functioning of transpiled code', () => {
   };
 
   const testList = [
+    {name: 'if', result: [5]},
+    {name: 'if-else', result: [10]},
     {name: 'array', result: [[1, 4], 3, 3]},
     {name: 'array-sum', result: ['sum(array(1, 2, 3)) := 6']},
     {name: 'println', result: ['Hello world\nHello']},
@@ -104,6 +109,7 @@ describe('Correct functioning of transpiled code', () => {
     {name: 'times', result: [23, 6]},
     {name: 'hello-scope', result: ['computed value = ', 5]},
     {name: 'funfun', result: [6]},
+    {name: 'do-with-let-at-end', result: [1]},
   ];
 
   testList.forEach((test) => {

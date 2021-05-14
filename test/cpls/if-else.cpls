@@ -23,12 +23,30 @@
       ]
     },
     {
-      "type": "Value",
-      "value": 0
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "println"
+      },
+      "args": [
+        {
+          "type": "Value",
+          "value": 0
+        }
+      ]
     },
     {
-      "type": "Value",
-      "value": 10
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "println"
+      },
+      "args": [
+        {
+          "type": "Value",
+          "value": 10
+        }
+      ]
     }
   ]
 }
