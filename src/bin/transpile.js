@@ -18,7 +18,7 @@ const removeMonkeyPatching = () => {
   Object.keys(Object.prototype).forEach((key) => {
     delete Object.prototype[key];
   });
-}
+};
 
 program
     .version(version)

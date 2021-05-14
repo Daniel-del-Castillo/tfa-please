@@ -1,13 +1,11 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $f = (($x, ) => {
-    return (($y, ) => {
-      return ($x + $y);
-    });
-  });
+  let $x = [1, 3, [7]];
+  $x['='](9, 1);
+  $x['='](1000, -1, 0);
   return (() => {
-    let val = [$f(2)(4)];
+    let val = [$x];
     console.log(...val);
     return val;
   })();

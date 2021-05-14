@@ -96,7 +96,7 @@ keywords.foreach = (args, scope) => {
  * @return {*} The return value of the last executed expression
  */
 keywords.run = keywords.do = (args, scope) => {
-  let value = false;
+  let value = undefined;
   const doScope = Object.create(scope);
   args.forEach((arg) => {
     value = arg.evaluate(doScope);

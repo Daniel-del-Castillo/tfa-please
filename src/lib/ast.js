@@ -44,9 +44,9 @@ class Value {
    */
   toJS() {
     if (typeof this.value === 'string') {
-      return `'${this.value}'`;
+      return `${JSON.stringify(this.value)}`;
     }
-    return this.value;
+    return this.value.toString();
   }
 }
 
@@ -132,7 +132,8 @@ class REGEXP {
    * @return {string} The result of the convertion
    */
   toJS() {
-    return `XRegExp(${this.expression}, ${this.flags})`;
+    return `$XRegExp(\`${this.expression.replace(/\\/g, '\\\\')}` +
+        `\`, \`${this.flags}\`)`;
   }
 }
 
@@ -226,8 +227,17 @@ class MethodCall {
    * @return {string} The result of the convertion
    */
   toJS() {
-    const args = this.args.map((arg) => arg.toJS());
-    return this.operator.toJS() + '[' + args.join(',') + ']';
+    const operator = this.operator.toJS();
+    const name = this.args[0].toJS();
+    const args = this.args.slice(1).map((arg) => arg.toJS());
+    return `(() => {
+      let name = ${name};
+      let processedArgs = [${args}];
+      if (typeof ${operator}[name] !== 'function') {
+        return ${operator}[name];
+      }
+      return (...args) => ${operator}[name](...processedArgs, ...args);
+    })()`;
   }
 }
 

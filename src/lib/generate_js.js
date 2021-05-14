@@ -84,11 +84,13 @@ generateJS.run = generateJS.do = (...args) => {
   args.slice(0, -1).forEach((arg) => {
     result += arg + ';\n';
   });
-  if (args[args.length - 1].startsWith('let ')) {
-    result += `${args[args.length - 1]};
-      return ${args[args.length - 1].match(/let\s(.*?)\s/)[1]};\n})()`;
-  } else {
-    result += `return ${args[args.length - 1]};\n})()`;
+  if (args.length > 0) {
+    if (args[args.length - 1].startsWith('let ')) {
+      result += `${args[args.length - 1]};
+        return ${args[args.length - 1].match(/let\s(.*?)\s/)[1]};\n})()`;
+    } else {
+      result += `return ${args[args.length - 1]};\n})()`;
+    }
   }
   return result;
 };
@@ -116,18 +118,22 @@ generateJS.fn = generateJS.function = generateJS['->'] = (...args) => {
   });
   result += ') => {\nreturn ';
   result += args[args.length - 1];
-  result += '})';
+  result += ';\n})';
   return result;
 };
 
 /**
  * The assign keyword. Allows to assign a different value to a variable
  * @param {string} variable The name of the variable
- * @param {string} value The value to assign
+ * @param {...string} rest The rest of the arguments, they must be indexes and
+ *     the last one must be the value to assign
  * @return {string} The JS code
  */
-generateJS.assign = generateJS.set = generateJS['='] = (variable, value) => {
-  return `${variable} = ${value}`;
+generateJS.assign = generateJS.set = generateJS['='] = (variable, ...rest) => {
+  if (rest.length === 1) {
+    return `${variable} = ${rest[0]}`;
+  }
+  return `${variable}['='](${rest[rest.length - 1]}, ${rest.slice(0, -1)})`;
 };
 
 /**
@@ -138,14 +144,16 @@ generateJS.assign = generateJS.set = generateJS['='] = (variable, value) => {
 generateJS.object = (...args) => {
   let result = '{';
   for (let i = 0; i < args.length; i += 2) {
-    if (args[i + 1].startsWith('(function')) {
-      result = `${args[i]}: function(...args) {
-        let self = this;
+    if (args[i + 1].startsWith('((')) {
+      result += `${args[i]}: function(...args) {
+        let $self = this;
         let f = ${args[i + 1]};
         return f(...args);
       },`;
+    } else if (args[i].startsWith('$')) {
+      result += `'${args[i].slice(1)}': ${args[i + 1]},`;
     } else {
-      result = `${args[i]}: ${args[i + 1]},`;
+      result += `${args[i]}: ${args[i + 1]},`;
     }
   }
   result += '}';
@@ -197,7 +205,7 @@ generateJS.println = (...values) => {
  * @return {string} The JS code
  */
 generateJS.arr = generateJS.array = (...args) => {
-  return args.toString();
+  return '[' + args.toString() + ']';
 };
 
 /**
@@ -217,7 +225,7 @@ generateJS.len = generateJS.length = (array) => {
  */
 generateJS.element = (array, ...indexes) => {
   // @ts-ignore
-  return `${array}.sub(...${indexes})`;
+  return `${array}.sub(${indexes})`;
 };
 
 /**
@@ -229,7 +237,11 @@ generateJS.element = (array, ...indexes) => {
 generateJS.map = generateJS.hash = (...args) => {
   let result = '{';
   for (let i = 0; i < args.length; i += 2) {
-    result = `${args[i]}: ${args[i + 1]},`;
+    if (args[i].startsWith('$')) {
+      result += `'${args[i].slice(1)}': ${args[i + 1]},`;
+    } else {
+      result += `${args[i]}: ${args[i + 1]},`;
+    }
   }
   result += '}';
   return result;

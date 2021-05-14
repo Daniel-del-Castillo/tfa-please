@@ -67,7 +67,7 @@
           "type": "Call",
           "operator": {
             "type": "Word",
-            "name": "def"
+            "name": "set"
           },
           "args": [
             {
