@@ -1,6 +1,6 @@
 {
   "name": "@ull-esit-pl-2021/please",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "A simple programming language built on top of JavaScript",
   "main": "src/main.js",
   "bin": {
