@@ -1,7 +1,8 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $x = [1, [3, 4]];
+  let $x;
+  $x = [1, [3, 4]];
   (() => {
     let val = [(() => {
       let name = "sub";

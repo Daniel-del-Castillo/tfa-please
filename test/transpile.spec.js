@@ -51,6 +51,7 @@ describe('Transpiler', () => {
     'hello-scope',
     'funfun',
     'do-with-let-at-end',
+    'chained-def',
   ];
 
   testList.forEach((test) => {
@@ -110,6 +111,7 @@ describe('Correct functioning of transpiled code', () => {
     {name: 'hello-scope', result: ['computed value = ', 5]},
     {name: 'funfun', result: [6]},
     {name: 'do-with-let-at-end', result: [1]},
+    {name: 'chained-def', result: [3]},
   ];
 
   testList.forEach((test) => {

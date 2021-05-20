@@ -73,6 +73,7 @@ describe('Interpreter', () => {
     {name: 'hello-scope', result: ['computed value = ', 5]},
     {name: 'funfun', result: [6]},
     {name: 'do-with-let-at-end', result: [1]},
+    {name: 'chained-def', result: [3]},
   ];
 
   const runLogTest = (test) => {

@@ -15,6 +15,11 @@
 const generateJS = {};
 
 /**
+ * A place to store declarations that need to be at the top of a block
+ */
+generateJS.declarations = [];
+
+/**
  * The if function
  * @param {string} condition The JS code for the condition
  * @param {string} action1 The action to perform if the condition is fulfilled
@@ -42,9 +47,13 @@ generateJS.if = (condition, action1, action2) => {
  * @return {string} The JS code
  */
 generateJS.while = (condition, body) => {
-  return `while (${condition} !== false) {
+  const declarations = generateJS.declarations.join('');
+  generateJS.declarations = [];
+  return `(() => {
+    ${declarations}while (${condition} !== false) {
     ${body}
-  }`;
+    }
+  })()`;
 };
 
 /**
@@ -56,9 +65,13 @@ generateJS.while = (condition, body) => {
  * @return {string} The JS code
  */
 generateJS.for = (initial, condition, final, body) => {
-  return `for (${initial}; ${condition} !== false; ${final}) {
+  const declarations = generateJS.declarations.join('');
+  generateJS.declarations = [];
+  return `(() => {
+    ${declarations}for(${initial}; ${condition} !== false; ${final}) {
     ${body}
-  }`;
+    }
+  })()`;
 };
 
 /**
@@ -69,9 +82,13 @@ generateJS.for = (initial, condition, final, body) => {
  * @return {string} The JS code
  */
 generateJS.foreach = (name, iterable, body) => {
-  return `${iterable}.forEach((${name}) => {
+  const declarations = generateJS.declarations.join('');
+  generateJS.declarations = [];
+  return `(() => {
+    ${declarations}${iterable}.forEach((${name}) => {
     ${body}
-  });`;
+    });
+  })()`;
 };
 
 /**
@@ -81,16 +98,13 @@ generateJS.foreach = (name, iterable, body) => {
  */
 generateJS.run = generateJS.do = (...args) => {
   let result = '(() => {\n';
+  result += generateJS.declarations.join('');
+  generateJS.declarations = [];
   args.slice(0, -1).forEach((arg) => {
     result += arg + ';\n';
   });
   if (args.length > 0) {
-    if (args[args.length - 1].startsWith('let ')) {
-      result += `${args[args.length - 1]};
-        return ${args[args.length - 1].match(/let\s(.*?)\s/)[1]};\n})()`;
-    } else {
-      result += `return ${args[args.length - 1]};\n})()`;
-    }
+    result += `return ${args[args.length - 1]};\n})()`;
   }
   return result;
 };
@@ -102,7 +116,11 @@ generateJS.run = generateJS.do = (...args) => {
  * @return {string} The JS code
  */
 generateJS.let = generateJS.def = generateJS[':='] = (name, value) => {
-  return `let ${name} = ${value}`;
+  const declaration = `let ${name};\n`;
+  if (!generateJS.declarations.includes(declaration)) {
+    generateJS.declarations.push(declaration);
+  }
+  return `${name} = ${value}`;
 };
 
 /**
@@ -113,6 +131,8 @@ generateJS.let = generateJS.def = generateJS[':='] = (name, value) => {
  */
 generateJS.fn = generateJS.function = generateJS['->'] = (...args) => {
   let result = '((';
+  result += generateJS.declarations.join('');
+  generateJS.declarations = [];
   args.slice(0, -1).forEach((arg) => {
     result += arg + ',';
   });

@@ -1,7 +1,8 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $w = [
+  let $w;
+  $w = [
     [1, 2],
     [3, 4]
   ];

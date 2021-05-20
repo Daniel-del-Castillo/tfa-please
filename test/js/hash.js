@@ -1,7 +1,8 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $x = {
+  let $x;
+  $x = {
     "x": 4,
     "y": {
       "z": 3,

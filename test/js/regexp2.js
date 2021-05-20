@@ -1,7 +1,10 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $d = $XRegExp(`
+  let $x;
+  let $m;
+  let $d;
+  $d = $XRegExp(`
          (?<year>  \\d{4} ) -?  # year
          (?<month> \\d{2} ) -?  # month
          (?<day>   \\d{2} )     # day
@@ -18,7 +21,7 @@ require('../lib/plugins/monkey-patch.js');
     console.log(...val);
     return val;
   })();
-  let $m = (() => {
+  $m = (() => {
     let name = "exec";
     let processedArgs = [];
     if (typeof $d[name] !== 'function') {
@@ -50,7 +53,7 @@ require('../lib/plugins/monkey-patch.js');
     console.log(...val);
     return val;
   })();
-  let $x = (() => {
+  $x = (() => {
     let name = "exec";
     let processedArgs = [];
     if (typeof $XRegExp[name] !== 'function') {

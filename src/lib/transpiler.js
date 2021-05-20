@@ -12,6 +12,7 @@ const fs = require('fs');
 const {parse} = require('./compiler.js');
 const {jsonToAST} = require('./json_to_ast.js');
 const {preface} = require('./preface.js');
+const {generateJS} = require('./generate_js.js');
 const beautify = require('js-beautify').js;
 
 /**
@@ -21,8 +22,9 @@ const beautify = require('js-beautify').js;
  * @throws Will throw if there are syntactical errors
  */
 const convertToJS = (program) => {
+  const convertedProgram = program.toJS();
   return beautify(
-      preface + program.toJS(),
+      preface + generateJS.declarations.join('') + convertedProgram,
       {indent_size: 2, end_with_newline: true},
   );
 };

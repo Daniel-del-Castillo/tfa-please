@@ -1,16 +1,21 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $sum = (($nums, ) => {
+  let $sum;
+  $sum = (($nums, ) => {
     return (() => {
-      let $i = 0;
-      let $s = 0;
-      while (($i < $nums.length) !== false) {
-        (() => {
-          $s = ($s + $nums.sub($i));
-          return $i = ($i + 1);
-        })()
-      };
+      let $s;
+      let $i;
+      $i = 0;
+      $s = 0;
+      (() => {
+        while (($i < $nums.length) !== false) {
+          (() => {
+            $s = ($s + $nums.sub($i));
+            return $i = ($i + 1);
+          })()
+        }
+      })();
       return $s;
     })();
   });

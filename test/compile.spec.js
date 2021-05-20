@@ -52,6 +52,7 @@ describe('Compiler', () => {
     'hello-scope',
     'funfun',
     'do-with-let-at-end',
+    'chained-def',
   ];
 
   testList.forEach((test) => {

@@ -1,8 +1,10 @@
 const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
-  let $x = [1, 2, 3, 4];
-  let $inc = (($x, $i, $g, ) => {
+  let $inc;
+  let $x;
+  $x = [1, 2, 3, 4];
+  $inc = (($x, $i, $g, ) => {
     return ($x + 1);
   });
   return (() => {

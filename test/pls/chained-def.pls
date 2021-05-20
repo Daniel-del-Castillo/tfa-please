@@ -1,0 +1,1 @@
+println(def(x, def(a, 3)))

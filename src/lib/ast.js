@@ -181,12 +181,20 @@ class Call {
    * @return {string} The result of the convertion
    */
   toJS() {
+    const previousDeclarations = generateJS.declarations;
+    generateJS.declarations = [];
     const args = this.args.map((arg) => arg.toJS());
+    let result;
     if (this.operator instanceof Word &&
         generateJS[this.operator.name] != undefined) {
-      return generateJS[this.operator.name](...args);
+      result = generateJS[this.operator.name](...args);
+    } else {
+      result = this.operator.toJS() + '(' + args.join(',') + ')';
     }
-    return this.operator.toJS() + '(' + args.join(',') + ')';
+    previousDeclarations.forEach((declaration) => {
+      generateJS.declarations.push(declaration);
+    });
+    return result;
   }
 }
 
