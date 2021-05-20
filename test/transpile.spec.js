@@ -16,8 +16,8 @@ describe('Transpiler', () => {
   const runTest = (testName) => {
     const expected = fs.readFileSync(
         'test/js/' + testName + '.js', {encoding: 'utf8'},
-    );
-    convertToJSFromFile('test/pls/' + testName + '.pls')
+    ).replace(/\r/g, '');
+    convertToJSFromFile('test/pls/' + testName + '.pls').replace(/\r/g, '')
         .should.eql(expected);
   };
 

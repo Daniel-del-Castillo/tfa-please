@@ -63,16 +63,20 @@ describe('Miscellanous', () => {
 
   it('Transpile from compiled file', () => {
     transpileFromCompiled('test/cpls/funfun.cpls');
-    const actual = fs.readFileSync('test/cpls/funfun.js', {encoding: 'utf8'});
-    const expected = fs.readFileSync('test/js/funfun.js', {encoding: 'utf8'});
+    const actual = fs.readFileSync('test/cpls/funfun.js', {encoding: 'utf8'})
+        .replace(/\r/g, '');
+    const expected = fs.readFileSync('test/js/funfun.js', {encoding: 'utf8'})
+        .replace(/\r/g, '');
     fs.unlinkSync('test/cpls/funfun.js');
     actual.should.eql(expected);
   });
 
   it('Transpile', () => {
     transpile('test/pls/funfun.pls');
-    const actual = fs.readFileSync('test/pls/funfun.js', {encoding: 'utf8'});
-    const expected = fs.readFileSync('test/js/funfun.js', {encoding: 'utf8'});
+    const actual = fs.readFileSync('test/pls/funfun.js', {encoding: 'utf8'})
+        .replace(/\r/g, '');
+    const expected = fs.readFileSync('test/js/funfun.js', {encoding: 'utf8'})
+        .replace(/\r/g, '');
     fs.unlinkSync('test/pls/funfun.js');
     actual.should.eql(expected);
   });
