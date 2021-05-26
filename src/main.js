@@ -31,6 +31,7 @@ const {
   Word,
   Call,
   MethodCall,
+  REGEXP,
 } = require('./lib/ast.js');
 
 const {
@@ -57,6 +58,7 @@ module.exports = {
   Word,
   Call,
   MethodCall,
+  REGEXP,
   parse,
   parseCall,
   parseExpression,

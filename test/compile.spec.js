@@ -53,6 +53,7 @@ describe('Compiler', () => {
     'funfun',
     'do-with-let-at-end',
     'chained-def',
+    'expressive-assignments',
   ];
 
   testList.forEach((test) => {

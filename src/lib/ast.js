@@ -199,6 +199,37 @@ class Call {
 }
 
 /**
+ * A class representing a reference. It helps to evaluate the left hand side
+ */
+class Reference {
+  /**
+   * The constructor
+   * @param {Object} object The object
+   * @param {*} key The key that allows to access the real reference
+   */
+  constructor(object, key) {
+    this.object = object;
+    this.key = key;
+  }
+
+  /**
+   * Change the value the reference points to
+   * @param {*} value The value for the assignment
+   */
+  assign(value) {
+    this.object[this.key] = value;
+  }
+
+  /**
+   * Allows to get the value of the reference
+   * @return {*} The value inside
+   */
+  evaluate() {
+    return this.object[this.key];
+  }
+}
+
+/**
  * A class representing a method call
  */
 class MethodCall {
@@ -213,6 +244,29 @@ class MethodCall {
     this.type = 'MethodCall';
     this.operator = operator;
     this.args = args;
+  }
+
+  /**
+   * Evaluate the node for an assignment
+   * @param {object} scope The scope in which the node will be evaluated
+   * @return {*} The result of the evaluation
+   */
+  leftEvaluate(scope) {
+    const methodName = this.args[0].evaluate(scope);
+    let op;
+    if (this.operator instanceof MethodCall) {
+      op = this.operator.leftEvaluate(scope);
+      if (op == undefined) {
+        return undefined;
+      }
+      op = op.evaluate(scope);
+    } else {
+      op = this.operator.evaluate(scope);
+    }
+    if (op == undefined) {
+      return undefined;
+    }
+    return new Reference(op, methodName);
   }
 
   /**

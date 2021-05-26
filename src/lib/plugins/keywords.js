@@ -8,7 +8,7 @@
 
 'use strict';
 
-const {keywords, Word} = require('../ast.js');
+const {keywords, Word, MethodCall} = require('../ast.js');
 
 /**
  * The if function
@@ -169,16 +169,23 @@ keywords.assign = keywords.set = keywords['='] = (args, scope) => {
   if (args.length < 2) {
     throw new SyntaxError('Assign needs at least two arguments');
   }
-  if (!(args[0] instanceof Word)) {
+  if (!(args[0] instanceof Word || args[0] instanceof MethodCall)) {
     throw new SyntaxError(
-        'The first argument to assign must be a variable name',
+        'The first argument to assign must be a variable',
     );
+  }
+  const value = args[args.length - 1].evaluate(scope);
+  if (args[0] instanceof MethodCall) {
+    const reference = args[0].leftEvaluate(scope);
+    if (reference != undefined) {
+      reference.assign(value);
+    }
+    return value;
   }
   const varName = args[0].getName();
   const indexes = args.slice(1, -1).map((arg) => {
     return arg.evaluate(scope);
   });
-  const value = args[args.length - 1].evaluate(scope);
   const hasProperty = Object.prototype.hasOwnProperty;
   while (scope != null) {
     if (hasProperty.call(scope, varName)) {

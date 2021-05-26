@@ -15,7 +15,7 @@ const sinon = require('sinon');
 describe('Transpiler', () => {
   const runTest = (testName) => {
     const expected = fs.readFileSync(
-        'test/js/' + testName + '.js', {encoding: 'utf8'},
+        'test/js/' + testName + '.jstest', {encoding: 'utf8'},
     ).replace(/\r/g, '');
     convertToJSFromFile('test/pls/' + testName + '.pls').replace(/\r/g, '')
         .should.eql(expected);

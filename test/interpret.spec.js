@@ -74,6 +74,7 @@ describe('Interpreter', () => {
     {name: 'funfun', result: [6]},
     {name: 'do-with-let-at-end', result: [1]},
     {name: 'chained-def', result: [3]},
+    {name: 'expressive-assignments', result: [{'z': 50}]},
   ];
 
   const runLogTest = (test) => {
