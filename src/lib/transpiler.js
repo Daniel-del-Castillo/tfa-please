@@ -23,8 +23,10 @@ const beautify = require('js-beautify').js;
  */
 const convertToJS = (program) => {
   const convertedProgram = program.toJS();
+  const declarations = generateJS.declarations.join('');
+  generateJS.declarations = [];
   return beautify(
-      preface + generateJS.declarations.join('') + convertedProgram,
+      preface + declarations + convertedProgram,
       {indent_size: 2, end_with_newline: true},
   );
 };

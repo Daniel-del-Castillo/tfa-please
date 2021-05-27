@@ -52,6 +52,7 @@ describe('Transpiler', () => {
     'funfun',
     'do-with-let-at-end',
     'chained-def',
+    'expressive-assignments',
   ];
 
   testList.forEach((test) => {
@@ -115,6 +116,7 @@ describe('Correct functioning of transpiled code', () => {
     'funfun',
     'do-with-let-at-end',
     'chained-def',
+    'expressive-assignments',
   ];
 
   testList.forEach((testName) => {

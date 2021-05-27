@@ -10,11 +10,12 @@ require('../lib/plugins/monkey-patch.js');
   return (() => {
     let val = [(() => {
       let name = "map";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()($inc)];
     console.log(...val);
     return val;

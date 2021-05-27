@@ -13,11 +13,12 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "sub";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()("a")];
     console.log(...val);
     return val;
@@ -25,11 +26,12 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "sub";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()("c", "d")];
     console.log(...val);
     return val;
@@ -37,32 +39,20 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "e";
-      let processedArgs = [];
-      if (typeof(() => {
-          let name = "sub";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()("c")[name] !== 'function') {
-        return (() => {
-          let name = "sub";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()("c")[name];
-      }
-      return (...args) => (() => {
+      let op = (() => {
         let name = "sub";
+        let op = $x;
         let processedArgs = [];
-        if (typeof $x[name] !== 'function') {
-          return $x[name];
+        if (typeof op[name] !== 'function') {
+          return op[name];
         }
-        return (...args) => $x[name](...processedArgs, ...args);
-      })()("c")[name](...processedArgs, ...args);
+        return (...args) => op[name](...processedArgs, ...args);
+      })()("c");
+      let processedArgs = [];
+      if (typeof op[name] !== 'function') {
+        return op[name];
+      }
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -70,11 +60,12 @@ require('../lib/plugins/monkey-patch.js');
   return (() => {
     let val = [(() => {
       let name = "sub";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()("b")];
     console.log(...val);
     return val;

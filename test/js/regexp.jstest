@@ -10,19 +10,21 @@ require('../lib/plugins/monkey-patch.js');
           `, `x`);
   $s = (() => {
     let name = "test";
+    let op = $r;
     let processedArgs = [];
-    if (typeof $r[name] !== 'function') {
-      return $r[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $r[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()("a 4");
   $m = (() => {
     let name = "exec";
+    let op = $r;
     let processedArgs = [];
-    if (typeof $r[name] !== 'function') {
-      return $r[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $r[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()(";;; a 42");
   (() => {
     let val = [$s];

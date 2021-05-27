@@ -4,11 +4,12 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "length";
+      let op = "hello";
       let processedArgs = [];
-      if (typeof "hello" [name] !== 'function') {
-        return "hello" [name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => "hello" [name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -16,11 +17,12 @@ require('../lib/plugins/monkey-patch.js');
   return (() => {
     let val = [(() => {
       let name = "toFixed";
+      let op = 4;
       let processedArgs = [];
-      if (typeof 4[name] !== 'function') {
-        return 4[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => 4[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()(2)];
     console.log(...val);
     return val;

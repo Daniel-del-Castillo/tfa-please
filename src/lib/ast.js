@@ -181,6 +181,10 @@ class Call {
    * @return {string} The result of the convertion
    */
   toJS() {
+    if (['=', 'set', 'assign'].includes(this.operator.name) &&
+       this.args[0].type === 'MethodCall' && this.args.length === 2) {
+      return this.assignmentToJS();
+    }
     const previousDeclarations = generateJS.declarations;
     generateJS.declarations = [];
     const args = this.args.map((arg) => arg.toJS());
@@ -194,6 +198,34 @@ class Call {
     previousDeclarations.forEach((declaration) => {
       generateJS.declarations.push(declaration);
     });
+    return result;
+  }
+
+  /**
+   * Convert an assignment to JS
+   * @return {string} The result of the convertion
+   */
+  assignmentToJS() {
+    let result = '';
+    const keys = [];
+    let operator = this.args[0];
+    while (operator.type !== 'Word') {
+      keys.push(operator.args[0].toJS());
+      operator = operator.operator;
+    }
+    const object = operator.toJS();
+    result += keys.map((key, i) => `var a${i} = ${key};`).join('\n');
+    result += `var obj = ${object};\n`;
+    result += 'if (';
+    let accesses = '';
+    for (let i = keys.length - 1; i >= 0; i--) {
+      accesses += '[a' + i + ']';
+      if (i !== 0) {
+        result += `obj${accesses} != undefined && `;
+      }
+    }
+    result = result.slice(0, -3) + ') {\n';
+    result += `obj${accesses} = ${this.args[1].toJS()};\n}`;
     return result;
   }
 }
@@ -297,11 +329,12 @@ class MethodCall {
     const args = this.args.slice(1).map((arg) => arg.toJS());
     return `(() => {
       let name = ${name};
+      let op = ${operator};
       let processedArgs = [${args}];
-      if (typeof ${operator}[name] !== 'function') {
-        return ${operator}[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => ${operator}[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()`;
   }
 }

@@ -2,17 +2,35 @@ const $XRegExp = require('xregexp');
 require('../lib/plugins/monkey-patch.js');
 (() => {
   let $x;
-  $x = "hello";
+  $x = {
+    "x": 4,
+    "y": {
+      "z": 3,
+    },
+  };
+  var a0 = "z";
+  var a1 = "y";
+  var obj = $x;
+  if (obj[a1] != undefined) {
+    obj[a1][a0] = 50;
+  };
+  var a0 = "z";
+  var a1 = 3;
+  var a2 = "3";
+  var obj = $x;
+  if (obj[a2] != undefined && obj[a2][a1] != undefined) {
+    obj[a2][a1][a0] = 50;
+  };
   return (() => {
     let val = [(() => {
-      let name = "toUpperCase";
+      let name = "y";
       let op = $x;
       let processedArgs = [];
       if (typeof op[name] !== 'function') {
         return op[name];
       }
       return (...args) => op[name](...processedArgs, ...args);
-    })()()];
+    })()];
     console.log(...val);
     return val;
   })();

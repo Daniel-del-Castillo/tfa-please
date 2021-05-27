@@ -12,31 +12,34 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "test";
+      let op = $d;
       let processedArgs = [];
-      if (typeof $d[name] !== 'function') {
-        return $d[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $d[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()("1987-07-14")];
     console.log(...val);
     return val;
   })();
   $m = (() => {
     let name = "exec";
+    let op = $d;
     let processedArgs = [];
-    if (typeof $d[name] !== 'function') {
-      return $d[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $d[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()("1987-07-14");
   (() => {
     let val = [(() => {
       let name = 0;
+      let op = $m;
       let processedArgs = [];
-      if (typeof $m[name] !== 'function') {
-        return $m[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $m[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -44,52 +47,42 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "index";
+      let op = $m;
       let processedArgs = [];
-      if (typeof $m[name] !== 'function') {
-        return $m[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $m[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
   })();
   $x = (() => {
     let name = "exec";
+    let op = $XRegExp;
     let processedArgs = [];
-    if (typeof $XRegExp[name] !== 'function') {
-      return $XRegExp[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $XRegExp[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()("2015-02-22", $d);
   (() => {
     let val = [(() => {
       let name = "year";
-      let processedArgs = [];
-      if (typeof(() => {
-          let name = "groups";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()[name] !== 'function') {
-        return (() => {
-          let name = "groups";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()[name];
-      }
-      return (...args) => (() => {
+      let op = (() => {
         let name = "groups";
+        let op = $x;
         let processedArgs = [];
-        if (typeof $x[name] !== 'function') {
-          return $x[name];
+        if (typeof op[name] !== 'function') {
+          return op[name];
         }
-        return (...args) => $x[name](...processedArgs, ...args);
-      })()[name](...processedArgs, ...args);
+        return (...args) => op[name](...processedArgs, ...args);
+      })();
+      let processedArgs = [];
+      if (typeof op[name] !== 'function') {
+        return op[name];
+      }
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -97,32 +90,20 @@ require('../lib/plugins/monkey-patch.js');
   return (() => {
     let val = [(() => {
       let name = "month";
-      let processedArgs = [];
-      if (typeof(() => {
-          let name = "groups";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()[name] !== 'function') {
-        return (() => {
-          let name = "groups";
-          let processedArgs = [];
-          if (typeof $x[name] !== 'function') {
-            return $x[name];
-          }
-          return (...args) => $x[name](...processedArgs, ...args);
-        })()[name];
-      }
-      return (...args) => (() => {
+      let op = (() => {
         let name = "groups";
+        let op = $x;
         let processedArgs = [];
-        if (typeof $x[name] !== 'function') {
-          return $x[name];
+        if (typeof op[name] !== 'function') {
+          return op[name];
         }
-        return (...args) => $x[name](...processedArgs, ...args);
-      })()[name](...processedArgs, ...args);
+        return (...args) => op[name](...processedArgs, ...args);
+      })();
+      let processedArgs = [];
+      if (typeof op[name] !== 'function') {
+        return op[name];
+      }
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;

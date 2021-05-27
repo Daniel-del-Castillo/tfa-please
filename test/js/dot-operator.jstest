@@ -9,11 +9,12 @@ require('../lib/plugins/monkey-patch.js');
       let f = (() => {
         return (() => {
           let name = "c";
+          let op = $self;
           let processedArgs = [];
-          if (typeof $self[name] !== 'function') {
-            return $self[name];
+          if (typeof op[name] !== 'function') {
+            return op[name];
           }
-          return (...args) => $self[name](...processedArgs, ...args);
+          return (...args) => op[name](...processedArgs, ...args);
         })();
       });
       return f(...args);
@@ -29,11 +30,12 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "c";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -41,11 +43,12 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "c";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()];
     console.log(...val);
     return val;
@@ -53,51 +56,56 @@ require('../lib/plugins/monkey-patch.js');
   (() => {
     let val = [(() => {
       let name = "gc";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()()];
     console.log(...val);
     return val;
   })();
   (() => {
     let name = "sc";
+    let op = $x;
     let processedArgs = [];
-    if (typeof $x[name] !== 'function') {
-      return $x[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $x[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()(5);
   (() => {
     let val = [(() => {
       let name = "gc";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()()];
     console.log(...val);
     return val;
   })();
   (() => {
     let name = "sc";
+    let op = $x;
     let processedArgs = [];
-    if (typeof $x[name] !== 'function') {
-      return $x[name];
+    if (typeof op[name] !== 'function') {
+      return op[name];
     }
-    return (...args) => $x[name](...processedArgs, ...args);
+    return (...args) => op[name](...processedArgs, ...args);
   })()(9);
   return (() => {
     let val = [(() => {
       let name = "gc";
+      let op = $x;
       let processedArgs = [];
-      if (typeof $x[name] !== 'function') {
-        return $x[name];
+      if (typeof op[name] !== 'function') {
+        return op[name];
       }
-      return (...args) => $x[name](...processedArgs, ...args);
+      return (...args) => op[name](...processedArgs, ...args);
     })()()];
     console.log(...val);
     return val;
