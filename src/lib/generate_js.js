@@ -28,16 +28,15 @@ generateJS.declarations = [];
  * @return {string} The JS code
  */
 generateJS.if = (condition, action1, action2) => {
-  const result = `if (${condition} !== false) {
+  let result = `(() => { if (${condition} !== false) {
     return ${action1};
   }`;
-  if (action2 == undefined) {
-    return result;
-  } else {
-    return result + ` else {
+  if (action2 != undefined) {
+    result += ` else {
       return ${action2};
     }`;
   }
+  return result + `})()`;
 };
 
 /**

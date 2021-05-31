@@ -1,0 +1,15 @@
+const $XRegExp = require('xregexp');
+require('../lib/plugins/monkey-patch.js');
+(() => {
+  let val = [(() => {
+    return (() => {
+      if (false !== false) {
+        return 5;
+      } else {
+        return 4;
+      }
+    })();
+  })()];
+  console.log(...val);
+  return val;
+})()

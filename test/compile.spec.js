@@ -54,6 +54,7 @@ describe('Compiler', () => {
     'do-with-let-at-end',
     'chained-def',
     'expressive-assignments',
+    'if-at-end',
   ];
 
   testList.forEach((test) => {

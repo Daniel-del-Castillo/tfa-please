@@ -12,6 +12,41 @@ const {convertToJSFromFile, runFromFile} = require('../src/main.js');
 const fs = require('fs');
 const sinon = require('sinon');
 
+const testList = [
+  'if',
+  'if-else',
+  'println',
+  'array',
+  'array-sum',
+  'method-example',
+  'array-properties',
+  'js-methods',
+  'map',
+  'sub',
+  '=',
+  'currying',
+  'undefined-sub',
+  'operation-methods',
+  'negative-indexes',
+  'multilevel-assign',
+  'hash',
+  'hash-colon',
+  'sub-in-hash',
+  'object',
+  'dot-operator',
+  'regexp',
+  'regexp2',
+  'for',
+  'foreach',
+  'times',
+  'hello-scope',
+  'funfun',
+  'do-with-let-at-end',
+  'chained-def',
+  'expressive-assignments',
+  'if-at-end',
+];
+
 describe('Transpiler', () => {
   const runTest = (testName) => {
     const expected = fs.readFileSync(
@@ -20,40 +55,6 @@ describe('Transpiler', () => {
     convertToJSFromFile('test/pls/' + testName + '.pls').replace(/\r/g, '')
         .should.eql(expected);
   };
-
-  const testList = [
-    'if',
-    'if-else',
-    'println',
-    'array',
-    'array-sum',
-    'method-example',
-    'array-properties',
-    'js-methods',
-    'map',
-    'sub',
-    '=',
-    'currying',
-    'undefined-sub',
-    'operation-methods',
-    'negative-indexes',
-    'multilevel-assign',
-    'hash',
-    'hash-colon',
-    'sub-in-hash',
-    'object',
-    'dot-operator',
-    'regexp',
-    'regexp2',
-    'for',
-    'foreach',
-    'times',
-    'hello-scope',
-    'funfun',
-    'do-with-let-at-end',
-    'chained-def',
-    'expressive-assignments',
-  ];
 
   testList.forEach((test) => {
     it(test, () => {
@@ -84,40 +85,6 @@ describe('Correct functioning of transpiled code', () => {
     eval(code);
     result.should.eql(expected);
   };
-
-  const testList = [
-    'if',
-    'if-else',
-    'array',
-    'array-sum',
-    'println',
-    'method-example',
-    'array-properties',
-    'js-methods',
-    'map',
-    'sub',
-    '=',
-    'currying',
-    'undefined-sub',
-    'operation-methods',
-    'negative-indexes',
-    'multilevel-assign',
-    'hash',
-    'hash-colon',
-    'sub-in-hash',
-    'object',
-    'dot-operator',
-    'regexp',
-    'regexp2',
-    'for',
-    'foreach',
-    'times',
-    'hello-scope',
-    'funfun',
-    'do-with-let-at-end',
-    'chained-def',
-    'expressive-assignments',
-  ];
 
   testList.forEach((testName) => {
     it(testName, () => {
