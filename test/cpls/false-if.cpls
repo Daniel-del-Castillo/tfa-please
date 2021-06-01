@@ -30,21 +30,8 @@
       },
       "args": [
         {
-          "type": "Call",
-          "operator": {
-            "type": "Word",
-            "name": "=="
-          },
-          "args": [
-            {
-              "type": "Value",
-              "value": 1
-            },
-            {
-              "type": "Value",
-              "value": 2
-            }
-          ]
+          "type": "Value",
+          "value": false
         },
         {
           "type": "Call",

@@ -2,23 +2,19 @@
   "type": "Call",
   "operator": {
     "type": "Word",
-    "name": "run"
+    "name": "do"
   },
   "args": [
     {
       "type": "Call",
       "operator": {
         "type": "Word",
-        "name": "let"
+        "name": "println"
       },
       "args": [
         {
-          "type": "Word",
-          "name": "x"
-        },
-        {
           "type": "Value",
-          "value": 1
+          "value": 19
         }
       ]
     },
@@ -26,61 +22,40 @@
       "type": "Call",
       "operator": {
         "type": "Word",
-        "name": "while"
+        "name": "println"
       },
       "args": [
         {
           "type": "Call",
           "operator": {
             "type": "Word",
-            "name": "!="
+            "name": "&&"
           },
           "args": [
-            {
-              "type": "Word",
-              "name": "x"
-            },
             {
               "type": "Value",
-              "value": 2
-            }
-          ]
-        },
-        {
-          "type": "Call",
-          "operator": {
-            "type": "Word",
-            "name": "assign"
-          },
-          "args": [
-            {
-              "type": "Word",
-              "name": "x"
+              "value": false
             },
             {
               "type": "Call",
               "operator": {
                 "type": "Word",
-                "name": "+"
+                "name": "!="
               },
               "args": [
                 {
                   "type": "Word",
-                  "name": "x"
+                  "name": "true"
                 },
                 {
-                  "type": "Value",
-                  "value": 1
+                  "type": "Word",
+                  "name": "false"
                 }
               ]
             }
           ]
         }
       ]
-    },
-    {
-      "type": "Word",
-      "name": "x"
     }
   ]
 }

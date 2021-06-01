@@ -8,14 +8,15 @@
 'use strict';
 
 const should = require('chai').should();
-const {parseFromFile} = require('../src/main.js');
+const {parseFromFile, optimize} = require('../src/main.js');
 const fs = require('fs');
 
 describe('Compiler', () => {
   const runTest = (testName) => {
     const expected = JSON.parse(
         fs.readFileSync('test/cpls/' + testName + '.cpls', {encoding: 'utf8'}));
-    parseFromFile('test/pls/' + testName + '.pls').should.eql(expected);
+    optimize(parseFromFile('test/pls/' + testName + '.pls'))
+        .should.eql(expected);
   };
 
   const testList = [
@@ -55,6 +56,7 @@ describe('Compiler', () => {
     'chained-def',
     'expressive-assignments',
     'if-at-end',
+    'constant-folding',
   ];
 
   testList.forEach((test) => {

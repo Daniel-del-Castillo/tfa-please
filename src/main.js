@@ -46,6 +46,7 @@ const {
   transpile,
   transpileFromCompiled,
 } = require('./lib/transpiler.js');
+const {optimize} = require('./lib/optimization.js');
 
 module.exports = {
   interpret,
@@ -72,4 +73,5 @@ module.exports = {
   convertToJSFromFile,
   transpile,
   transpileFromCompiled,
+  optimize,
 };

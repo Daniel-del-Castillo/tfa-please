@@ -46,6 +46,7 @@ const testList = [
   'expressive-assignments',
   'if-at-end',
   'method-undefined',
+  'constant-folding',
 ];
 
 describe('Transpiler', () => {

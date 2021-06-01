@@ -10,6 +10,7 @@
 
 const fs = require('fs');
 const {unraw} = require('unraw');
+const {optimize} = require('./optimization.js');
 const {Value, Word, REGEXP, Call, MethodCall} = require('./ast.js');
 
 /**
@@ -331,7 +332,7 @@ const compile = (origin, destination = undefined) => {
   if (destination == undefined) {
     destination = origin.match(/^[^\.]*/)[0] + '.cpls';
   }
-  const ast = JSON.stringify(parse(source), null, 2);
+  const ast = JSON.stringify(optimize(parse(source)), null, 2);
   fs.writeFileSync(destination, ast);
 };
 

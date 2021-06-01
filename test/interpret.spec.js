@@ -76,6 +76,7 @@ describe('Interpreter', () => {
     {name: 'chained-def', result: [3]},
     {name: 'expressive-assignments', result: [{'z': 50}]},
     {name: 'if-at-end', result: [4]},
+    {name: 'constant-folding', result: [19, false]},
   ];
 
   const runLogTest = (test) => {

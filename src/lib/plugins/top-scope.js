@@ -37,7 +37,8 @@ topScope.XRegExp = require('xregexp');
 /**
  * The basic Please operators
  */
-['+', '-', '*', '/', '==', '!=', '<', '>', '&&', '||'].forEach((op) => {
+const operators = ['+', '-', '*', '/', '==', '!=', '<', '>', '&&', '||'];
+operators.forEach((op) => {
   topScope[op] = Function('a, b', `return a ${op} b;`);
 });
 
@@ -99,4 +100,4 @@ topScope.map = topScope.hash = (...args) => {
   return hash;
 };
 
-module.exports = {topScope};
+module.exports = {topScope, operators};
