@@ -1,0 +1,13 @@
+{
+  "type": "Call",
+  "operator": {
+    "type": "Word",
+    "name": "println"
+  },
+  "args": [
+    {
+      "type": "Value",
+      "value": "Hello world\nHello"
+    }
+  ]
+}

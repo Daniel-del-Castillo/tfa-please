@@ -10,6 +10,9 @@ require('../lib/plugins/monkey-patch.js');
     let name = "=";
     let op = $w;
     let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
     if (typeof op[name] !== 'function') {
       return op[name];
     }

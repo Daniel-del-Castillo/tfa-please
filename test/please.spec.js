@@ -25,7 +25,12 @@ describe('Miscellanous', () => {
   });
 
   it('interpret from file with method call', () => {
-    interpretFromFile('test/cpls/method-undefined.cpls').should.eql(true);
+    const logStub = sinon.stub(console, 'log');
+    const result = [];
+    logStub.callsFake((arg) => result.push(arg));
+    interpretFromFile('test/cpls/method-undefined.cpls');
+    logStub.restore();
+    result.should.eql([undefined]);
   });
 
   it('interpret from file with a regexp', () => {

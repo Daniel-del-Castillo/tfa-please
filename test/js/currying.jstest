@@ -6,6 +6,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "+";
       let op = 4;
       let processedArgs = [5];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }

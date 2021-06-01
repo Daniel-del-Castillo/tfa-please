@@ -15,6 +15,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "sub";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -28,6 +31,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "sub";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -43,12 +49,18 @@ require('../lib/plugins/monkey-patch.js');
         let name = "sub";
         let op = $x;
         let processedArgs = [];
+        if (op == undefined) {
+          return undefined;
+        }
         if (typeof op[name] !== 'function') {
           return op[name];
         }
         return (...args) => op[name](...processedArgs, ...args);
       })()("c");
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -62,6 +74,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "sub";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }

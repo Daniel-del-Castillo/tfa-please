@@ -26,6 +26,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "y";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }

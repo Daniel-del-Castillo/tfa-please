@@ -1,1 +1,1 @@
-==(1[2][3], undefined)
+println(1[2][3])

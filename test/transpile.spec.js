@@ -45,6 +45,7 @@ const testList = [
   'chained-def',
   'expressive-assignments',
   'if-at-end',
+  'method-undefined',
 ];
 
 describe('Transpiler', () => {

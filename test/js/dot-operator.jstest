@@ -11,6 +11,9 @@ require('../lib/plugins/monkey-patch.js');
           let name = "c";
           let op = $self;
           let processedArgs = [];
+          if (op == undefined) {
+            return undefined;
+          }
           if (typeof op[name] !== 'function') {
             return op[name];
           }
@@ -32,6 +35,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "c";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -45,6 +51,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "c";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -58,6 +67,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "gc";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -70,6 +82,9 @@ require('../lib/plugins/monkey-patch.js');
     let name = "sc";
     let op = $x;
     let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
     if (typeof op[name] !== 'function') {
       return op[name];
     }
@@ -80,6 +95,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "gc";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -92,6 +110,9 @@ require('../lib/plugins/monkey-patch.js');
     let name = "sc";
     let op = $x;
     let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
     if (typeof op[name] !== 'function') {
       return op[name];
     }
@@ -102,6 +123,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "gc";
       let op = $x;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }

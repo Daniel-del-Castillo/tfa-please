@@ -1,0 +1,29 @@
+const $XRegExp = require('xregexp');
+require('../lib/plugins/monkey-patch.js');
+(() => {
+  let val = [(() => {
+    let name = 3;
+    let op = (() => {
+      let name = 2;
+      let op = 1;
+      let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
+      if (typeof op[name] !== 'function') {
+        return op[name];
+      }
+      return (...args) => op[name](...processedArgs, ...args);
+    })();
+    let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
+    if (typeof op[name] !== 'function') {
+      return op[name];
+    }
+    return (...args) => op[name](...processedArgs, ...args);
+  })()];
+  console.log(...val);
+  return val;
+})()

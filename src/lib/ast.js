@@ -331,6 +331,9 @@ class MethodCall {
       let name = ${name};
       let op = ${operator};
       let processedArgs = [${args}];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }

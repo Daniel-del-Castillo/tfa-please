@@ -30,7 +30,6 @@ describe('Interpreter', () => {
     {name: 'fixing-scope', result: 50},
     {name: 'while', result: 2},
     {name: 'false-if', result: 2},
-    {name: 'method-undefined', result: true},
   ];
 
   const runTest = (test) => {
@@ -50,6 +49,7 @@ describe('Interpreter', () => {
     {name: 'array-sum', result: ['sum(array(1, 2, 3)) := 6']},
     {name: 'println', result: ['Hello world\nHello']},
     {name: 'method-example', result: [5, '4.00']},
+    {name: 'method-undefined', result: [undefined]},
     {name: 'array-properties', result: [1, [5, 3], 3]},
     {name: 'js-methods', result: ['HELLO']},
     {name: 'map', result: [[2, 3, 4, 5]]},

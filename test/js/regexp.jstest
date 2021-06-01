@@ -12,6 +12,9 @@ require('../lib/plugins/monkey-patch.js');
     let name = "test";
     let op = $r;
     let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
     if (typeof op[name] !== 'function') {
       return op[name];
     }
@@ -21,6 +24,9 @@ require('../lib/plugins/monkey-patch.js');
     let name = "exec";
     let op = $r;
     let processedArgs = [];
+    if (op == undefined) {
+      return undefined;
+    }
     if (typeof op[name] !== 'function') {
       return op[name];
     }

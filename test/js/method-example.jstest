@@ -6,6 +6,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "length";
       let op = "hello";
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
@@ -19,6 +22,9 @@ require('../lib/plugins/monkey-patch.js');
       let name = "toFixed";
       let op = 4;
       let processedArgs = [];
+      if (op == undefined) {
+        return undefined;
+      }
       if (typeof op[name] !== 'function') {
         return op[name];
       }
