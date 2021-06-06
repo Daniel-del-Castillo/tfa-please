@@ -57,6 +57,7 @@ describe('Compiler', () => {
     'expressive-assignments',
     'if-at-end',
     'constant-folding',
+    'constant-propagation',
   ];
 
   testList.forEach((test) => {

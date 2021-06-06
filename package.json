@@ -14,7 +14,7 @@
     "test": "c8 -x **/preface.js --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 mocha --reporter nyan",
     "doc": "jsdoc -d docs -c jsdoc.json",
     "gen-js": "for i in if if-else println array array-sum method-example array-properties js-methods map sub = currying undefined-sub operation-methods negative-indexes multilevel-assign hash hash-colon sub-in-hash object dot-operator regexp regexp2 for foreach times hello-scope funfun do-with-let-at-end chained-def expressive-assignments if-at-end method-undefined constant-folding ; do src/bin/please.js t -l test/pls/$i.pls -o test/js/$i.jstest && src/bin/please.js t test/pls/$i.pls -o test/cjs/$i.js ; done",
-    "gen-cpls": "for i in fixing-scope false-if while if if-else println array array-sum method-example array-properties js-methods map sub = currying undefined-sub operation-methods negative-indexes multilevel-assign hash hash-colon sub-in-hash object dot-operator regexp regexp2 for foreach times hello-scope funfun do-with-let-at-end chained-def expressive-assignments if-at-end method-undefined constant-folding ; do src/bin/please.js c test/pls/$i.pls -o test/cpls/$i.cpls ; done",
+    "gen-cpls": "for i in fixing-scope false-if while if if-else println array array-sum method-example array-properties js-methods map sub = currying undefined-sub operation-methods negative-indexes multilevel-assign hash hash-colon sub-in-hash object dot-operator regexp regexp2 for foreach times hello-scope funfun do-with-let-at-end chained-def expressive-assignments if-at-end method-undefined constant-folding constant-propagation ; do src/bin/please.js c test/pls/$i.pls -o test/cpls/$i.cpls ; done",
     "gen-tests": "npm run gen-js && npm run gen-cpls"
   },
   "repository": {

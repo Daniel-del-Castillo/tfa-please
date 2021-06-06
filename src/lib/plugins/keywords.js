@@ -45,8 +45,9 @@ keywords.while = (args, scope) => {
   if (args.length !== 2) {
     throw new SyntaxError('Wrong number of arguments to while');
   }
-  while (args[0].evaluate(scope) !== false) {
-    args[1].evaluate(scope);
+  const whileScope = Object.create(scope);
+  while (args[0].evaluate(whileScope) !== false) {
+    args[1].evaluate(whileScope);
   }
 };
 

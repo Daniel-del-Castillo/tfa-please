@@ -1,0 +1,698 @@
+{
+  "type": "Call",
+  "operator": {
+    "type": "Word",
+    "name": "run"
+  },
+  "args": [
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "a"
+        },
+        {
+          "type": "Value",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "x"
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "fn"
+          },
+          "args": [
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "assign"
+              },
+              "args": [
+                {
+                  "type": "Word",
+                  "name": "a"
+                },
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "+"
+                  },
+                  "args": [
+                    {
+                      "type": "Word",
+                      "name": "a"
+                    },
+                    {
+                      "type": "Value",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Value",
+      "value": 3
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "x"
+      },
+      "args": []
+    },
+    {
+      "type": "Word",
+      "name": "a"
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "b"
+        },
+        {
+          "type": "Value",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "y"
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "fn"
+          },
+          "args": [
+            {
+              "type": "Word",
+              "name": "b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "assign"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "b"
+        },
+        {
+          "type": "Value",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "d"
+        },
+        {
+          "type": "Value",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Call",
+        "operator": {
+          "type": "Word",
+          "name": "fn"
+        },
+        "args": [
+          {
+            "type": "Call",
+            "operator": {
+              "type": "Word",
+              "name": "assign"
+            },
+            "args": [
+              {
+                "type": "Word",
+                "name": "d"
+              },
+              {
+                "type": "Value",
+                "value": 3
+              }
+            ]
+          }
+        ]
+      },
+      "args": []
+    },
+    {
+      "type": "Word",
+      "name": "d"
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "e"
+        },
+        {
+          "type": "Value",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "while"
+      },
+      "args": [
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "<"
+          },
+          "args": [
+            {
+              "type": "Word",
+              "name": "e"
+            },
+            {
+              "type": "Value",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "do"
+          },
+          "args": [
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "let"
+              },
+              "args": [
+                {
+                  "type": "Word",
+                  "name": "f"
+                },
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "-"
+                  },
+                  "args": [
+                    {
+                      "type": "Value",
+                      "value": 5
+                    },
+                    {
+                      "type": "Word",
+                      "name": "e"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "="
+              },
+              "args": [
+                {
+                  "type": "Word",
+                  "name": "e"
+                },
+                {
+                  "type": "Value",
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Word",
+      "name": "e"
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "g"
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "array"
+          },
+          "args": [
+            {
+              "type": "Value",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "h"
+        },
+        {
+          "type": "Value",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "="
+      },
+      "args": [
+        {
+          "type": "MethodCall",
+          "operator": {
+            "type": "Word",
+            "name": "g"
+          },
+          "args": [
+            {
+              "type": "Value",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "fn"
+          },
+          "args": [
+            {
+              "type": "Value",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "do"
+      },
+      "args": [
+        {
+          "type": "Call",
+          "operator": {
+            "type": "MethodCall",
+            "operator": {
+              "type": "Word",
+              "name": "g"
+            },
+            "args": [
+              {
+                "type": "Value",
+                "value": 0
+              }
+            ]
+          },
+          "args": []
+        }
+      ]
+    },
+    {
+      "type": "Word",
+      "name": "h"
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "z"
+        },
+        {
+          "type": "Value",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "y"
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "fn"
+          },
+          "args": [
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "do"
+              },
+              "args": [
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "let"
+                  },
+                  "args": [
+                    {
+                      "type": "Word",
+                      "name": "x"
+                    },
+                    {
+                      "type": "Call",
+                      "operator": {
+                        "type": "Word",
+                        "name": "fn"
+                      },
+                      "args": [
+                        {
+                          "type": "Call",
+                          "operator": {
+                            "type": "Word",
+                            "name": "assign"
+                          },
+                          "args": [
+                            {
+                              "type": "Word",
+                              "name": "z"
+                            },
+                            {
+                              "type": "Value",
+                              "value": 3
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "x"
+                  },
+                  "args": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "y"
+      },
+      "args": []
+    },
+    {
+      "type": "Word",
+      "name": "z"
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "a1"
+        },
+        {
+          "type": "Value",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "a2"
+        },
+        {
+          "type": "Value",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "let"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "a3"
+        },
+        {
+          "type": "Value",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "if"
+      },
+      "args": [
+        {
+          "type": "Word",
+          "name": "true"
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "do"
+          },
+          "args": [
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "assign"
+              },
+              "args": [
+                {
+                  "type": "Word",
+                  "name": "a3"
+                },
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "fn"
+                  },
+                  "args": [
+                    {
+                      "type": "Call",
+                      "operator": {
+                        "type": "Word",
+                        "name": "assign"
+                      },
+                      "args": [
+                        {
+                          "type": "Word",
+                          "name": "a1"
+                        },
+                        {
+                          "type": "Value",
+                          "value": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "Call",
+          "operator": {
+            "type": "Word",
+            "name": "assign"
+          },
+          "args": [
+            {
+              "type": "Word",
+              "name": "a3"
+            },
+            {
+              "type": "Call",
+              "operator": {
+                "type": "Word",
+                "name": "fn"
+              },
+              "args": [
+                {
+                  "type": "Call",
+                  "operator": {
+                    "type": "Word",
+                    "name": "assign"
+                  },
+                  "args": [
+                    {
+                      "type": "Word",
+                      "name": "a2"
+                    },
+                    {
+                      "type": "Value",
+                      "value": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Value",
+      "value": 1
+    },
+    {
+      "type": "Value",
+      "value": 1
+    },
+    {
+      "type": "Call",
+      "operator": {
+        "type": "Word",
+        "name": "a3"
+      },
+      "args": []
+    },
+    {
+      "type": "Word",
+      "name": "a1"
+    },
+    {
+      "type": "Word",
+      "name": "a2"
+    }
+  ]
+}

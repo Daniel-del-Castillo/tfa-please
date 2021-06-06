@@ -130,12 +130,13 @@ generateJS.let = generateJS.def = generateJS[':='] = (name, value) => {
  */
 generateJS.fn = generateJS.function = generateJS['->'] = (...args) => {
   let result = '((';
-  result += generateJS.declarations.join('');
-  generateJS.declarations = [];
   args.slice(0, -1).forEach((arg) => {
     result += arg + ',';
   });
-  result += ') => {\nreturn ';
+  result += ') => {\n';
+  result += generateJS.declarations.join('');
+  generateJS.declarations = [];
+  result += 'return ';
   result += args[args.length - 1];
   result += ';\n})';
   return result;
