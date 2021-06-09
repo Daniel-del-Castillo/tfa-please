@@ -39,49 +39,10 @@ const optimize = (ast) => {
   depth = 0;
   functions = [];
   return replace(ast, {
-    enter: (node, parent) => {
-      if (node instanceof Call && node.operator instanceof Word &&
-          ['run', 'do'].includes(node.operator.name)) {
-        addScope();
-      } else if ((node instanceof Call && node.operator instanceof Word &&
-          (['foreach', 'for', 'while'].includes(node.operator.name) ||
-          (['fn', 'function', '->'].includes(node.operator.name) &&
-          parent instanceof Call && parent.operator instanceof Word &&
-          ['let', 'def', ':=', 'assign', 'set', '='].includes(parent.operator.name) &&
-          parent.args[0] instanceof Word))) ||
-          (parent instanceof Call && parent.operator instanceof Word &&
-          parent.operator.name === 'for' && parent.args[1] === node)) {
-        addSeparatedScope();
-      } else if (node instanceof Call && !(node.operator instanceof Word ||
-          (node.operator instanceof Call && node.operator.operator instanceof Word &&
-          ['fn', 'function', '->'].includes(node.operator.operator.name)))) {
-        resetConstants();
-        return VisitorOption.Skip;
-      }
-    },
+    enter: registerScopeChangesOnEnter,
     leave: (node, parent) => {
       const fold = constantFolding(node);
       const propagation = constantPropagation(node, parent);
-      if (node instanceof Call && node.operator instanceof Word &&
-          ['run', 'do'].includes(node.operator.name)) {
-        removeScope();
-      } else if (node instanceof Call && node.operator instanceof Word &&
-          ['foreach', 'for', 'while'].includes(node.operator.name)) {
-        removeSeparatedScope();
-        if (node.operator.name === 'for') {
-          removeSeparatedScope();
-        }
-      } else if (node instanceof Call && node.operator instanceof Word &&
-          ['fn', 'function', '->'].includes(node.operator.name) &&
-          parent instanceof Call && parent.operator instanceof Word &&
-          ['let', 'def', ':=', 'assign', 'set', '='].includes(parent.operator.name) &&
-          parent.args[0] instanceof Word) {
-        if (['let', 'def', ':='].includes(parent.operator.name)) {
-          addNewFunction(parent.args[0].name);
-        } else {
-          addChangesToFunction(parent.args[0].name);
-        }
-      }
       return fold || propagation;
     },
     fallback: (node) => {
@@ -113,6 +74,7 @@ const constantFolding = (node) => {
  *     constant or undefined
  */
 const constantPropagation = (node, parent) => {
+  registerScopeChangesOnLeave(node, parent);
   registerVariableChanges(node);
   registerVariables(node);
   if (node instanceof Word && node.name in constantVariables[depth] &&
@@ -123,6 +85,61 @@ const constantPropagation = (node, parent) => {
     return new Value({value: constantVariables[depth][node.name]});
   }
   return undefined;
+};
+
+/**
+ * Checks if a new scope has been entered and acts accordingly
+ * @param {Object} node The node
+ * @param {Object} parent The parent of the node
+ * @return {VisitorOption} Might return VisitorOption.Skip para evitar el nodo
+ */
+const registerScopeChangesOnEnter = (node, parent) => {
+  if (node instanceof Call && node.operator instanceof Word &&
+      ['run', 'do'].includes(node.operator.name)) {
+    addScope();
+  } else if ((node instanceof Call && node.operator instanceof Word &&
+      (['foreach', 'for', 'while'].includes(node.operator.name) ||
+      (['fn', 'function', '->'].includes(node.operator.name) &&
+      parent instanceof Call && parent.operator instanceof Word &&
+      ['let', 'def', ':=', 'assign', 'set', '='].includes(parent.operator.name) &&
+      parent.args[0] instanceof Word))) ||
+      (parent instanceof Call && parent.operator instanceof Word &&
+      parent.operator.name === 'for' && parent.args[1] === node)) {
+    addSeparatedScope();
+  } else if (node instanceof Call && !(node.operator instanceof Word ||
+      (node.operator instanceof Call && node.operator.operator instanceof Word &&
+      ['fn', 'function', '->'].includes(node.operator.operator.name)))) {
+    resetConstants();
+    return VisitorOption.Skip;
+  }
+};
+
+/**
+ * Checks if a new scope has been left and acts accordingly
+ * @param {Object} node The node to check
+ * @param {Object} parent The parent of the node
+ */
+const registerScopeChangesOnLeave = (node, parent) => {
+  if (node instanceof Call && node.operator instanceof Word &&
+      ['run', 'do'].includes(node.operator.name)) {
+    removeScope();
+  } else if (node instanceof Call && node.operator instanceof Word &&
+      ['foreach', 'for', 'while'].includes(node.operator.name)) {
+    removeSeparatedScope();
+    if (node.operator.name === 'for') {
+      removeSeparatedScope();
+    }
+  } else if (node instanceof Call && node.operator instanceof Word &&
+      ['fn', 'function', '->'].includes(node.operator.name) &&
+      parent instanceof Call && parent.operator instanceof Word &&
+      ['let', 'def', ':=', 'assign', 'set', '='].includes(parent.operator.name) &&
+      parent.args[0] instanceof Word) {
+    if (['let', 'def', ':='].includes(parent.operator.name)) {
+      addNewFunction(parent.args[0].name);
+    } else {
+      addChangesToFunction(parent.args[0].name);
+    }
+  }
 };
 
 /**
@@ -164,6 +181,12 @@ const registerVariableChanges = (node) => {
   }
 };
 
+/**
+ * Removes a constant from the list of constants or adds the name to
+ *     the list of variables changed by the function if modifying an outside
+ *     variable from a function
+ * @param {string} name The name of the constant
+ */
 const removeConstant = (name) => {
   const hasProperty = Object.prototype.hasOwnProperty;
   let scope = constantVariables[depth];
@@ -181,6 +204,9 @@ const removeConstant = (name) => {
   }
 };
 
+/**
+ * Removes all the constants from the list
+ */
 const resetConstants = () => {
   for (let i = 0; i < constantVariables.length; i++) {
     let scope = constantVariables[i];
@@ -191,26 +217,45 @@ const resetConstants = () => {
   }
 };
 
+/**
+ * Adds a new scope. Used when entering a run block, for example
+ */
 const addScope = () => {
   constantVariables[depth] = Object.create(constantVariables[depth]);
 };
 
+/**
+ * Adds a new separated scope. Used when entering an fn block, for example.
+ *     It is separated in the sense that outside variables can't be propagated
+ *     inside the function
+ */
 const addSeparatedScope = () => {
   constantVariables.push(Object.create(null));
   functions.push([]);
   depth += 1;
 };
 
+/**
+ * Removes a scope. Used when leaving a run block, for example.
+ */
 const removeScope = () => {
   constantVariables[depth] = Object.getPrototypeOf(constantVariables[depth]);
 };
 
+/**
+ * Removes a separated scope. Used when leaving an fn block, for example.
+ */
 const removeSeparatedScope = () => {
   constantVariables.pop();
   depth -= 1;
   functions.pop().map((name) => removeConstant(name));
 };
 
+/**
+ * Takes the variables changed by the current function and stores it with
+ *     the name of the function
+ * @param {string} name The name of the new function
+ */
 const addNewFunction = (name) => {
   constantVariables.pop();
   const functionChanges = functions.pop();
@@ -218,6 +263,11 @@ const addNewFunction = (name) => {
   constantVariables[depth][name] = functionChanges;
 };
 
+/**
+ * Takes the variables changed by the current function and adds them to
+ *     the list of variable change by a function.
+ * @param {string} name The name of the function
+ */
 const addChangesToFunction = (name) => {
   constantVariables.pop();
   const functionChanges = functions.pop();
